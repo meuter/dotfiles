@@ -1,26 +1,40 @@
 return require('packer').startup(function(use)
-  use 'wbthomason/packer.nvim'
 
-  use {
-    "nvim-lualine/lualine.nvim",
-    requires = {'kyazdani42/nvim-web-devicons', opt=true},
-    config = function()
-      require("lualine").setup({
-          theme='auto',
-          options = {section_separators = '', component_separators = ''}
-      })
-    end
-  }
+    -- Packer
+    use 'wbthomason/packer.nvim'
 
-  use {
-    "projekt0n/github-nvim-theme",
-    after = "lualine.nvim",
-    config = function()
-      require("github-theme").setup({
-        theme_style = "dark"
-      })
-      vim.cmd("set noshowmode laststatus=2")
-    end
-  }
+    -- Github theme
+    use {
+        "projekt0n/github-nvim-theme",
+        config = function()  
+            local ok, module = pcall(require, "github-theme")
+            if ok then 
+                module.setup {
+                    theme_style = "dark"
+                }
+            end
+        end
+    }
+
+    -- Lualine
+    use {
+        "nvim-lualine/lualine.nvim",
+        requires = {
+            {'kyazdani42/nvim-web-devicons', opt=true},
+        },
+        config = function()
+            local ok, module = pcall(require, "lualine")
+            if ok then 
+                vim.cmd("set noshowmode laststatus=2")
+                module.setup {
+                    options = {
+                        theme='ayu_dark',
+                        section_separators = '', 
+                        component_separators = ''
+                    }
+                }
+            end
+        end
+    }
 
 end)
