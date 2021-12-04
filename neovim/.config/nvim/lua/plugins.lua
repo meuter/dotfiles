@@ -19,6 +19,7 @@ return require('packer').startup(function(use)
       require("github-theme").setup({
         theme_style = "dark"
       })
+      vim.cmd("set noshowmode laststatus=2")
     end
   }
 
