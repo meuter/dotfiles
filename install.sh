@@ -51,7 +51,9 @@ function configure_git() {
     fi
     stow git
     initrc 'alias w="git status -s"'
-    initrc 'alias d="git lol"'
+    initrc 'alias d="git diff"'
+    initrc 'alias l="git lol"'
+    initrc 'alias g="git lolg"'
 }
 
 function install_libtree() {
