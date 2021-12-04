@@ -1,12 +1,8 @@
 #! /bin/bash
-
-# sane defaults
 set -euo pipefail
-export PATH=~/.local/bin:$PATH
 
 BIN=~/.local/bin
 SRC=~/.local/src
-
 mkdir -p ${BIN} ${SRC}
 
 function banner() {
@@ -48,6 +44,16 @@ function install_gnu_stow() {
     initrc 'export PATH=~/.local/bin:$PATH'
 }
 
+function configure_git() {
+    banner "Configuring git"
+    if [ -f ~/.gitconfig ]; then
+        mv -v ~/.gitconfig ~/.gitconfig.bak
+    fi
+    stow git
+    initrc 'alias w="git status -s"'
+    initrc 'alias d="git lol"'
+}
+
 function install_libtree() {
     banner "Installing libtree"
     local version=${1-v2.0.0}
@@ -68,8 +74,10 @@ function install_neovim() {
     rm -rf ${packer}
     git clone --depth 1 https://github.com/wbthomason/packer.nvim ${packer}
     nvim --headless -c 'autocmd User PackerComplete quitall' -c "PackerCompile" -c 'PackerSync'
+    echo
 }
 
 install_gnu_stow
+configure_git
 install_libtree
 install_neovim

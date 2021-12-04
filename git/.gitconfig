@@ -1,0 +1,26 @@
+[user]
+        email = cedric.meuter@gmail.com
+        name = Cédric Meuter
+[alias]
+        lol = log --decorate --pretty=oneline --abbrev-commit --color
+        lolg = log --graph --decorate --pretty=oneline --abbrev-commit --all --color
+        recent = log -5 --color --pretty=tformat:'%C(yellow)%h%Creset [%><(18)%cr] %C(white)%<(70,trunc)%s%Creset (%cn)'
+        out = log --color --pretty=tformat:'%C(yellow)%h%Creset [%><(18)%cr] %Cred%<(70,trunc)%s%Creset (%cn)' @{u}..
+        in = "!git remote update -p; git log --color --pretty=tformat:'%C(yellow)%h%Creset [%><(18)%cr] %Cred%<(70,trunc)%s%Creset (%cn)' ..@{u} "
+        update = "!git stash; git pull --rebase; git stash apply"
+        wipe = "!git reset --hard HEAD; git clean -fd"
+        progress = commit -a --amend --reuse-message HEAD
+        undo = reset HEAD^1
+        meld = difftool -d
+        revin = "!git remote update -p; git difftool -d @{u}"
+[diff]
+        tool = meld
+        guitool = meld
+        prompt = false
+[difftool]
+        guitool = meld
+        prompt = false
+[credential]
+        helper = cache
+[core]
+        editor = vim
