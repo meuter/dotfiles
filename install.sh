@@ -8,12 +8,12 @@ mkdir -p ${BIN} ${SRC}
 function banner() {
     local white_on_green="\e[97m\e[102m"
     local normal="\e[0m"
-    echo 
+    echo
     printf "${white_on_green}------------------------------------------------------------${normal}\n"
     printf "${white_on_green}------------------------------------------------------------${normal}\r"
-    printf "${white_on_green}-- ${1} ${normal}\n" 
+    printf "${white_on_green}-- ${1} ${normal}\n"
     printf "${white_on_green}------------------------------------------------------------${normal}\n"
-    echo 
+    echo
 }
 
 function add_line_to_file() {
@@ -27,7 +27,7 @@ function add_line_to_file() {
 function initrc() {
     local initrc=~/.bashrc
     add_line_to_file ${initrc} ${1}
-    source ${initrc} 
+    source ${initrc}
 }
 
 function install_gnu_stow() {
@@ -55,6 +55,14 @@ function configure_git() {
     initrc 'alias d="git diff"'
     initrc 'alias l="git lol"'
     initrc 'alias g="git lolg"'
+}
+
+function configure_bash() {
+    banner "Configuring bash"
+    if [ -f ~/.inputrc ]; then
+        mv -v ~/.inputrc ~/.inputrc.bak
+    fi
+    stow bash
 }
 
 function install_libtree() {
@@ -88,7 +96,7 @@ function install_bat() {
         cd /tmp
         tar xvf /tmp/${tarball}
         find /tmp/${tarball%.tar.gz} -name "bat" -type f -exec mv {} ~/.local/bin/ \;
-#        rm -rf ${tarball}
+        rm -rf ${tarball}
     popd
     initrc 'export PATH=~/.local/bin:$PATH'
 }
@@ -101,7 +109,7 @@ function install_neovim() {
     stow neovim
     initrc 'export PATH=~/.local/bin:$PATH'
     initrc 'alias vim=nvim'
-    
+
     local packer=~/.local/share/nvim/site/pack/packer/start/packer.nvim
     rm -rf ${packer}
     git clone --depth 1 https://github.com/wbthomason/packer.nvim ${packer}
@@ -109,9 +117,10 @@ function install_neovim() {
     echo
 }
 
-install_gnu_stow
-configure_git
-install_libtree
-install_exa
-install_bat
-install_neovim
+# install_gnu_stow
+configure_bash
+# configure_git
+# install_libtree
+# install_exa
+# install_bat
+# install_neovim
