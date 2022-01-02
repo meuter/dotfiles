@@ -1,0 +1,26 @@
+add_newline = true
+
+[cmd_duration]
+min_time = 100
+format = '[$duration]($style) '
+
+[package]
+disabled = true
+
+[git_status]
+disabled = true
+
+[git_branch]
+format = '[$symbol$branch]($style) '
+
+[username]
+disabled = true
+
+[hostname]
+disabled = true
+
+[directory]
+style = "blue"
+truncate_to_repo = false
+format = '[$path]($style)[$read_only]($read_only_style) '
+read_only = " 🔒"

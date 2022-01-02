@@ -73,6 +73,21 @@ function install_libtree() {
     initrc 'export PATH=~/.local/bin:$PATH'
 }
 
+function install_starship() {
+    banner "Installing starship"
+    local version=${1-v1.1.1}
+    local tarball=starship-x86_64-unknown-linux-musl.tar.gz
+    curl -L https://github.com/starship/starship/releases/download/${version}/${tarball} --output /tmp/${tarball}
+    pushd .
+        cd ${BIN}
+        tar xvf /tmp/${tarball}
+        rm -rf /tmp/${tarball}
+    popd
+    stow starship
+    initrc 'eval "$(starship init bash)"'
+}
+
+
 function install_exa() {
     banner "Installing exa"
     local version=${1-v0.10.1}
@@ -81,7 +96,7 @@ function install_exa() {
     pushd .
         cd ~/.local
         unzip -o /tmp/${zipfile}
-        rm -rf ${zipfile}
+        rm -rf /tmp/${zipfile}
     popd
     initrc 'export PATH=~/.local/bin:$PATH'
     initrc 'alias ls="exa --icons"'
@@ -96,7 +111,7 @@ function install_bat() {
         cd /tmp
         tar xvf /tmp/${tarball}
         find /tmp/${tarball%.tar.gz} -name "bat" -type f -exec mv {} ~/.local/bin/ \;
-        rm -rf ${tarball}
+        rm -rf /tmp/${tarball}
     popd
     initrc 'export PATH=~/.local/bin:$PATH'
 }
@@ -117,10 +132,11 @@ function install_neovim() {
     echo
 }
 
-# install_gnu_stow
+install_gnu_stow
 configure_bash
-# configure_git
-# install_libtree
-# install_exa
-# install_bat
-# install_neovim
+configure_git
+install_libtree
+install_starship
+install_exa
+install_bat
+install_neovim
