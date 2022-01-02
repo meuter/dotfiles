@@ -16,6 +16,9 @@ set mark-symlinked-directories on
 set colored-completion-prefix on
 set menu-complete-display-prefix on
 
+# Case insensitive completion
+set completion-ignore-case on
+
 # Key Bindings to move around
 "\C-b":"cd ..\n"
 "\C-h":"cd\n"
