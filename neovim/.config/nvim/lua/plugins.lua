@@ -11,7 +11,6 @@ function setup(module_name)
     return setup_result
 end
 
-
 return require('packer').startup(function(use)
 
     -- Packer
@@ -62,9 +61,49 @@ return require('packer').startup(function(use)
                 }
             },
             configure = function()
-                vim.api.nvim_set_keymap("n", "<C-p>", ":Telescope git_files<cr>", { silent=true})
+                vim.api.nvim_set_keymap("n", "<C-p>", "<CMD>lua require('project-files').project_files()<CR>", {noremap = true, silent = true})
             end
         }
+    }
+
+    -- LSP
+    use {
+        'neovim/nvim-lspconfig',
+        config = function()
+            local ok, module = pcall(require, "lspconfig")
+            if ok then
+                module.pyright.setup {}
+            end
+        end
+    }
+
+    use { 'hrsh7th/cmp-nvim-lsp' }
+    use { 'hrsh7th/cmp-buffer' }
+    use { 'hrsh7th/cmp-path' }
+    use { 'hrsh7th/cmp-cmdline' }
+    use {
+        'hrsh7th/nvim-cmp',
+        config = function()
+            local ok, cmp = pcall(require, "cmp")
+            if ok then
+                cmp.setup {
+                    mapping = {
+                        ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+                        ['<C-y>'] = cmp.config.disable,
+                        ['<C-e>'] = cmp.mapping({
+                            i = cmp.mapping.abort(),
+                            c = cmp.mapping.close(),
+                        }),
+                        ['<CR>'] = cmp.mapping.confirm({ select = true }),
+                    },
+                    sources = cmp.config.sources({
+                        { name = 'nvim_lsp' },
+                    }, {
+                        { name = 'buffer' },
+                    })
+                }
+            end
+        end
     }
 
 end)
