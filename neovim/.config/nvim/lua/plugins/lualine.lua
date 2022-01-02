@@ -14,10 +14,13 @@ function configure(module)
         },
         sections = {
             lualine_b = {
-                { cwd, color = { fg="LightYellow"} },
                 { 'branch', color = { fg="LightSkyBlue1", bg="gray16"} }, 
+                { cwd, color = { fg="LightYellow"} },
                 'diff', 
                 'diagnostics'
+            },
+            lualine_c = {
+                { 'filename', path=1 }
             },
         }
     }
