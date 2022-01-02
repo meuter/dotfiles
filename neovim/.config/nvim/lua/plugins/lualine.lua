@@ -1,5 +1,10 @@
 local load = require("load")
 
+function cwd()
+    local home = os.getenv("HOME")
+    return "📁" .. vim.fn.getcwd():gsub(home, "~")
+end
+
 function configure(module)
     module.setup {
         options = {
@@ -7,6 +12,14 @@ function configure(module)
             section_separators = '',
             component_separators = ''
         },
+        sections = {
+            lualine_b = {
+                { cwd, color = { fg="LightYellow"} },
+                { 'branch', color = { fg="LightSkyBlue1", bg="gray16"} }, 
+                'diff', 
+                'diagnostics'
+            },
+        }
     }
     vim.cmd("set noshowmode laststatus=2")
 end
