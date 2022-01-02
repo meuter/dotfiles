@@ -102,7 +102,7 @@ function install_exa() {
         rm -rf /tmp/${zipfile}
     popd
     initrc 'export PATH=~/.local/bin:$PATH'
-    initrc 'alias ls="exa --icons"'
+    initrc 'alias ls=exa'
 }
 
 function install_bat() {
@@ -139,7 +139,7 @@ function install_fzf() {
         rm -rf /tmp/${tarball}
     popd
     initrc 'export PATH=~/.local/bin:$PATH'
-    initrc 'FZF_ALT_C_COMMAND="bfz ~/ -type d"'
+    initrc 'FZF_ALT_C_COMMAND="bfs ~/ -type d"'
     initrc 'source ~/.local/share/fzf/key-bindings.bash'
 }
 
