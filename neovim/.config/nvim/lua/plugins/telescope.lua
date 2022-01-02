@@ -5,6 +5,10 @@ function configure(module)
         pickers = {
             find_files = {
                 hidden=true,
+            },
+            buffers = {
+                theme="dropdown",
+                previewer=false
             }
         },
     }
