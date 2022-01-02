@@ -3,7 +3,8 @@ set -euo pipefail
 
 BIN=~/.local/bin
 SRC=~/.local/src
-mkdir -p ${BIN} ${SRC}
+SHARE=~/.local/share
+mkdir -p ${BIN} ${SRC} ${SHARE}
 
 function banner() {
     local white_on_green="\e[97m\e[102m"
@@ -116,6 +117,24 @@ function install_bat() {
     initrc 'export PATH=~/.local/bin:$PATH'
 }
 
+function install_fzf() {
+    banner "Installing fzf"
+    local version=${1-0.29.0}
+    local tarball=fzf-${version}-linux_amd64.tar.gz
+    curl -L https://github.com/junegunn/fzf/releases/download/${version}/${tarball} --output /tmp/${tarball}
+    mkdir -pv ${SHARE}/fzf
+    curl -L https://raw.githubusercontent.com/junegunn/fzf/${version}/shell/key-bindings.bash --output ${SHARE}/fzf/key-bindings.bash
+    ls -la ${SHARE}/fzf/
+    pushd .
+        cd ${BIN}
+        tar xvf /tmp/${tarball}
+        rm -rf /tmp/${tarball}
+    popd
+    initrc 'export PATH=~/.local/bin:$PATH'
+    initrc 'FZF_ALT_C_COMMAND="find ~/ -type d"'
+    initrc 'source ~/.local/share/fzf/key-bindings.bash'
+}
+
 function install_neovim() {
     banner "Installing NeoVIM"
     local version=${1-v0.6.0}
@@ -139,4 +158,5 @@ install_libtree
 install_starship
 install_exa
 install_bat
+install_fzf
 install_neovim

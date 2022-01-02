@@ -20,6 +20,9 @@ set menu-complete-display-prefix on
 "\C-b":"cd ..\n"
 "\C-h":"cd\n"
 
+# For FZF
+"\C-n":"\C-k \C-u__fzf_cd__\n"
+
 # Ctrl-Delete: delete next word
 "\e[3;5~": shell-kill-word
 
