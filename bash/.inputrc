@@ -21,7 +21,7 @@ set menu-complete-display-prefix on
 "\C-h":"cd\n"
 
 # For FZF
-"\C-n":"\C-k \C-u__fzf_cd__\n"
+"\C-n": " \C-k \C-u`__fzf_cd__`\e\C-e\er\C-m\C-y\C-h\e \C-y\ey\C-x\C-x\C-d"
 
 # Ctrl-Delete: delete next word
 "\e[3;5~": shell-kill-word
