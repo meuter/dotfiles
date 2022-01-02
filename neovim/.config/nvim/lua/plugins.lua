@@ -6,9 +6,9 @@ return require('packer').startup(function(use)
     -- Github theme
     use {
         "projekt0n/github-nvim-theme",
-        config = function()  
+        config = function()
             local ok, module = pcall(require, "github-theme")
-            if ok then 
+            if ok then
                 module.setup {
                     theme_style = "dark"
                 }
@@ -24,12 +24,12 @@ return require('packer').startup(function(use)
         },
         config = function()
             local ok, module = pcall(require, "lualine")
-            if ok then 
+            if ok then
                 vim.cmd("set noshowmode laststatus=2")
                 module.setup {
                     options = {
                         theme='ayu_dark',
-                        section_separators = '', 
+                        section_separators = '',
                         component_separators = ''
                     }
                 }
