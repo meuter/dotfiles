@@ -144,6 +144,19 @@ function install_fzf() {
     initrc 'source ~/.local/share/fzf/key-bindings.bash'
 }
 
+function install_nodejs() {
+    banner "Installing nodejs"
+    local version=${1-v16.13.1}
+    local tarball=node-${version}-linux-x64.tar.gz
+    curl -L https://nodejs.org/download/release/${version}/${tarball} --output /tmp/${tarball}
+    pushd .
+        cd ~/.local
+        tar xvf /tmp/${tarball} --strip-components=1 --exclude="*/CHANGELOG.md" --exclude="*/README.md" --exclude="*/LICENSE"
+        rm -rf /tmp/${tarball}
+    popd
+    initrc 'export PATH=~/.local/bin:$PATH'
+}
+
 function install_neovim() {
     banner "Installing NeoVIM"
     local version=${1-v0.6.0}
@@ -169,4 +182,5 @@ install_exa
 install_bat
 install_bfs
 install_fzf
+install_nodejs
 install_neovim
