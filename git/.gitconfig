@@ -22,5 +22,3 @@
         prompt = false
 [credential]
         helper = cache
-[core]
-        editor = vim

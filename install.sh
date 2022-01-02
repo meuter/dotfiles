@@ -64,6 +64,8 @@ function configure_bash() {
         mv -v ~/.inputrc ~/.inputrc.bak
     fi
     stow bash
+    initrc 'export EDITOR=$([ "$TERM_PROGRAM" == "vscode" ] && echo "code --wait" || echo "vim")'
+    initrc 'export VISUAL="$EDITOR"'
 }
 
 function install_libtree() {
@@ -137,7 +139,7 @@ function install_fzf() {
         rm -rf /tmp/${tarball}
     popd
     initrc 'export PATH=~/.local/bin:$PATH'
-    initrc 'FZF_ALT_C_COMMAND="find ~/ -type d"'
+    initrc 'FZF_ALT_C_COMMAND="bfz ~/ -type d"'
     initrc 'source ~/.local/share/fzf/key-bindings.bash'
 }
 
