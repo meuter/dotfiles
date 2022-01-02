@@ -11,6 +11,7 @@ disabled = true
 disabled = true
 
 [git_branch]
+style = "yellow"
 format = '[$symbol$branch]($style) '
 
 [username]
@@ -20,7 +21,7 @@ disabled = true
 disabled = true
 
 [directory]
-style = "blue"
+style = "bold blue"
 truncate_to_repo = false
 format = '[$path]($style)[$read_only]($read_only_style) '
 read_only = " 🔒"
