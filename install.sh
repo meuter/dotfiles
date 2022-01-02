@@ -117,6 +117,12 @@ function install_bat() {
     initrc 'export PATH=~/.local/bin:$PATH'
 }
 
+function install_bfs() {
+    banner "Installing bfs"
+    stow bfs
+    initrc 'export PATH=~/.local/bin:$PATH'
+}
+
 function install_fzf() {
     banner "Installing fzf"
     local version=${1-0.29.0}
@@ -158,5 +164,6 @@ install_libtree
 install_starship
 install_exa
 install_bat
+install_bfs
 install_fzf
 install_neovim
