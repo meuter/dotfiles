@@ -144,6 +144,20 @@ function install_fzf() {
     initrc 'source ~/.local/share/fzf/key-bindings.bash'
 }
 
+function install_lazygit() {
+    banner "Installing lazygit"
+    local version=${1-0.31.4}
+    local tarball=lazygit_${version}_Linux_x86_64.tar.gz
+    curl -L https://github.com/jesseduffield/lazygit/releases/download/v${version}/${tarball} --output /tmp/${tarball}
+    pushd .
+        cd ${BIN}
+        tar xvf /tmp/${tarball} lazygit
+        rm -rf /tmp/${tarball}
+    popd
+    stow lazygit
+    initrc 'export PATH=~/.local/bin:$PATH'
+}
+
 function install_nodejs() {
     banner "Installing nodejs"
     local version=${1-v16.13.1}
@@ -171,6 +185,8 @@ function install_neovim() {
     git clone --depth 1 https://github.com/wbthomason/packer.nvim ${packer}
     nvim --headless -c 'autocmd User PackerComplete quitall' -c "PackerCompile" -c 'PackerSync'
     echo
+
+    npm i -g pyright
 }
 
 install_gnu_stow
@@ -182,5 +198,6 @@ install_exa
 install_bat
 install_bfs
 install_fzf
+install_lazygit
 install_nodejs
 install_neovim
