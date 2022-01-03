@@ -1,4 +1,4 @@
-require "user.options"
-require("mappings")
+require("user.options")
+require("user.keymaps")
 require("plugins")
 
