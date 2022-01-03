@@ -1,4 +1,4 @@
-require("defaults")
+require "user.options"
 require("mappings")
 require("plugins")
 
