@@ -1,7 +1,7 @@
 local noremap = require("user.helpers").noremap
 
 -- ctrl+p to open file
-noremap("n", "<C-p>", "<CMD>lua require('project-files').project_files()<CR>")
+noremap("n", "<C-p>", "<CMD>lua require('user.helpers').project_files()<CR>")
 noremap("n", "<C-t>", "<CMD>Telescope buffers<CR>")
 
 -- ctrl+b to toggle file explorer
