@@ -1,4 +1,4 @@
-local load = require("load")
+local load = require("plugins_old.load")
 
 function cwd()
     local home = os.getenv("HOME")
@@ -14,9 +14,9 @@ function configure(module)
         },
         sections = {
             lualine_b = {
-                { 'branch', color = { fg="LightSkyBlue1", bg="gray16"} }, 
+                { 'branch', color = { fg="LightSkyBlue1", bg="gray16"} },
                 { cwd, color = { fg="LightYellow"} },
-                'diff', 
+                'diff',
                 'diagnostics'
             },
             lualine_c = {

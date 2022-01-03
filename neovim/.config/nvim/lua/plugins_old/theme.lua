@@ -1,4 +1,4 @@
-local load = require("load")
+local load = require("plugins_old.load")
 
 return {
     "projekt0n/github-nvim-theme",
