@@ -35,5 +35,8 @@ remap_all_modes("<C-j>", "<CMD>ToggleTerm<CR>")
 noremap("t", "<esc>", "<CMD>ToggleTerm<CR>")
 
 -- keep visual mode when indenting/dedenting
-noremap("v", "<S-Tab>", "<gv")
 noremap("v", "<Tab>", ">gv")
+noremap("n", "<Tab>", "v><C-\\><C-N>")
+noremap("v", "<S-Tab>", "<gv")
+noremap("n", "<S-Tab>", "v<<C-\\><C-N>")
+
