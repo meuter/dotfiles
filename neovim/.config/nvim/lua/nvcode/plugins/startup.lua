@@ -3,6 +3,7 @@ local treesitter = require("nvcode.plugins.treesitter")
 local terminal = require("nvcode.plugins.terminal")
 local explorer = require("nvcode.plugins.explorer")
 local telescope = require("nvcode.plugins.telescope")
+local completion = require("nvcode.plugins.completion")
 
 function startup(use)
     -- My plugins here
@@ -15,25 +16,16 @@ function startup(use)
     terminal.startup(use)
     explorer.startup(use)
     telescope.startup(use)
+    completion.startup(use)
 
     --   use "windwp/nvim-autopairs" -- Autopairs, integrates with both cmp and treesitter
     --   use "numToStr/Comment.nvim" -- Easily comment stuff
-    --   use "kyazdani42/nvim-web-devicons"
-    --   use "kyazdani42/nvim-tree.lua"
-    --   use "akinsho/bufferline.nvim"
-    --   use "moll/vim-bbye"
-    --   use "nvim-lualine/lualine.nvim"
-    --   use "akinsho/toggleterm.nvim"
     --   use "ahmedkhalf/project.nvim"
     --   use "lewis6991/impatient.nvim"
     --   use "lukas-reineke/indent-blankline.nvim"
     --   use "goolord/alpha-nvim"
     --   use "antoinemadec/FixCursorHold.nvim" -- This is needed to fix lsp doc highlight
     --   use "folke/which-key.nvim"
-
-    --   -- Colorschemes
-    --   -- use "lunarvim/colorschemes" -- A bunch of colorschemes you can try out
-    --   use "lunarvim/darkplus.nvim"
 
     --   -- cmp plugins
     --   use "hrsh7th/nvim-cmp" -- The completion plugin
@@ -52,9 +44,6 @@ function startup(use)
     --   use "williamboman/nvim-lsp-installer" -- simple to use language server installer
     --   use "tamago324/nlsp-settings.nvim" -- language server settings defined in json for
     --   use "jose-elias-alvarez/null-ls.nvim" -- for formatters and linters
-
-    --   -- Telescope
-    --   use "nvim-telescope/telescope.nvim"
 
     --   -- Treesitter
     --   use {
