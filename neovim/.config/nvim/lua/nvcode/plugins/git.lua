@@ -54,6 +54,10 @@ function M.startup(use)
         "lewis6991/gitsigns.nvim",
         config = configure_git_signs()
     }
+
+    use {
+       "tpope/vim-fugitive"
+    }
 end
 
 return M
