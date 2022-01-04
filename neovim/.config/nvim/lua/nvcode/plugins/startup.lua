@@ -7,10 +7,11 @@ local completion = require("nvcode.plugins.completion")
 local git = require("nvcode.plugins.git")
 
 function startup(use)
-    -- My plugins here
-    use "wbthomason/packer.nvim"    -- Have packer manage itself
-    use "nvim-lua/popup.nvim"       -- An implementation of the Popup API from vim in Neovim
-    use "nvim-lua/plenary.nvim"     -- Useful lua functions used ny lots of plugins
+    -- basics
+    use "wbthomason/packer.nvim"         -- Have packer manage itself
+    use "nvim-lua/popup.nvim"            -- An implementation of the Popup API from vim in Neovim
+    use "nvim-lua/plenary.nvim"          -- Useful lua functions used ny lots of plugins
+    use "ntpeters/vim-better-whitespace" -- highlight trailing whitespace
 
     theme.startup(use)
     treesitter.startup(use)
