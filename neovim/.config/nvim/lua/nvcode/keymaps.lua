@@ -1,21 +1,30 @@
-function noremap(mode, key, command)
+local function noremap(mode, key, command)
     local options = {noremap=true, silent=true}
     return vim.api.nvim_set_keymap(mode, key, command, options)
 end
 
+local function remap_all_modes(key, command)
+    noremap("n", key, command)
+    noremap("i", key, "<C-\\><C-N>" .. command)
+    noremap("v", key, "<C-\\><C-N>" .. command)
+end
+
 -- ctrl+p to open file
-noremap("n", "<C-p>", "<CMD>lua require('nvcode.plugins.telescope').project_files()<CR>")
-noremap("n", "<C-t>", "<CMD>Telescope buffers<CR>")
+remap_all_modes("<C-p>", "<CMD>lua require('nvcode.plugins.telescope').project_files()<CR>")
+
+-- ctrl+t to open a buffer 
+remap_all_modes("<C-t>", "<CMD>Telescope buffers<CR>")
+
+-- ctrl+g to open git fugitive
+remap_all_modes("<C-g>", "<CMD>Git<CR>")
 
 -- ctrl+b to toggle file explorer
-noremap("n", "<C-b>", "<CMD>NvimTreeToggle<CR>")
-noremap("t", "<C-b>", "<CMD>NvimTreeToggle<CR>")
+remap_all_modes("<C-b>", "<CMD>NvimTreeToggle<CR>")
 
 -- ctrl+j to toggle terminal
-noremap("n", "<C-j>", "<CMD>ToggleTerm<CR>")
-noremap("t", "<C-j>", "<CMD>ToggleTerm<CR>")
+remap_all_modes("<C-j>", "<CMD>ToggleTerm<CR>")
 noremap("t", "<esc>", "<CMD>ToggleTerm<CR>")
 
 -- keep visual mode when indenting/dedenting
-noremap("v", "<", "<gv")
-noremap("v", ">", ">gv")
+noremap("v", "<S-Tab>", "<gv")
+noremap("v", "<Tab>", ">gv")
