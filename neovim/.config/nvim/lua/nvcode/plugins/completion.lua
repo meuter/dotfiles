@@ -29,7 +29,7 @@ local function configure_lsp()
     lspconfig.pyright.setup {}
 end
 
-function M.startup(use) 
+function M.startup(use)
     use {
         'hrsh7th/nvim-cmp',
         requires = {
