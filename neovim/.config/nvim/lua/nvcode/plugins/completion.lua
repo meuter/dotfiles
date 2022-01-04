@@ -22,6 +22,13 @@ local function configure_nvim_cmp()
     }
 end
 
+local function configure_lsp()
+    local ok, lspconfig = pcall(require, "lspconfig")
+    if not ok then return end
+
+    lspconfig.pyright.setup {}
+end
+
 function M.startup(use) 
     use {
         'hrsh7th/nvim-cmp',
@@ -33,6 +40,12 @@ function M.startup(use)
         },
         config = configure_nvim_cmp()
     }
+
+    use {
+        'neovim/nvim-lspconfig',
+        config = configure_lsp
+    }
+
 end
 
 return M
