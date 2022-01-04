@@ -15,3 +15,7 @@ noremap("t", "<C-b>", "<CMD>NvimTreeToggle<CR>")
 noremap("n", "<C-j>", "<CMD>ToggleTerm<CR>")
 noremap("t", "<C-j>", "<CMD>ToggleTerm<CR>")
 noremap("t", "<esc>", "<CMD>ToggleTerm<CR>")
+
+-- keep visual mode when indenting/dedenting
+noremap("v", "<", "<gv")
+noremap("v", ">", ">gv")
