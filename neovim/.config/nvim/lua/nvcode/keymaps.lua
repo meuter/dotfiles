@@ -33,6 +33,7 @@ remap_all_modes("<C-b>", "<CMD>NvimTreeToggle<CR>")
 -- ctrl+j to toggle terminal
 remap_all_modes("<C-j>", "<CMD>ToggleTerm<CR>")
 noremap("t", "<esc>", "<CMD>ToggleTerm<CR>")
+noremap("t", "<C-j>", "<CMD>ToggleTerm<CR>")
 
 -- keep visual mode when indenting/dedenting
 noremap("v", "<Tab>", ">gv")
