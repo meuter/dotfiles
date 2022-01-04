@@ -1,4 +1,7 @@
-local noremap = require("nvcode.helpers").noremap
+function noremap(mode, key, command)
+    local options = {noremap=true, silent=true}
+    return vim.api.nvim_set_keymap(mode, key, command, options)
+end
 
 -- ctrl+p to open file
 noremap("n", "<C-p>", "<CMD>lua require('nvcode.plugins.telescope').project_files()<CR>")
