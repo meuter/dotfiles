@@ -16,8 +16,11 @@ end
 -- ctrl+p to open file
 remap_all_modes("<C-p>", "<CMD>lua require('nvcode.plugins.telescope').project_files()<CR>")
 
--- ctrl+t to open a buffer 
+-- ctrl+t to select open a buffer
 remap_all_modes("<C-t>", "<CMD>Telescope buffers<CR>")
+
+-- ctrl+w to close a buffer
+remap_all_modes("<C-w>", "<CMD>Bd<CR>")
 
 -- ctrl+g to open git fugitive
 remap_all_modes("<C-g>", "<CMD>Git<CR>")
