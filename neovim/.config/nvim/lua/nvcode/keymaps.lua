@@ -41,3 +41,6 @@ noremap("n", "<Tab>", "v><C-\\><C-N>")
 noremap("v", "<S-Tab>", "<gv")
 noremap("n", "<S-Tab>", "v<<C-\\><C-N>")
 
+
+-- ctrl+l to toggle quick list
+remap_all_modes("<C-l>", "<CMD>QToggle<CR>")
