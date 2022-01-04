@@ -4,6 +4,7 @@ local terminal = require("nvcode.plugins.terminal")
 local explorer = require("nvcode.plugins.explorer")
 local telescope = require("nvcode.plugins.telescope")
 local completion = require("nvcode.plugins.completion")
+local git = require("nvcode.plugins.git")
 
 function startup(use)
     -- My plugins here
@@ -17,6 +18,7 @@ function startup(use)
     explorer.startup(use)
     telescope.startup(use)
     completion.startup(use)
+    git.startup(use)
 
     --   use "windwp/nvim-autopairs" -- Autopairs, integrates with both cmp and treesitter
     --   use "numToStr/Comment.nvim" -- Easily comment stuff
@@ -27,33 +29,13 @@ function startup(use)
     --   use "antoinemadec/FixCursorHold.nvim" -- This is needed to fix lsp doc highlight
     --   use "folke/which-key.nvim"
 
-    --   -- cmp plugins
-    --   use "hrsh7th/nvim-cmp" -- The completion plugin
-    --   use "hrsh7th/cmp-buffer" -- buffer completions
-    --   use "hrsh7th/cmp-path" -- path completions
-    --   use "hrsh7th/cmp-cmdline" -- cmdline completions
-    --   use "saadparwaiz1/cmp_luasnip" -- snippet completions
-    --   use "hrsh7th/cmp-nvim-lsp"
-
-    --   -- snippets
-    --   use "L3MON4D3/LuaSnip" --snippet engine
-    --   use "rafamadriz/friendly-snippets" -- a bunch of snippets to use
-
     --   -- LSP
-    --   use "neovim/nvim-lspconfig" -- enable LSP
     --   use "williamboman/nvim-lsp-installer" -- simple to use language server installer
     --   use "tamago324/nlsp-settings.nvim" -- language server settings defined in json for
     --   use "jose-elias-alvarez/null-ls.nvim" -- for formatters and linters
 
-    --   -- Treesitter
-    --   use {
-    --     "nvim-treesitter/nvim-treesitter",
-    --     run = ":TSUpdate",
-    --   }
     --   use "JoosepAlviste/nvim-ts-context-commentstring"
 
-    --   -- Git
-    --   use "lewis6991/gitsigns.nvim"
 end
 
 return startup
