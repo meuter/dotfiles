@@ -5,6 +5,7 @@ local explorer = require("nvcode.plugins.explorer")
 local telescope = require("nvcode.plugins.telescope")
 local completion = require("nvcode.plugins.completion")
 local git = require("nvcode.plugins.git")
+local comment = require("nvcode.plugins.comment")
 
 function startup(use)
     -- basics
@@ -22,6 +23,7 @@ function startup(use)
     telescope.startup(use)
     completion.startup(use)
     git.startup(use)
+    comment.startup(use)
 
     --   use "windwp/nvim-autopairs" -- Autopairs, integrates with both cmp and treesitter
     --   use "numToStr/Comment.nvim" -- Easily comment stuff
@@ -36,9 +38,6 @@ function startup(use)
     --   use "williamboman/nvim-lsp-installer" -- simple to use language server installer
     --   use "tamago324/nlsp-settings.nvim" -- language server settings defined in json for
     --   use "jose-elias-alvarez/null-ls.nvim" -- for formatters and linters
-
-    --   use "JoosepAlviste/nvim-ts-context-commentstring"
-
 end
 
 return startup

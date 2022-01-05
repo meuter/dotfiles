@@ -34,6 +34,11 @@ function M.startup(use)
         config = configure_treesitter(),
         run = ':TSUpdate'
     }
+
+    -- Provide better context to Comments.nvim
+    use {
+        'JoosepAlviste/nvim-ts-context-commentstring'
+    }
 end
 
 return M
