@@ -1,72 +1,5 @@
 local M = {}
 
-local function configure_github_theme()
-    local ok, github_theme = pcall(require, "github-theme")
-    if not ok then return end
-
-    github_theme.setup {
-        theme_style="dark"
-    }
-end
-
-local function configure_lualine()
-    local ok, lualine = pcall(require, "lualine")
-    if not ok then return end
-
-    local cwd = {
-        function()
-           local home = os.getenv("HOME")
-           local icon = "📁 "
-           return icon .. vim.fn.getcwd():gsub(home, "~")
-       end,
-       color = { fg="LightYellow"}
-    }
-
-    local branch = {
-        "branch",
-        icons_enabled = true,
-        icon = "",
-    }
-
-    local diagnostics = {
-        "diagnostics",
-        sources = { "nvim_diagnostic" },
-        sections = { "error", "warn" },
-        symbols = { error = " ", warn = " " },
-        colored = false,
-        update_in_insert = false,
-        always_visible = true,
-    }
-
-    local spaces = function()
-        return "spaces: " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
-    end
-
-    local location = {
-        "location",
-        padding = 0,
-    }
-
-    lualine.setup {
-        options = {
-            icons_enabled = true,
-            theme = "ayu_dark",
-            component_separators = { left = "", right = "" },
-            section_separators = { left = "", right = "" },
-            disabled_filetypes = { "NvimTree", "Outline" },
-            always_divide_middle = true,
-        },
-        sections = {
-            lualine_a = {'mode'},
-            lualine_b = { branch , diagnostics },
-            lualine_c = { cwd },
-            lualine_x = { 'filetype' },
-            lualine_y = { location, spaces, 'encoding', 'fileformat' },
-            lualine_z = { }
-        },
-    }
-end
-
 local function configure_bufferline()
     local ok, bufferline = pcall(require, "bufferline")
     if not ok then return end
@@ -175,67 +108,7 @@ local function configure_bufferline()
     }
 end
 
-local function configure_better_whitespace()
-    vim.g.better_whitespace_enabled=1
-    vim.g.strip_whitespace_on_save=1
-    vim.g.strip_whitespace_confirm=0
-end
-
-local function configure_indentline()
-    local ok, indent_blankline = pcall(require, "indent_blankline")
-    if not ok then return end
-
-    vim.g.indent_blankline_char = "▏"
-    vim.g.indent_blankline_show_trailing_blankline_indent = false
-
-    vim.opt.list = true
-    vim.opt.listchars:append("space:⋅")
-    vim.opt.listchars:append("eol:")
-    vim.opt.listchars:append("tab: ")
-
-    indent_blankline.setup {
-        enabled = true,
-        show_trailing_blankline_indent = false,
-        show_first_indent_level = true,
-        blankline_char = "▏",
-        use_treesitter = true,
-        buftype_exclude = {
-            "terminal",
-            "nofile"
-        },
-        filetype_exclude = {
-            "help",
-            "startify",
-            "dashboard",
-            "packer",
-            "neogitstatus",
-            "NvimTree",
-            "Trouble",
-        },
-        show_end_of_line = true,
-        space_char_blankline = " ",
-    }
-end
-
 function M.startup(use)
-    -- Nice icons for NF font
-    use { use "kyazdani42/nvim-web-devicons" }
-
-    -- Github color scheme
-    use {
-        "projekt0n/github-nvim-theme",
-        config = configure_github_theme()
-    }
-
-    -- Lualine
-    use {
-        "nvim-lualine/lualine.nvim",
-        requires = {
-            { "kyazdani42/nvim-web-devicons" }
-        },
-        config = configure_lualine()
-    }
-
     -- Bufferline
     use {
         "akinsho/bufferline.nvim",
@@ -245,19 +118,7 @@ function M.startup(use)
         },
         config = configure_bufferline()
     }
-
-    -- Highlight white space and strip on save
-    use {
-        "ntpeters/vim-better-whitespace",
-        config = configure_better_whitespace()
-    }
-
-    -- Indent line and display hidden characters (spaces/tabs)
-    use {
-        "lukas-reineke/indent-blankline.nvim",
-        config = configure_indentline()
-    }
-
 end
 
 return M
+

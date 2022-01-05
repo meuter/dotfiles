@@ -1,4 +1,4 @@
-local theme = require("nvcode.plugins.theme")
+local ui = require("nvcode.plugins.ui")
 local treesitter = require("nvcode.plugins.treesitter")
 local terminal = require("nvcode.plugins.terminal")
 local explorer = require("nvcode.plugins.explorer")
@@ -14,7 +14,7 @@ function startup(use)
     use "farmergreg/vim-lastplace"       -- rememnber position in file
     use "valloric/listtoggle"            -- toggle quick and location list
 
-    theme.startup(use)
+    ui.startup(use)
     treesitter.startup(use)
     terminal.startup(use)
     explorer.startup(use)
