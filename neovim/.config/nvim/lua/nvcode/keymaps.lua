@@ -42,6 +42,11 @@ noremap("n", "<Tab>", "v><C-\\><C-N>")
 noremap("v", "<S-Tab>", "<gv")
 noremap("n", "<S-Tab>", "v<<C-\\><C-N>")
 
-
 -- ctrl+l to toggle quick list
 remap_all_modes("<C-l>", "<CMD>QToggle<CR>")
+
+-- move lines around using alt+{up/down}
+noremap("n", "<A-Down>", ":MoveLine(1)<CR>")
+noremap("n", "<A-Up>", ":MoveLine(-1)<CR>")
+noremap("v", "<A-Down>", ":MoveBlock(1)<CR>")
+noremap("v", "<A-Up>", ":MoveBlock(-1)<CR>")
