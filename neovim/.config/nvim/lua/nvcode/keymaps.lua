@@ -29,6 +29,7 @@ remap_for_filetype("fugitive", "n", "cc", "<CMD>q<bar>Git commit --quiet<CR>")
 
 -- ctrl+b to toggle file explorer
 remap_all_modes("<C-b>", "<CMD>NvimTreeToggle<CR>")
+remap_all_modes("<F5>", "<CMD>NvimTreeRefresh<CR>")
 
 -- ctrl+j to toggle terminal
 remap_all_modes("<C-j>", "<CMD>ToggleTerm<CR>")
