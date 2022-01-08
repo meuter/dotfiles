@@ -52,8 +52,8 @@ local function configure_lualine()
             lualine_b = { branch , diagnostics },
             lualine_c = { cwd },
             lualine_x = { 'filetype' },
-            lualine_y = { location, spaces, 'encoding', 'fileformat' },
-            lualine_z = { }
+            lualine_y = { location, spaces, 'encoding', },
+            lualine_z = { 'fileformat' }
         },
     }
 end
