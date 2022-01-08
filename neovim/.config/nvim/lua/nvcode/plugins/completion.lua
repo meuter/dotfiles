@@ -56,8 +56,15 @@ local function configure_lsp()
             prefix = "",
         },
     }
+end
 
-    lspconfig.pyright.setup {}
+local function configure_lsp_installer()
+    local ok, lsp_installer = pcall(require, "nvim-lsp-installer")
+    if not ok then return end
+
+    lsp_installer.on_server_ready(function(server)
+        server:setup {}
+    end)
 end
 
 function M.startup(use)
@@ -78,6 +85,13 @@ function M.startup(use)
         "neovim/nvim-lspconfig",
         config = configure_lsp()
     }
+
+    -- LSP server installer
+    use {
+        "williamboman/nvim-lsp-installer",
+        config = configure_lsp_installer()
+    }
+
 
 end
 
