@@ -44,6 +44,8 @@ function install_gnu_stow() {
     popd
     initrc 'export PERL5LIB=~/.local/share/perl/'
     initrc 'export PATH=~/.local/bin:$PATH'
+    export PATH=~/.local/bin:$PATH
+    export PERL5LIB=~/.local/share/perl/
 }
 
 function configure_git() {
@@ -184,9 +186,6 @@ function install_neovim() {
     rm -rf ${packer}
     git clone --depth 1 https://github.com/wbthomason/packer.nvim ${packer}
     nvim --headless -c 'autocmd User PackerComplete quitall' -c "PackerCompile" -c 'PackerSync'
-    echo
-
-    npm i -g pyright
 }
 
 install_gnu_stow
