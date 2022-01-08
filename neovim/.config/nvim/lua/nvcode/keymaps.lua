@@ -41,6 +41,7 @@ noremap("n", "<S-Tab>", "v<<C-\\><C-N>")
 
 -- ctrl+l to toggle quick list
 remap_all_modes("<C-l>", "<CMD>QToggle<CR>")
+remap_for_filetype("qf", "n", "<CR>", "<CR><CMD>QToggle<CR>")
 
 -- move lines around using alt+{up/down}
 noremap("n", "<A-Down>", ":MoveLine(1)<CR>")
@@ -52,4 +53,5 @@ noremap("v", "<A-Up>", ":MoveBlock(-1)<CR>")
 noremap("n", "<F4>", "<cmd>lua vim.diagnostic.open_float()<CR>")
 noremap("n", "<F3>", "<cmd>lua vim.lsp.buf.references()<CR>")
 noremap("n", "<F8>", "<cmd>lua vim.diagnostic.goto_next()<CR>")
+noremap("n", "<F9>", "<cmd>lua vim.diagnostic.setqflist()<CR>")
 noremap("n", "<F12>", "<cmd>lua vim.lsp.buf.definition()<CR>")
