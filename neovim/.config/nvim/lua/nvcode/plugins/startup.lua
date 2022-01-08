@@ -14,7 +14,7 @@ function startup(use)
     use "nvim-lua/plenary.nvim"          -- useful lua functions used ny lots of plugins
     use "farmergreg/vim-lastplace"       -- rememnber position in file
     use "valloric/listtoggle"            -- toggle quick and location list
-    use 'fedepujol/move.nvim'            -- move lines around in V mode
+    use "fedepujol/move.nvim"            -- move lines around in V mode
 
     ui.startup(use)
     treesitter.startup(use)
