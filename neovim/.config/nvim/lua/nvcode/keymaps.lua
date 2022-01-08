@@ -63,7 +63,7 @@ noremap("v", "<A-Up>", ":MoveBlock(-1)<CR>")
 noremap("n", "<F4>", "<CMD>lua vim.diagnostic.open_float()<CR>")
 noremap("n", "<F3>", "<CMD>lua vim.lsp.buf.references()<CR>")
 noremap("n", "<F8>", "<CMD>lua vim.diagnostic.goto_next()<CR>")
-noremap("n", "<F9>", "<CMD>lua vim.diagnostic.setqflist()<CR>")
+noremap("n", "<F9>", "<CMD>Telescope diagnostics<CR>")
 noremap("n", "<F12>", "<CMD>lua vim.lsp.buf.definition()<CR>")
 
 -- ctrl+shift+/ to toggle comment
