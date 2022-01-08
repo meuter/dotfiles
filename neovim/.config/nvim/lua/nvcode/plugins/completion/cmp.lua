@@ -52,9 +52,9 @@ local function configure_nvim_cmp()
         },
         sources = cmp.config.sources({
             { name = 'nvim_lsp' },
-            { name = 'luasnip' },
         }, {
             { name = 'buffer' },
+            { name = 'path' },
         }),
         formatting = {
             fields = { "kind", "abbr", "menu" },
@@ -62,7 +62,6 @@ local function configure_nvim_cmp()
                 vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
                 vim_item.menu = ({
                     nvim_lsp = "[LSP]",
-                    luasnip = "[Snippet]",
                     buffer = "[Buffer]",
                     path = "[Path]",
                 })[entry.source.name]
