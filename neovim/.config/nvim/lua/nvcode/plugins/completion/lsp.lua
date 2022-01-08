@@ -16,9 +16,7 @@ local function configure_lsp()
     end
 
     vim.diagnostic.config {
-        -- disable virtual text
         virtual_text = false,
-        -- show signs
         signs = {
             active = signs,
         },
@@ -36,7 +34,14 @@ local function configure_lsp()
     }
 
     lsp_installer.on_server_ready(function(server)
-        server:setup {}
+        local opts = {}
+
+        if server.name == "sumneko_lua" then
+           local sumneko_opts = require("nvcode.plugins.completion.sumneko_lua")
+           opts = vim.tbl_deep_extend("force", sumneko_opts, opts)
+        end
+
+        server:setup(opts)
     end)
 end
 
