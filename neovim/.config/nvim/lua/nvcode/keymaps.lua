@@ -19,9 +19,6 @@ remap_all_modes("<C-p>", "<CMD>lua require('nvcode.plugins.telescope').project_f
 -- ctrl+t to select open a buffer
 remap_all_modes("<C-t>", "<CMD>Telescope buffers<CR>")
 
--- ctrl+w to close a buffer (interferes with windows navigation...)
--- remap_all_modes("<C-w>", "<CMD>Bd<CR>")
-
 -- ctrl+g to open git fugitive
 remap_all_modes("<C-g>", "<CMD>Git<CR>")
 remap_for_filetype("fugitive", "n", "<C-G>", "<CMD>q<CR>")
@@ -50,3 +47,9 @@ noremap("n", "<A-Down>", ":MoveLine(1)<CR>")
 noremap("n", "<A-Up>", ":MoveLine(-1)<CR>")
 noremap("v", "<A-Down>", ":MoveBlock(1)<CR>")
 noremap("v", "<A-Up>", ":MoveBlock(-1)<CR>")
+
+-- code navigation using LSP server
+noremap("n", "<F4>", "<cmd>lua vim.diagnostic.open_float()<CR>")
+noremap("n", "<F3>", "<cmd>lua vim.lsp.buf.references()<CR>")
+noremap("n", "<F8>", "<cmd>lua vim.diagnostic.goto_next()<CR>")
+noremap("n", "<F12>", "<cmd>lua vim.lsp.buf.definition()<CR>")
