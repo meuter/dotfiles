@@ -7,7 +7,7 @@ local completion = require("nvcode.plugins.completion")
 local git = require("nvcode.plugins.git")
 local comment = require("nvcode.plugins.comment")
 
-function startup(use)
+local function startup(use)
     -- basics
     use "wbthomason/packer.nvim"         -- have packer manage itself
     use "nvim-lua/popup.nvim"            -- an implementation of the Popup API from vim in Neovim
@@ -26,7 +26,6 @@ function startup(use)
     comment.startup(use)
 
     --   use "windwp/nvim-autopairs" -- Autopairs, integrates with both cmp and treesitter
-    --   use "numToStr/Comment.nvim" -- Easily comment stuff
     --   use "ahmedkhalf/project.nvim"
     --   use "lewis6991/impatient.nvim"
     --   use "lukas-reineke/indent-blankline.nvim"
@@ -35,7 +34,6 @@ function startup(use)
     --   use "folke/which-key.nvim"
 
     --   -- LSP
-    --   use "williamboman/nvim-lsp-installer" -- simple to use language server installer
     --   use "tamago324/nlsp-settings.nvim" -- language server settings defined in json for
     --   use "jose-elias-alvarez/null-ls.nvim" -- for formatters and linters
 end
