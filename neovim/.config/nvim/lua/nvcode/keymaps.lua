@@ -50,8 +50,13 @@ noremap("v", "<A-Down>", ":MoveBlock(1)<CR>")
 noremap("v", "<A-Up>", ":MoveBlock(-1)<CR>")
 
 -- code navigation using LSP server
-noremap("n", "<F4>", "<cmd>lua vim.diagnostic.open_float()<CR>")
-noremap("n", "<F3>", "<cmd>lua vim.lsp.buf.references()<CR>")
-noremap("n", "<F8>", "<cmd>lua vim.diagnostic.goto_next()<CR>")
-noremap("n", "<F9>", "<cmd>lua vim.diagnostic.setqflist()<CR>")
-noremap("n", "<F12>", "<cmd>lua vim.lsp.buf.definition()<CR>")
+noremap("n", "<F4>", "<CMD>lua vim.diagnostic.open_float()<CR>")
+noremap("n", "<F3>", "<CMD>lua vim.lsp.buf.references()<CR>")
+noremap("n", "<F8>", "<CMD>lua vim.diagnostic.goto_next()<CR>")
+noremap("n", "<F9>", "<CMD>lua vim.diagnostic.setqflist()<CR>")
+noremap("n", "<F12>", "<CMD>lua vim.lsp.buf.definition()<CR>")
+
+-- ctrl+shift+/ to toggle comment
+noremap("n", "<C-_>", "<CMD>CommentToggle<CR>")
+noremap("i", "<C-_>", "<C-\\><C-N><CMD>CommentToggle<CR>i")
+noremap("v", "<C-_>", ":'<,'>CommentToggle<CR>gv")
