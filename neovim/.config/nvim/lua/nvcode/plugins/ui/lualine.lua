@@ -29,9 +29,21 @@ local function configure_lualine()
         always_visible = true,
     }
 
-    local spaces = function()
-        return "spaces: " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
+    local lsp = function()
+        local buf_clients = vim.lsp.buf_get_clients()
+        if next(buf_clients) == nil then
+            return ""
+        end
+
+        local buf_client_names = {}
+        for _, client in pairs(buf_clients) do
+            if client.name ~= "null-ls" then
+                table.insert(buf_client_names, client.name)
+            end
+        end
+        return "🔌" .. table.concat(buf_client_names, ", ")
     end
+
 
     local location = {
         "location",
@@ -51,8 +63,8 @@ local function configure_lualine()
             lualine_a = {'mode'},
             lualine_b = { branch , diagnostics },
             lualine_c = { cwd },
-            lualine_x = { 'filetype' },
-            lualine_y = { location, spaces, 'encoding', },
+            lualine_x = { location, 'encoding' },
+            lualine_y = { 'filetype', lsp },
             lualine_z = { 'fileformat' }
         },
     }
