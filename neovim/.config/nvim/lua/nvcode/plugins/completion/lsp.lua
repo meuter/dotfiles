@@ -41,6 +41,12 @@ local function configure_lsp()
            opts = vim.tbl_deep_extend("force", sumneko_opts, opts)
         end
 
+
+        if server.name == "jsonls" then
+           local jsonls_opts = require("nvcode.plugins.completion.jsonls")
+           opts = vim.tbl_deep_extend("force", jsonls_opts, opts)
+        end
+
         server:setup(opts)
     end)
 end
@@ -50,6 +56,7 @@ function M.startup(use)
         "williamboman/nvim-lsp-installer",
         requires = {
             { "neovim/nvim-lspconfig" },
+            { "tamago324/nlsp-settings.nvim" },
         },
         config = configure_lsp()
     }
