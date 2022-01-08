@@ -182,10 +182,24 @@ function install_neovim() {
     initrc 'export PATH=~/.local/bin:$PATH'
     initrc 'alias vim=nvim'
 
+    banner "Installing packer"
     local packer=~/.local/share/nvim/site/pack/packer/start/packer.nvim
     rm -rf ${packer}
     git clone --depth 1 https://github.com/wbthomason/packer.nvim ${packer}
+
+    banner "Installer NeoVIM packages"
     nvim --headless -c 'autocmd User PackerComplete quitall' -c "PackerCompile" -c 'PackerSync'
+
+    banner "Installer NeoVIM LSP servers"
+    nvim --headless -c "LspInstall --sync sumneko_lua" +qa
+    nvim --headless -c "LspInstall --sync tsserver" +qa
+    nvim --headless -c "LspInstall --sync eslint" +qa
+    nvim --headless -c "LspInstall --sync jsonls" +qa
+    nvim --headless -c "LspInstall --sync htmljsonls" +qa
+    nvim --headless -c "LspInstall --sync yamlls" +qa
+    nvim --headless -c "LspInstall --sync pyright" +qa
+    nvim --headless -c "LspInstall --sync clangd" +qa
+    nvim --headless -c "LspInstall --sync cmake" +qa
 }
 
 install_gnu_stow
