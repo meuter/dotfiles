@@ -173,7 +173,7 @@ function install_nodejs() {
 
 function install_neovim() {
     banner "Installing NeoVIM"
-    local version=${1-v0.6.0}
+    local version=${1-v0.6.1}
     curl -L https://github.com/neovim/neovim/releases/download/${version}/nvim.appimage --output ${BIN}/nvim
     chmod u+x ${BIN}/nvim
     stow neovim
