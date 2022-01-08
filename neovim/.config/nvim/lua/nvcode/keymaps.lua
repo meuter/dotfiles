@@ -39,6 +39,10 @@ noremap("n", "<Tab>", "v><C-\\><C-N>")
 noremap("v", "<S-Tab>", "<gv")
 noremap("n", "<S-Tab>", "v<<C-\\><C-N>")
 
+-- alt left,right to navigate jumplist
+noremap("n", "<A-Left>", "<C-O>")
+noremap("n", "<A-Right>", "<C-I>")
+
 -- ctrl+l to toggle quick list
 remap_all_modes("<C-l>", "<CMD>QToggle<CR>")
 remap_for_filetype("qf", "n", "<CR>", "<CR><CMD>QToggle<CR>")
