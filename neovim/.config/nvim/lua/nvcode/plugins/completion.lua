@@ -36,13 +36,11 @@ local function configure_nvim_cmp()
     }
 
     cmp.setup {
-
         snippet = {
             expand = function(args)
                 luasnip.lsp_expand(args.body) -- For `luasnip` users.
             end,
         },
-
         mapping = {
             ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
             ["<C-y>"] = cmp.config.disable,
@@ -52,15 +50,12 @@ local function configure_nvim_cmp()
             }),
             ["<CR>"] = cmp.mapping.confirm({ select = true }),
         },
-
-
         sources = cmp.config.sources({
             { name = 'nvim_lsp' },
             { name = 'luasnip' },
         }, {
             { name = 'buffer' },
         }),
-
         formatting = {
             fields = { "kind", "abbr", "menu" },
             format = function(entry, vim_item)
@@ -75,6 +70,16 @@ local function configure_nvim_cmp()
             end,
         },
     }
+
+    -- Use cmp in command mode
+    cmp.setup.cmdline(':', {
+        sources = cmp.config.sources({
+            { name = 'path' }
+        }, {
+            { name = 'cmdline' }
+        })
+    })
+
 end
 
 local function configure_lsp()
