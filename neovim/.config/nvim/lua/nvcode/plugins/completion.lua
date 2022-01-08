@@ -61,6 +61,7 @@ local function configure_lsp()
 end
 
 function M.startup(use)
+    -- Completion engine
     use {
         "hrsh7th/nvim-cmp",
         requires = {
@@ -72,9 +73,10 @@ function M.startup(use)
         config = configure_nvim_cmp()
     }
 
+    -- Global lsp configuration
     use {
         "neovim/nvim-lspconfig",
-        config = configure_lsp
+        config = configure_lsp()
     }
 
 end
