@@ -45,6 +45,10 @@ local function configure_bufferline()
                 guifg = { attribute = "fg", highlight = "TabLine" },
                 guibg = { attribute = "bg", highlight = "TabLine" },
             },
+            buffer_selected = {
+                guifg = "white",
+                gui = "bold",
+            },
             close_button = {
                 guifg = { attribute = "fg", highlight = "TabLine" },
                 guibg = { attribute = "bg", highlight = "TabLine" },
@@ -68,17 +72,17 @@ local function configure_bufferline()
             duplicate_selected = {
                 guifg = { attribute = "fg", highlight = "TabLineSel" },
                 guibg = { attribute = "bg", highlight = "TabLineSel" },
-                gui = "italic",
+                gui = "NONE",
             },
             duplicate_visible = {
                 guifg = { attribute = "fg", highlight = "TabLine" },
                 guibg = { attribute = "bg", highlight = "TabLine" },
-                gui = "italic",
+                gui = "NONE",
             },
             duplicate = {
                 guifg = { attribute = "fg", highlight = "TabLine" },
                 guibg = { attribute = "bg", highlight = "TabLine" },
-                gui = "italic",
+                gui = "NONE",
             },
             modified = {
                 guifg = { attribute = "fg", highlight = "TabLine" },
