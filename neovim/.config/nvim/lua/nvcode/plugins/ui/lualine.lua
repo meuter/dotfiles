@@ -19,6 +19,11 @@ local function configure_lualine()
         icon = "",
     }
 
+    local mode = {
+        "mode",
+        color = { gui='italic' },
+    }
+
     local diagnostics = {
         "diagnostics",
         sources = { "nvim_diagnostic" },
@@ -53,14 +58,14 @@ local function configure_lualine()
     lualine.setup {
         options = {
             icons_enabled = true,
-            theme = "github",
+            theme = "ayu_dark",
             component_separators = { left = "", right = "" },
             section_separators = { left = "", right = "" },
             disabled_filetypes = { "NvimTree", "Outline" },
             always_divide_middle = true,
         },
         sections = {
-            lualine_a = {'mode'},
+            lualine_a = { mode },
             lualine_b = { branch , diagnostics },
             lualine_c = { cwd },
             lualine_x = { location, 'encoding' },
