@@ -53,7 +53,7 @@ local function configure_lualine()
     lualine.setup {
         options = {
             icons_enabled = true,
-            theme = "ayu_dark",
+            theme = "github",
             component_separators = { left = "", right = "" },
             section_separators = { left = "", right = "" },
             disabled_filetypes = { "NvimTree", "Outline" },
