@@ -8,6 +8,7 @@ local function configure_github_theme()
         theme_style="dark",
         function_style = "NONE",
         comment_style = "NONE",
+        keyword_style = "NONE",
     }
 end
 
