@@ -5,7 +5,9 @@ local function configure_github_theme()
     if not ok then return end
 
     github_theme.setup {
-        theme_style="dark"
+        theme_style="dark",
+        function_style = "NONE",
+        comment_style = "NONE",
     }
 end
 
