@@ -21,7 +21,7 @@ local function configure_lualine()
 
     local mode = {
         "mode",
-        color = { gui='italic' },
+        color = { gui='NONE' },
     }
 
     local diagnostics = {
