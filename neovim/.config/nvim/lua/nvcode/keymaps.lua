@@ -31,8 +31,8 @@ remap_for_filetype("fugitive", "n", "<C-G>", "<CMD>q<CR>")
 remap_for_filetype("fugitive", "n", "cc", "<CMD>q<bar>Git commit --quiet<CR>")
 
 -- ctrl-[or] to navigate buffer
-remap_all_modes("<C-[>", "<CMD>BufferLineCyclePrev<CR>")
-remap_all_modes("<C-]>", "<CMD>BufferLineCycleNext<CR>")
+remap_all_modes("<C-PageUp>", "<CMD>BufferLineCyclePrev<CR>")
+remap_all_modes("<C-PageDown>", "<CMD>BufferLineCycleNext<CR>")
 
 -- ctrl+b to toggle file explorer
 remap_all_modes("<C-b>", "<CMD>NvimTreeToggle<CR>")
