@@ -15,6 +15,7 @@ local function startup(use)
     use "farmergreg/vim-lastplace"       -- rememnber position in file
     use "valloric/listtoggle"            -- toggle quick and location list
     use "fedepujol/move.nvim"            -- move lines around in V mode
+    use "kheaactua/aosp-vim-syntax"      -- syntax highlight for Android.bp, XML manifest, AIDL, HIDL, etc.
 
     ui.startup(use)
     treesitter.startup(use)
