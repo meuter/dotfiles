@@ -190,16 +190,14 @@ function install_neovim() {
     banner "Installer NeoVIM packages"
     nvim --headless -c 'autocmd User PackerComplete quitall' -c "PackerCompile" -c 'PackerSync'
 
+    banner "Compiling Treesitter parser"
+    nvim --headless -c "TSInstallSync all" -c "q"
+
     banner "Installer NeoVIM LSP servers"
-    nvim --headless -c "LspInstall --sync sumneko_lua" +qa
-    nvim --headless -c "LspInstall --sync tsserver" +qa
-    nvim --headless -c "LspInstall --sync eslint" +qa
-    nvim --headless -c "LspInstall --sync jsonls" +qa
-    nvim --headless -c "LspInstall --sync htmljsonls" +qa
-    nvim --headless -c "LspInstall --sync yamlls" +qa
-    nvim --headless -c "LspInstall --sync pyright" +qa
-    nvim --headless -c "LspInstall --sync clangd" +qa
-    nvim --headless -c "LspInstall --sync cmake" +qa
+    local lsp_servers="sumneko_lua tsserver eslint jsonls html yamlls pyright clangd cmake"
+    for lsp_server in ${lsp_servers}; do
+        nvim --headless -c "LspInstall --sync ${lsp_server}" +qa
+    done
 }
 
 install_gnu_stow
