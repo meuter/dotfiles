@@ -23,7 +23,7 @@ remap_all_modes("<C-t>", "<CMD>Telescope buffers<CR>")
 remap_all_modes("<C-k>", "<CMD>Telescope commands<CR>")
 
 -- ctrl+j for live grep search
-remap_all_modes("<C-j>", "<CMD>Telescope live_grep<CR>")
+remap_all_modes("<C-Y>", "<CMD>Telescope live_grep<CR>")
 
 -- ctrl+g to open git fugitive
 remap_all_modes("<C-g>", "<CMD>Git<CR>")
@@ -39,9 +39,9 @@ remap_all_modes("<C-b>", "<CMD>NvimTreeToggle<CR>")
 remap_all_modes("<F5>", "<CMD>NvimTreeRefresh<CR>")
 
 -- ctrl+j to toggle terminal
-remap_all_modes("<C-Y>", "<CMD>ToggleTerm<CR>")
+remap_all_modes("<C-j>", "<CMD>ToggleTerm<CR>")
 noremap("t", "<esc>", "<CMD>ToggleTerm<CR>")
-noremap("t", "<C-Y>", "<CMD>ToggleTerm<CR>")
+noremap("t", "<C-j>", "<CMD>ToggleTerm<CR>")
 
 -- keep visual mode when indenting/dedenting
 noremap("v", "<Tab>", ">gv")
