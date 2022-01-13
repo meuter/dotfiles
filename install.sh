@@ -135,14 +135,13 @@ function install_fzf() {
     curl -L https://github.com/junegunn/fzf/releases/download/${version}/${tarball} --output /tmp/${tarball}
     mkdir -pv ${SHARE}/fzf
     curl -L https://raw.githubusercontent.com/junegunn/fzf/${version}/shell/key-bindings.bash --output ${SHARE}/fzf/key-bindings.bash
-    ls -la ${SHARE}/fzf/
     pushd .
         cd ${BIN}
         tar xvf /tmp/${tarball}
         rm -rf /tmp/${tarball}
     popd
     initrc 'export PATH=~/.local/bin:$PATH'
-    initrc 'FZF_ALT_C_COMMAND="bfs ~/ -type d"'
+    initrc "FZF_ALT_C_COMMAND=\"bfs ~/ -type d -exclude -name '.local' -exclude -name '.cache' -exclude -name '.npm' -exclude -name '.git'\""
     initrc 'source ~/.local/share/fzf/key-bindings.bash'
 }
 
