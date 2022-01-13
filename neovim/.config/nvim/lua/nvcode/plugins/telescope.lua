@@ -13,7 +13,12 @@ local function configure_telescope()
                 theme="dropdown",
                 previewer=false
             }
-        }
+        },
+        defaults = {
+            preview = {
+                treesitter = false,
+            },
+       },
     }
 end
 
