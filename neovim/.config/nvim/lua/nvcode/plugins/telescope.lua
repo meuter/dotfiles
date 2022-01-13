@@ -47,7 +47,6 @@ local from_entry = require('telescope.from_entry')
 function M.navigate()
     local name="Navigate"
     -- TODO(cme): get this from FZF env variable
-    -- FZ_ALT_C_COMMAND="bfs ~/ -type d -exclude -name '.local' -exclude -name '.npm' -exclude -name '.cache' -exclude -name '.git'"F
     local cmd = { "bfs", "/home/cme/", "-type", "d",
         "-exclude", "-name", ".local",
         "-exclude", "-name", ".npm",
