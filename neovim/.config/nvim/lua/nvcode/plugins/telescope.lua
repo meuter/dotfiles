@@ -34,6 +34,37 @@ function M.project_files()
     end
 end
 
+
+local actions = require('telescope.actions')
+local sorters = require('telescope.sorters')
+local pickers = require('telescope.pickers')
+local finders = require('telescope.finders')
+local utils = require('telescope.utils')
+local actions_set = require('telescope.actions.set')
+local actions_state = require('telescope.actions.state')
+local from_entry = require('telescope.from_entry')
+
+function M.navigate()
+    local name="Navigate"
+    local cmd= { "bfs", "/home/cme/", "-type", "d", "-exclude", ".local" }
+
+    pickers.new({}, {
+        prompt_title = name,
+        finder = finders.new_table{ results = utils.get_os_command_output(cmd) },
+        previewer = false,
+        sorter = sorters.get_fzy_sorter(),
+        attach_mappings = function(prompt_bufnr)
+            actions_set.select:replace(function(_, _)
+                local entry = actions_state.get_selected_entry()
+                actions.close(prompt_bufnr)
+                local dir = from_entry.path(entry)
+                vim.cmd('cd '..dir)
+            end)
+            return true
+        end,
+    }):find()
+end
+
 function M.startup(use)
     use {
         'nvim-telescope/telescope.nvim',

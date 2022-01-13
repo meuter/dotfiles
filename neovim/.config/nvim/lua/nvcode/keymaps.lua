@@ -22,6 +22,9 @@ remap_all_modes("<C-t>", "<CMD>Telescope buffers<CR>")
 -- ctrl+k for command pallette
 remap_all_modes("<C-k>", "<CMD>Telescope commands<CR>")
 
+-- ctrl+n to navigate to another directory in ~/
+remap_all_modes("<C-n>", "<CMD>lua require('nvcode.plugins.telescope').navigate()<CR>")
+
 -- ctrl+j for live grep search
 remap_all_modes("<C-Y>", "<CMD>Telescope live_grep<CR>")
 
