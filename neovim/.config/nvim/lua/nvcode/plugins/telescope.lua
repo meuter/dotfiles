@@ -1,6 +1,6 @@
 local M = {}
 
-local function configure_telescope(module)
+local function configure_telescope()
     local ok, telescope = pcall(require, "telescope")
     if not ok then return end
 
@@ -22,8 +22,8 @@ function M.project_files()
     if not ok then return end
 
     local git_files_options = {}
-    local ok = pcall(telescope_builtin.git_files, git_files_options)
-    if not ok then
+    local git_files_ok = pcall(telescope_builtin.git_files, git_files_options)
+    if not git_files_ok then
         local find_files_options = {}
         telescope_builtin.find_files(find_files_options)
     end
