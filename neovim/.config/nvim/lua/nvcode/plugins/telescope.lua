@@ -20,6 +20,7 @@ local function configure_telescope()
             },
        },
     }
+    telescope.load_extension("fzf")
 end
 
 function M.project_files()
@@ -35,35 +36,34 @@ function M.project_files()
 end
 
 
-local actions = require('telescope.actions')
-local sorters = require('telescope.sorters')
-local pickers = require('telescope.pickers')
-local finders = require('telescope.finders')
-local utils = require('telescope.utils')
-local actions_set = require('telescope.actions.set')
-local actions_state = require('telescope.actions.state')
-local from_entry = require('telescope.from_entry')
-
 function M.navigate()
-    local name="Navigate"
-    -- TODO(cme): get this from FZF env variable
-    local cmd = { "bfs", "/home/cme/", "-type", "d",
-        "-exclude", "-name", ".local",
+    local actions = require('telescope.actions')
+    local sorters = require('telescope.sorters')
+    local pickers = require('telescope.pickers')
+    local finders = require('telescope.finders')
+    local actions_state = require('telescope.actions.state')
+    local from_entry = require('telescope.from_entry')
+
+    local cmd = { "bfs", os.getenv("HOME"), "-type", "d",
         "-exclude", "-name", ".npm",
+        "-exclude", "-name", ".gradle",
+        "-exclude", "-name", ".vscode-server",
         "-exclude", "-name", ".cache",
-        "-exclude", "-name", ".git"
+        "-exclude", "-name", ".git",
+        "-exclude", "-name", ".repo",
     }
 
     pickers.new({}, {
-        prompt_title = name,
-        finder = finders.new_table{ results = utils.get_os_command_output(cmd) },
-        previewer = false,
+        prompt_title = "Navigate",
+        finder = finders.new_oneshot_job(cmd),
         sorter = sorters.get_fzy_sorter(),
+        selection_strategy = "reset",
         attach_mappings = function(prompt_bufnr)
-            actions_set.select:replace(function(_, _)
-                local entry = actions_state.get_selected_entry()
+            actions.select_default:replace(function()
                 actions.close(prompt_bufnr)
+                local entry = actions_state.get_selected_entry()
                 local dir = from_entry.path(entry)
+                print("Selected entry : ", dir)
                 vim.cmd('cd '..dir)
             end)
             return true
@@ -74,7 +74,10 @@ end
 function M.startup(use)
     use {
         'nvim-telescope/telescope.nvim',
-        requires = { {'nvim-lua/plenary.nvim'} },
+        requires = {
+            {'nvim-lua/plenary.nvim'},
+            {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
+        },
         config = configure_telescope
     }
 end
