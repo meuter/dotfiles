@@ -50,6 +50,7 @@ function M.navigate()
         "-exclude", "-name", ".vscode-server",
         "-exclude", "-name", ".cache",
         "-exclude", "-name", ".git",
+        "-exclude", "-name", ".local",
         "-exclude", "-name", ".repo",
     }
 
@@ -63,7 +64,6 @@ function M.navigate()
                 actions.close(prompt_bufnr)
                 local entry = actions_state.get_selected_entry()
                 local dir = from_entry.path(entry)
-                print("Selected entry : ", dir)
                 vim.cmd('cd '..dir)
             end)
             return true
