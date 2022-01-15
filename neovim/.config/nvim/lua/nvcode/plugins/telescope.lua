@@ -71,6 +71,18 @@ function M.navigate(opts)
     }):find()
 end
 
+function M.search_and_replace()
+    local text_to_replace = vim.fn.input("Replace> ")
+    if text_to_replace == "" then return end
+
+    vim.cmd("vimgrep /" .. text_to_replace .. "/gj **/*")
+    local replacement = vim.fn.input("With> ");
+    if replacement == "" then return end
+
+    vim.cmd("redraw")
+    vim.cmd("cfdo %s/" .. text_to_replace .. "/" .. replacement .. "/gc")
+end
+
 function M.startup(use)
     use {
         'nvim-telescope/telescope.nvim',
