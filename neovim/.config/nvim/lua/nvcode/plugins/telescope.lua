@@ -50,6 +50,7 @@ function M.navigate(opts)
         "-exclude", "-name", ".cache",
         "-exclude", "-name", ".git",
         "-exclude", "-name", ".repo",
+        "-exclude", "-name", "node_modules",
     }
 
     opts = opts or {}
