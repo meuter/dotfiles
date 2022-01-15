@@ -6,39 +6,38 @@ local function configure_telescope()
 
     telescope.setup {
         pickers = {
-            find_files = {
-                hidden=true,
-            },
             buffers = {
                 theme="dropdown",
                 previewer=false
             }
         },
         defaults = {
+            prompt_prefix = "🔎 ",
+            color_devicons = true,
+            selection_caret = "❯ ",
             preview = {
                 treesitter = false,
             },
-       },
+        },
     }
     telescope.load_extension("fzf")
 end
 
-function M.project_files()
+function M.project_files(opts)
+    opts = opts or {}
     local ok, telescope_builtin = pcall(require, "telescope.builtin")
     if not ok then return end
 
-    local git_files_options = {}
-    local git_files_ok = pcall(telescope_builtin.git_files, git_files_options)
+    local git_files_ok = pcall(telescope_builtin.git_files, opts)
     if not git_files_ok then
-        local find_files_options = {}
-        telescope_builtin.find_files(find_files_options)
+        telescope_builtin.find_files(opts)
     end
 end
 
 
-function M.navigate()
+function M.navigate(opts)
     local actions = require('telescope.actions')
-    local sorters = require('telescope.sorters')
+    local config  = require('telescope.config').values
     local pickers = require('telescope.pickers')
     local finders = require('telescope.finders')
     local actions_state = require('telescope.actions.state')
@@ -50,15 +49,16 @@ function M.navigate()
         "-exclude", "-name", ".vscode-server",
         "-exclude", "-name", ".cache",
         "-exclude", "-name", ".git",
-        "-exclude", "-name", ".local",
         "-exclude", "-name", ".repo",
     }
 
-    pickers.new({}, {
+    opts = opts or {}
+
+    pickers.new(opts, {
         prompt_title = "Navigate",
         finder = finders.new_oneshot_job(cmd),
-        sorter = sorters.get_fzy_sorter(),
-        selection_strategy = "reset",
+        sorter = config.file_sorter(opts),
+        previewer = config.file_previewer(opts),
         attach_mappings = function(prompt_bufnr)
             actions.select_default:replace(function()
                 actions.close(prompt_bufnr)
