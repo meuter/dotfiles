@@ -66,7 +66,7 @@ function configure_bash() {
         mv -v ~/.inputrc ~/.inputrc.bak
     fi
     stow bash
-    initrc 'export EDITOR=$([ "$TERM_PROGRAM" == "vscode" ] && echo "code --wait" || echo "vim")'
+    initrc 'export EDITOR=$([ "${TERM_PROGRAM:-unknown}" == "vscode" ] && echo "code --wait" || echo "vim")'
     initrc 'export VISUAL="$EDITOR"'
 }
 
@@ -204,9 +204,11 @@ configure_bash
 configure_git
 install_libtree
 install_starship
+
 install_exa
 install_bat
 install_bfs
+exit 0
 install_fzf
 install_lazygit
 install_nodejs
