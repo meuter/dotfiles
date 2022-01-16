@@ -208,7 +208,6 @@ install_starship
 install_exa
 install_bat
 install_bfs
-exit 0
 install_fzf
 install_lazygit
 install_nodejs
