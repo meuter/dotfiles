@@ -4,13 +4,25 @@ local function configure_lualine()
     local ok, lualine = pcall(require, "lualine")
     if not ok then return end
 
+    local path_ok, Path = pcall(require, "plenary.path")
+    if not path_ok then return end
+
     local cwd = {
         function()
-           local home = os.getenv("HOME")
-           local icon = "📁 "
-           return icon .. vim.fn.getcwd():gsub(home, "~")
-       end,
-       color = { fg="LightYellow"}
+            local home = os.getenv("HOME")
+            local icon = "📁 "
+            return icon .. vim.fn.getcwd():gsub(home, "~")
+        end,
+        color = { fg="LightYellow"}
+    }
+
+    local filename = {
+        function()
+            local filename = vim.fn.expand('%')
+            if filename == '' then return '' end
+            return "📝 " .. Path:new { filename, sep = '/' }:make_relative(vim.fn.getcwd())
+        end,
+        color = { fg="AliceBlue" }
     }
 
     local branch = {
@@ -67,7 +79,7 @@ local function configure_lualine()
         sections = {
             lualine_a = { mode },
             lualine_b = { branch , diagnostics },
-            lualine_c = { cwd },
+            lualine_c = { cwd, filename },
             lualine_x = { location, 'encoding' },
             lualine_y = { 'filetype', lsp },
             lualine_z = { 'fileformat' }
