@@ -26,7 +26,9 @@ remap_all_modes("<C-k>", "<CMD>Telescope commands<CR>")
 remap_all_modes("<C-n>", "<CMD>lua require('nvcode.plugins.telescope').navigate()<CR>")
 
 -- ctrl+j for live grep search
-remap_all_modes("<C-Y>", "<CMD>Telescope live_grep<CR>")
+noremap("n", "<C-Y>", "<CMD>Telescope live_grep<CR>")
+noremap("i", "<C-Y>", "<CMD>Telescope live_grep<CR>")
+noremap("v", "<C-Y>", "<CMD>lua require('nvcode.plugins.telescope').live_grep_selected_string()<CR>")
 
 -- ctrl+g to open git fugitive
 remap_all_modes("<C-g>", "<CMD>Git<CR>")
