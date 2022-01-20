@@ -71,8 +71,10 @@ noremap("i", "<A-Down>", "<C-\\><C-N>:MoveLine(1)<CR>")
 noremap("i", "<A-Up>", "<C-\\><C-N>:MoveLine(1)<CR>")
 
 
-
 -- code navigation using LSP server
+remap_all_modes("<F1>", "<CMD>lua vim.lsp.buf.hover()<CR>")
+remap_all_modes("<F2>", "<CMD>lua vim.lsp.buf.rename()<CR>")
+remap_all_modes("<F3>", "<CMD>lua vim.lsp.buf.references()<CR>")
 remap_all_modes("<F4>", "<CMD>lua vim.diagnostic.open_float()<CR>")
 remap_all_modes("<F3>", "<CMD>lua vim.lsp.buf.references()<CR>")
 remap_all_modes("<F8>", "<CMD>lua vim.diagnostic.goto_next()<CR>")
