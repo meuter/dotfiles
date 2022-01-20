@@ -94,6 +94,16 @@ function M.search_and_replace()
     vim.cmd("cfdo %s/" .. text_to_replace .. "/" .. replacement .. "/gc")
 end
 
+function M.search_todo()
+    opts = opts or {}
+    local ok, telescope_builtin = pcall(require, "telescope.builtin")
+    if not ok then return end
+
+    telescope_builtin.grep_string {
+        search="TODO(cme)"
+    }
+end
+
 function M.startup(use)
     use {
         'nvim-telescope/telescope.nvim',

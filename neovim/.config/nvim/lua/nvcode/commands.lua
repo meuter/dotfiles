@@ -8,5 +8,5 @@ vim.cmd [[ command! GitFileHistory execute 'Telescope git_bcommits' ]]
 vim.cmd [[ command! GitBranch execute 'Telescope git_branches' ]]
 vim.cmd [[ command! GitStatus execute 'Telescope git_status' ]]
 
-
+vim.cmd [[ command! Todo execute 'lua require("nvcode.plugins.telescope").search_todo()' ]]
 vim.cmd [[ command! SearchAndReplace execute 'lua require("nvcode.plugins.telescope").search_and_replace()' ]]
