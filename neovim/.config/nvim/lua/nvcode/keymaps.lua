@@ -85,3 +85,5 @@ remap_all_modes("<F12>", "<CMD>lua vim.lsp.buf.definition()<CR>")
 noremap("n", "<C-_>", "<CMD>CommentToggle<CR>")
 noremap("i", "<C-_>", "<C-\\><C-N><CMD>CommentToggle<CR>i")
 noremap("v", "<C-_>", ":'<,'>CommentToggle<CR>gv")
+
+noremap("n", "<C-a>", "<CMD>lua require('nvcode.plugins.ui.indentline').toggle_mouse_copy()<CR>")
