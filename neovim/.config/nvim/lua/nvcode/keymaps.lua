@@ -97,9 +97,9 @@ remap_all_modes("<F9>", "<CMD>Telescope diagnostics<CR>")
 remap_all_modes("<F12>", "<CMD>lua vim.lsp.buf.definition()<CR>")
 
 -- ctrl+shift+/ to toggle comment
-noremap("n", "<C-_>", "<CMD>CommentToggle<CR>")
-noremap("i", "<C-_>", "<C-\\><C-N><CMD>CommentToggle<CR>i")
-noremap("v", "<C-_>", ":'<,'>CommentToggle<CR>gv")
+noremap("n", "<C-_>", "<CMD>CommentToggle<CR>j")
+noremap("i", "<C-_>", "<C-\\><C-N><CMD>CommentToggle<CR>ji")
+noremap("v", "<C-_>", ":'<,'>CommentToggle<CR>gv<esc>j")
 
 -- ctrl+a to toggle copy friendly mode
 noremap("n", "<C-a>", "<CMD>ToggleMouseCopy<CR>")
