@@ -7,6 +7,9 @@ local whitespace = require("nvcode.plugins.ui.whitespace")
 local M = {}
 
 function M.startup(use)
+    -- improve ui for rename
+    use "stevearc/dressing.nvim"
+
     colorscheme.startup(use)
     lualine.startup(use)
     bufferline.startup(use)
