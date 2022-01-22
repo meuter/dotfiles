@@ -90,10 +90,12 @@ remap_all_modes("<F1>", "<CMD>lua vim.lsp.buf.hover()<CR>")
 remap_all_modes("<F2>", "<CMD>lua vim.lsp.buf.rename()<CR>")
 remap_all_modes("<F3>", "<CMD>lua vim.lsp.buf.references()<CR>")
 remap_all_modes("<F4>", "<CMD>lua vim.diagnostic.open_float()<CR>")
--- <F5> is used for refresh in NvimTree
-remap_all_modes("<F3>", "<CMD>lua vim.lsp.buf.references()<CR>")
+-- <F5> is free
+-- <F7> is free
+-- <F7> is free
 remap_all_modes("<F8>", "<CMD>lua vim.diagnostic.goto_next()<CR>")
 remap_all_modes("<F9>", "<CMD>Telescope diagnostics<CR>")
+-- <F11> is taken by Windows Terminal to toggle full-screen
 remap_all_modes("<F12>", "<CMD>lua vim.lsp.buf.definition()<CR>")
 
 -- ctrl+shift+/ to toggle comment
