@@ -1,5 +1,6 @@
 M = {}
 
+-- TODO(cme): refactor this a but, there is a lot of copy-pasta
 function M.get_selected_lines()
     local start_row = vim.fn.line("'<")
     local start_col = vim.fn.col("'<")
