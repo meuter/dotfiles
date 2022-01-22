@@ -39,11 +39,10 @@ end
 local ready_for_mouse_copy = true
 
 function M.toggle_mouse_copy()
-    -- TODO(cme): should try and import these packages
-    --            before executing these commands to make
-    --            sure I'm not causing some trouble here
-    vim.cmd("IndentBlanklineToggle")
-    vim.cmd("Gitsigns toggle_signs")
+
+    pcall(vim.cmd, "IndentBlanklineToggle")
+    pcall(vim.cmd, "Gitsigns toggle_signs")
+
     if ready_for_mouse_copy then
         vim.opt.mouse = "i"
         vim.opt.number = false
