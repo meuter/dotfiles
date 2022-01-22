@@ -36,9 +36,7 @@ remap_all_modes("<C-k>", "<CMD>Telescope commands<CR>")
 remap_all_modes("<C-n>", "<CMD>Navigate<CR>")
 
 -- ctrl+y same as ctrl+ù for live grep search
-noremap("n", "<C-Y>", "<CMD>Telescope live_grep<CR>")
-noremap("i", "<C-Y>", "<CMD>Telescope live_grep<CR>")
-noremap("v", "<C-Y>", "<CMD>lua require('nvcode.plugins.telescope').live_grep_selected_string()<CR>")
+remap_all_modes("<C-Y>", "<CMD>Telescope live_grep<CR>")
 
 -- ctrl+] to search word under the cursor
 noremap("n", "<C-]>", "<CMD>SearchWordUnderCursor<CR>")

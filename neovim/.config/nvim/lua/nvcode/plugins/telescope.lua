@@ -36,16 +36,6 @@ function M.project_files(opts)
     end
 end
 
-function M.live_grep_selected_string(opts)
-    opts = opts or {}
-    local ok, telescope_builtin = pcall(require, "telescope.builtin")
-    if not ok then return end
-
-    -- TODO(cme): get the selected in VISUAL mode and grep for that
-    --            verbatim (using quotes or something, escape spaces, etc...)
-    telescope_builtin.grep_string()
-end
-
 function M.navigate(opts)
     local actions = require('telescope.actions')
     local config  = require('telescope.config').values
