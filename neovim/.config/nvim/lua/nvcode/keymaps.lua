@@ -1,3 +1,4 @@
+-- TODO(cme): switch to nvim 0.7 to have the nice API to set key map
 local function noremap(mode, key, command)
     local options = {noremap=true, silent=true}
     return vim.api.nvim_set_keymap(mode, key, command, options)
@@ -14,7 +15,7 @@ local function remap_all_modes(key, command)
 end
 
 -- ctrl+p to open file
-remap_all_modes("<C-p>", "<CMD>lua require('nvcode.plugins.telescope').project_files()<CR>")
+remap_all_modes("<C-p>", "<CMD>ProjectFiles<CR>")
 
 -- ctrl+t to select open a buffer
 remap_all_modes("<C-t>", "<CMD>Telescope buffers<CR>")
@@ -23,12 +24,15 @@ remap_all_modes("<C-t>", "<CMD>Telescope buffers<CR>")
 remap_all_modes("<C-k>", "<CMD>Telescope commands<CR>")
 
 -- ctrl+n to navigate to another directory in ~/
-remap_all_modes("<C-n>", "<CMD>lua require('nvcode.plugins.telescope').navigate()<CR>")
+remap_all_modes("<C-n>", "<CMD>Navigate<CR>")
 
--- ctrl+j for live grep search
+-- ctrl+y same as ctrl+ù for live grep search
 noremap("n", "<C-Y>", "<CMD>Telescope live_grep<CR>")
 noremap("i", "<C-Y>", "<CMD>Telescope live_grep<CR>")
 noremap("v", "<C-Y>", "<CMD>lua require('nvcode.plugins.telescope').live_grep_selected_string()<CR>")
+
+-- ctrl+] to search word under the cursor
+noremap("n", "<C-]>", "<CMD>SearchWordUnderCursor<CR>")
 
 -- ctrl+g to open git fugitive
 remap_all_modes("<C-g>", "<CMD>Git<CR>")
@@ -41,6 +45,7 @@ remap_all_modes("<C-PageDown>", "<CMD>BufferLineCycleNext<CR>")
 
 -- ctrl+b to toggle file explorer
 remap_all_modes("<C-b>", "<CMD>NvimTreeToggle<CR>")
+-- TODO(cme): this should be restricted to NvimTree
 remap_all_modes("<F5>", "<CMD>NvimTreeRefresh<CR>")
 
 -- ctrl+j to toggle terminal
@@ -70,12 +75,12 @@ noremap("v", "<A-Up>", ":MoveBlock(-1)<CR>")
 noremap("i", "<A-Down>", "<C-\\><C-N>:MoveLine(1)<CR>")
 noremap("i", "<A-Up>", "<C-\\><C-N>:MoveLine(1)<CR>")
 
-
 -- code navigation using LSP server
 remap_all_modes("<F1>", "<CMD>lua vim.lsp.buf.hover()<CR>")
 remap_all_modes("<F2>", "<CMD>lua vim.lsp.buf.rename()<CR>")
 remap_all_modes("<F3>", "<CMD>lua vim.lsp.buf.references()<CR>")
 remap_all_modes("<F4>", "<CMD>lua vim.diagnostic.open_float()<CR>")
+-- <F5> is used for refresh in NvimTree
 remap_all_modes("<F3>", "<CMD>lua vim.lsp.buf.references()<CR>")
 remap_all_modes("<F8>", "<CMD>lua vim.diagnostic.goto_next()<CR>")
 remap_all_modes("<F9>", "<CMD>Telescope diagnostics<CR>")
@@ -87,5 +92,5 @@ noremap("i", "<C-_>", "<C-\\><C-N><CMD>CommentToggle<CR>i")
 noremap("v", "<C-_>", ":'<,'>CommentToggle<CR>gv")
 
 -- ctrl+a to toggle copy friendly mode
-noremap("n", "<C-a>", "<CMD>lua require('nvcode.plugins.ui.indentline').toggle_mouse_copy()<CR>")
+noremap("n", "<C-a>", "<CMD>ToggleMouseCopy<CR>")
 

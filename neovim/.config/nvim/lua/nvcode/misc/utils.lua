@@ -20,6 +20,10 @@ function M.get_selected_lines()
     return text
 end
 
+function M.get_word_under_cursor()
+    vim.fn.expand("<cword>")
+end
+
 function M.get_current_line()
     return vim.api.nvim_get_current_line()
 end

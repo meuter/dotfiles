@@ -1,3 +1,5 @@
+local utils = require("nvcode.misc.utils")
+
 local M = {}
 
 local function configure_telescope()
@@ -33,7 +35,6 @@ function M.project_files(opts)
         telescope_builtin.find_files(opts)
     end
 end
-
 
 function M.live_grep_selected_string(opts)
     opts = opts or {}
@@ -100,7 +101,17 @@ function M.search_todo(opts)
     if not ok then return end
 
     telescope_builtin.grep_string {
-        search="TODO(cme)"
+        search="todo(cme)"
+    }
+end
+
+function M.search_word_under_cursor(opts)
+    opts = opts or {}
+    local ok, telescope_builtin = pcall(require, "telescope.builtin")
+    if not ok then return end
+
+    telescope_builtin.grep_string {
+        search=utils.get_word_under_cursor()
     }
 end
 
