@@ -9,6 +9,7 @@ local function configure_github_theme()
         function_style = "NONE",
         comment_style = "NONE",
         keyword_style = "NONE",
+        dark_float=true,
     }
 end
 
@@ -18,6 +19,10 @@ function M.startup(use)
         "projekt0n/github-nvim-theme",
         config = configure_github_theme()
     }
+
+    -- Don't care what the color scheme says, I want my bright yellow
+    -- search highlight
+    vim.cmd [[ hi Search guibg=yellow guifg=DimGray]]
 end
 
 return M
