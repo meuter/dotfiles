@@ -47,6 +47,7 @@ noremap("v", "<C-]>", "<esc><CMD>SearchSelectedText<CR>")
 -- ctrl+g to open git fugitive
 remap_all_modes("<C-g>", "<CMD>Git<CR>")
 remap_for_filetype("fugitive", "n", "<C-G>", "<CMD>q<CR>")
+remap_for_filetype("fugitive", "n", "<esc><esc>", "<CMD>q<CR>")
 remap_for_filetype("fugitive", "n", "cc", "<CMD>q<bar>Git commit --quiet<CR>")
 
 -- ctrl-[or] to navigate buffer
