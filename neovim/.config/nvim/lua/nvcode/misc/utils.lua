@@ -20,6 +20,11 @@ function M.get_selected_lines()
     return text
 end
 
+function M.get_selected_text()
+    local selected_lines = M.get_selected_lines()
+    return table.concat(selected_lines, "")
+end
+
 function M.get_word_under_cursor()
     vim.fn.expand("<cword>")
 end

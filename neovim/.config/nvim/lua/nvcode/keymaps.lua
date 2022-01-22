@@ -42,6 +42,7 @@ noremap("v", "<C-Y>", "<CMD>lua require('nvcode.plugins.telescope').live_grep_se
 
 -- ctrl+] to search word under the cursor
 noremap("n", "<C-]>", "<CMD>SearchWordUnderCursor<CR>")
+noremap("v", "<C-]>", "<esc><CMD>SearchSelectedText<CR>")
 
 -- ctrl+g to open git fugitive
 remap_all_modes("<C-g>", "<CMD>Git<CR>")

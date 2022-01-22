@@ -116,6 +116,16 @@ function M.search_word_under_cursor(opts)
     }
 end
 
+function M.search_selected_text(opts)
+    opts = opts or {}
+    local ok, telescope_builtin = pcall(require, "telescope.builtin")
+    if not ok then return end
+
+    telescope_builtin.grep_string {
+        search=utils.get_selected_text()
+    }
+end
+
 function M.search_function()
     local opts = require('telescope.themes').get_dropdown({
         symbols = {
