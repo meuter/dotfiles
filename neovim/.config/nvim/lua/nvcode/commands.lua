@@ -8,7 +8,8 @@ vim.cmd [[ command! GitFileHistory execute 'Telescope git_bcommits' ]]
 vim.cmd [[ command! GitBranch execute 'Telescope git_branches' ]]
 vim.cmd [[ command! GitStatus execute 'Telescope git_status' ]]
 
-vim.cmd [[ command! ConvertHexStringToCArray execute 'lua require("nvcode.misc.hexconvert").convert_hexstring_current_line_to_c_array()' ]]
+vim.cmd [[ command! ConvertHexStringLineToCArray execute 'lua require("nvcode.misc.hexconvert").convert_hexstring_current_line_to_c_array()' ]]
+vim.cmd [[ command! ConvertHexStringSelectionToCArray execute 'lua require("nvcode.misc.hexconvert").convert_hexstring_selection_to_c_array()' ]]
 
 vim.cmd [[ command! Todo execute 'lua require("nvcode.plugins.telescope").search_todo()' ]]
 vim.cmd [[ command! ProjectFiles execute 'lua require("nvcode.plugins.telescope").project_files()<CR>' ]]

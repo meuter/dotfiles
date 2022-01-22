@@ -4,7 +4,7 @@ local M = {}
 
 local function is_text_convertible_to_c_array(text)
     -- strip white spaces
-    local stripped = text:gsub("%s+$",""):gsub("^%s+","")
+    local stripped = text:gsub("%s+","")
 
     -- check if all remaining characters are hexadeciml digits
     local non_hex_digits = stripped:gsub("%x+","")
@@ -22,9 +22,9 @@ local function is_text_convertible_to_c_array(text)
     return true
 end
 
-local function convert_hexstring_to_c_array_new(text)
+local function convert_hexstring_to_c_array(text)
     -- strip  spaces
-    local line = text:gsub("%s+$",""):gsub("^%s+","")
+    local line = text:gsub("%s+","")
 
     -- replace pairs of digits 'DD' by '0xDD, ' grouped by 16 bytes
     local bytes = {}
@@ -56,14 +56,14 @@ function M.convert_hexstring_selection_to_c_array()
     local selected_lines = utils.get_selected_lines()
     local text = table.concat(selected_lines, "")
     if not is_text_convertible_to_c_array(text) then return end
-    local lines_to_insert = convert_hexstring_to_c_array_new(text)
+    local lines_to_insert = convert_hexstring_to_c_array(text)
     utils.replace_selection_with(lines_to_insert)
 end
 
 function M.convert_hexstring_current_line_to_c_array()
     local current_line = utils.get_current_line()
     if not is_text_convertible_to_c_array(current_line) then return end
-    local lines_to_insert = convert_hexstring_to_c_array_new(current_line)
+    local lines_to_insert = convert_hexstring_to_c_array(current_line)
     utils.replace_current_line_with(lines_to_insert)
 end
 

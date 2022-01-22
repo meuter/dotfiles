@@ -44,10 +44,28 @@ function M.replace_current_line_with(lines_to_insert)
 end
 
 function M.replace_selection_with(lines_to_insert)
-    -- TODO(cme): for now replace entire line
-    local current_position = vim.api.nvim_win_get_cursor(0)
-    local current_line_index = current_position[1] -- lua table are 1-indexed!
-    vim.api.nvim_buf_set_lines(0, current_line_index-1, current_line_index, true, lines_to_insert)
+    local start_row = vim.fn.line("'<")
+    local start_col = vim.fn.col("'<")
+    local end_row = vim.fn.line("'>")
+    local end_col = vim.fn.col("'>")
+    local range = {
+        ["start"] = {
+            line = start_row - 1,
+            character = start_col - 1,
+        },
+        ["end"] = {
+            line = end_row - 1,
+            character = end_col,
+        },
+    }
+    local text = table.concat(lines_to_insert, "")
+    local text_edit = {
+        range = range,
+        newText = text
+    }
+    local buffer = 0
+    local edit_set = { text_edit }
+    vim.lsp.util.apply_text_edits(edit_set, buffer, "utf-16")
 end
 
 return M
