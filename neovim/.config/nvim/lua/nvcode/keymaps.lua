@@ -86,4 +86,6 @@ noremap("n", "<C-_>", "<CMD>CommentToggle<CR>")
 noremap("i", "<C-_>", "<C-\\><C-N><CMD>CommentToggle<CR>i")
 noremap("v", "<C-_>", ":'<,'>CommentToggle<CR>gv")
 
+-- ctrl+a to toggle copy friendly mode
 noremap("n", "<C-a>", "<CMD>lua require('nvcode.plugins.ui.indentline').toggle_mouse_copy()<CR>")
+
