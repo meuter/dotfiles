@@ -94,3 +94,5 @@ noremap("v", "<C-_>", ":'<,'>CommentToggle<CR>gv")
 -- ctrl+a to toggle copy friendly mode
 noremap("n", "<C-a>", "<CMD>ToggleMouseCopy<CR>")
 
+-- ctrl+o to search function
+remap_all_modes("<C-o>", "<CMD>SearchFunction<CR>")

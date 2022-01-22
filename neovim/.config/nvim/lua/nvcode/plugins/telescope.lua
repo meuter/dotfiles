@@ -83,6 +83,7 @@ function M.navigate(opts)
     }):find()
 end
 
+-- TODO(cme): move to utils misc
 function M.search_and_replace()
     local text_to_replace = vim.fn.input("Replace> ")
     if text_to_replace == "" then return end
@@ -113,6 +114,16 @@ function M.search_word_under_cursor(opts)
     telescope_builtin.grep_string {
         search=utils.get_word_under_cursor()
     }
+end
+
+function M.search_function()
+    local opts = require('telescope.themes').get_dropdown({
+        symbols = {
+            "function",
+            "method",
+        },
+    })
+    require('telescope.builtin').lsp_document_symbols(opts)
 end
 
 function M.startup(use)

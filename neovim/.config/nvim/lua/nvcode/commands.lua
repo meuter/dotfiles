@@ -15,5 +15,6 @@ vim.cmd [[ command! ProjectFiles execute 'lua require("nvcode.plugins.telescope"
 vim.cmd [[ command! Navigate execute 'lua require("nvcode.plugins.telescope").navigate()<CR>' ]]
 vim.cmd [[ command! SearchAndReplace execute 'lua require("nvcode.plugins.telescope").search_and_replace()' ]]
 vim.cmd [[ command! SearchWordUnderCursor execute 'lua require("nvcode.plugins.telescope").search_word_under_cursor()' ]]
+vim.cmd [[ command! SearchFunction execute 'lua require("nvcode.plugins.telescope").search_function()' ]]
 
 vim.cmd [[ command! ToggleMouseCopy execute 'lua require("nvcode.plugins.ui.indentline").toggle_mouse_copy()<CR>' ]]
