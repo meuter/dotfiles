@@ -52,6 +52,7 @@ local function configure_nvim_cmp()
         },
         sources = cmp.config.sources({
             { name = 'nvim_lsp' },
+            { name = 'nvim_lua' }
         }, {
             { name = 'buffer' },
             { name = 'path' },
@@ -62,6 +63,7 @@ local function configure_nvim_cmp()
                 vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
                 vim_item.menu = ({
                     nvim_lsp = "[LSP]",
+                    nvim_lua = "[VIM]",
                     buffer = "[Buffer]",
                     path = "[Path]",
                 })[entry.source.name]
@@ -80,7 +82,7 @@ function M.startup(use)
             { "hrsh7th/cmp-buffer" },
             { "hrsh7th/cmp-path" },
             { "hrsh7th/cmp-cmdline" },
-
+            { "hrsh7th/cmp-nvim-lua" },
             -- some LSP server require a snippet engine
             -- here we use LuaSnip
             { "L3MON4D3/LuaSnip" },
