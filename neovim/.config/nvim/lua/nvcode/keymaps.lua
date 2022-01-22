@@ -1,3 +1,12 @@
+local function detect_key(letter)
+    vim.api.nvim_set_keymap("n", "<A-" .. letter .. ">", "<CMD>lua print('Alt+" .. letter .. " pressed')<CR>", {})
+    vim.api.nvim_set_keymap("n", "<S-" .. letter .. ">", "<CMD>lua print('Shift+" .. letter .. " pressed')<CR>", {})
+    vim.api.nvim_set_keymap("n", "<C-" .. letter .. ">", "<CMD>lua print('Ctrl+" .. letter .. " pressed')<CR>", {})
+    vim.api.nvim_set_keymap("n", "<C-S-" .. letter .. ">", "<CMD>lua print('Ctrl+Shift+" .. letter .. " pressed')<CR>", {}) -- DOES NOT WORK
+    vim.api.nvim_set_keymap("n", "<C-" .. letter .. ">", "<CMD>lua print('Ctrl+" .. letter .. " pressed')<CR>", {})
+    vim.api.nvim_set_keymap("n", "<C-A-" .. letter .. ">", "<CMD>lua print('Ctrl+" .. letter .. "lt+a pressed')<CR>", {}) -- DOES NOT WORK
+end
+
 -- TODO(cme): switch to nvim 0.7 to have the nice API to set key map
 local function noremap(mode, key, command)
     local options = {noremap=true, silent=true}

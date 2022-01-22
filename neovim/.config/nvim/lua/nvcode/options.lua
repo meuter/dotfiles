@@ -35,8 +35,8 @@ local options = {
     sidescrolloff = 8,                       -- keep at least 8 characters left and right when moving around
     autoread = true,                         -- reload file if modified outside of neovim
     hidden = true,                           -- hide buffer when switching
-    pastetoggle = "<F2>",                    -- toggle paste mode using <F2>
-    foldenable = false                       -- disable folding
+    foldenable = false,                      -- disable folding
+    showcmd = false                          -- faster over slow SSH
 }
 
 for k, v in pairs(options) do
