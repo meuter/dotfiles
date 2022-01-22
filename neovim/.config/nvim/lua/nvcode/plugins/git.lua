@@ -56,6 +56,10 @@ function M.startup(use)
     }
 
     use {
+        "sindrets/diffview.nvim",
+    }
+
+    use {
        "tpope/vim-fugitive"
     }
 end
