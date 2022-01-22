@@ -33,6 +33,9 @@ local function configure_lsp()
         },
     }
 
+    vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
+    vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
+
     lsp_installer.on_server_ready(function(server)
         local opts = {}
 
