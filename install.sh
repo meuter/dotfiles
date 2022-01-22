@@ -186,6 +186,9 @@ function install_neovim() {
     rm -rf ${packer}
     git clone --depth 1 https://github.com/wbthomason/packer.nvim ${packer}
 
+    banner "Installing NeoVim related NodeJS packages"
+    npm install -g neovim tree-sitter
+
     banner "Installer NeoVIM packages"
     nvim --headless -c 'autocmd User PackerComplete quitall' -c "PackerCompile" -c 'PackerSync'
 
@@ -193,7 +196,7 @@ function install_neovim() {
     nvim --headless -c "TSInstallSync all" -c "q"
 
     banner "Installer NeoVIM LSP servers"
-    local lsp_servers="sumneko_lua tsserver eslint jsonls html yamlls pyright clangd cmake"
+    local lsp_servers="sumneko_lua tsserver eslint jsonls html yamlls pyright clangd cmake bashls dockerls remark_ls"
     for lsp_server in ${lsp_servers}; do
         nvim --headless -c "LspInstall --sync ${lsp_server}" +qa
     done
