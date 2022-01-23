@@ -73,19 +73,6 @@ function M.navigate(opts)
     }):find()
 end
 
--- TODO(cme): move to utils misc
-function M.search_and_replace()
-    local text_to_replace = vim.fn.input("Replace> ")
-    if text_to_replace == "" then return end
-
-    vim.cmd("vimgrep /" .. text_to_replace .. "/gj **/*")
-    local replacement = vim.fn.input("With> ");
-    if replacement == "" then return end
-
-    vim.cmd("redraw")
-    vim.cmd("cfdo %s/" .. text_to_replace .. "/" .. replacement .. "/gc")
-end
-
 function M.search_todo(opts)
     opts = opts or {}
     local ok, telescope_builtin = pcall(require, "telescope.builtin")
