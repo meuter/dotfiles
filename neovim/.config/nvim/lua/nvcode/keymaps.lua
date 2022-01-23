@@ -74,6 +74,7 @@ noremap("n", "<A-Right>", "<C-I>")
 -- ctrl+l to toggle quick list
 remap_all_modes("<C-l>", "<CMD>QToggle<CR>")
 remap_for_filetype("qf", "n", "<CR>", "<CR><CMD>QToggle<CR>")
+remap_for_filetype("qf", "n", "<esc><esc>", ":q<CR>")
 
 -- move lines around using alt+{up/down}
 noremap("n", "<A-Down>", ":MoveLine(1)<CR>")
