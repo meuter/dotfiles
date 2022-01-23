@@ -187,7 +187,7 @@ function install_neovim() {
     git clone --depth 1 https://github.com/wbthomason/packer.nvim ${packer}
 
     banner "Installing NeoVim related NodeJS packages"
-    npm install -g neovim tree-sitter
+    npm install -g neovim tree-sitter remark
 
     banner "Installer NeoVIM packages"
     nvim --headless -c 'autocmd User PackerComplete quitall' -c "PackerCompile" -c 'PackerSync'
