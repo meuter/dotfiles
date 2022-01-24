@@ -55,6 +55,7 @@ remap_all_modes("<C-PageDown>", "<CMD>BufferLineCycleNext<CR>")
 -- ctrl+b to toggle file explorer
 remap_all_modes("<C-b>", "<CMD>NvimTreeToggle<CR>")
 remap_for_filetype("NvimTree", "n", "<F5>", "<CMD>NvimTreeRefresh<CR>")
+remap_for_filetype("NvimTree", "n", "=", "<CMD>NvimTreeCollapseAll<CR>")
 
 -- ctrl+j to toggle terminal
 remap_all_modes("<C-j>", "<CMD>ToggleTerm<CR>")

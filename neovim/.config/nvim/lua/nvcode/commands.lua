@@ -21,3 +21,5 @@ vim.cmd [[ command! SearchSelectedText execute 'lua require("nvcode.plugins.tele
 vim.cmd [[ command! SearchFunction execute 'lua require("nvcode.plugins.telescope").search_function()' ]]
 
 vim.cmd [[ command! ToggleMouseCopy execute 'lua require("nvcode.plugins.ui.indentline").toggle_mouse_copy()<CR>' ]]
+
+vim.cmd [[ command! NvimTreeCollapseAll execute 'lua require("nvim-tree.lib").collapse_all()<CR>' ]]
