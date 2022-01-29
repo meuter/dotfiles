@@ -42,6 +42,10 @@ local function configure_nvim_cmp()
             end,
         },
         mapping = {
+            ["<Up>"] = cmp.mapping.select_prev_item(),
+            ["<Down>"] = cmp.mapping.select_next_item(),
+            ["<C-k>"] = cmp.mapping.select_prev_item(),
+            ["<C-j>"] = cmp.mapping.select_next_item(),
             ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
             ["<C-y>"] = cmp.config.disable,
             ["<C-e>"] = cmp.mapping({
