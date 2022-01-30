@@ -25,6 +25,28 @@ local function configure_telescope()
     telescope.load_extension("fzf")
 end
 
+local function configure_neoclip()
+    local ok, neoclip = pcall(require, "neoclip")
+    if not ok then return end
+
+    local ok_tele, telescope = pcall(require, "telescope")
+    if not ok_tele then return end
+
+    telescope.load_extension('neoclip')
+    neoclip.setup {
+        keys = {
+            telescope = {
+                i = {
+                    paste = '<cr>',
+                },
+                n = {
+                    paste = '<cr>',
+                },
+            },
+        }
+    }
+end
+
 function M.project_files(opts)
     opts = opts or {}
     local ok, telescope_builtin = pcall(require, "telescope.builtin")
@@ -121,6 +143,15 @@ function M.startup(use)
             {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
         },
         config = configure_telescope
+    }
+
+    use {
+        "AckslD/nvim-neoclip.lua",
+        requires = {
+            {'tami5/sqlite.lua', module = 'sqlite'},
+            {'nvim-telescope/telescope.nvim'},
+        },
+        config = configure_neoclip
     }
 end
 

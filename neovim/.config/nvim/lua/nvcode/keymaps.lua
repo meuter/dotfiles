@@ -38,6 +38,9 @@ remap_all_modes("<C-n>", "<CMD>Navigate<CR>")
 -- ctrl+y same as ctrl+ù for live grep search
 remap_all_modes("<C-Y>", "<CMD>Telescope live_grep<CR>")
 
+-- alt+p to open neoclip
+remap_all_modes("<C-A-p>", "<CMD>Telescope neoclip<CR>")
+
 -- ctrl+] to search word under the cursor
 noremap("n", "<C-]>", "<CMD>SearchWordUnderCursor<CR>")
 noremap("v", "<C-]>", "<esc><CMD>SearchSelectedText<CR>")
