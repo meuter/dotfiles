@@ -48,10 +48,6 @@ local function configure_nvim_cmp()
             ["<C-j>"] = cmp.mapping.select_next_item(),
             ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
             ["<C-y>"] = cmp.config.disable,
-            ["<Esc>"] = cmp.mapping({
-                i = cmp.mapping.abort(),
-                c = cmp.mapping.close(),
-            }),
             ["<C-e>"] = cmp.mapping({
                 i = cmp.mapping.abort(),
                 c = cmp.mapping.close(),
