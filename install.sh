@@ -125,7 +125,6 @@ function install_bfs() {
     banner "Installing bfs"
     stow bfs
     initrc 'export PATH=~/.local/bin:$PATH'
-    initrc 'alias find=bfs'
 }
 
 function install_fzf() {
