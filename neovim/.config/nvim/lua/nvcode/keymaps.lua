@@ -71,6 +71,10 @@ noremap("n", "<Tab>", "v><C-\\><C-N>")
 noremap("v", "<S-Tab>", "<gv")
 noremap("n", "<S-Tab>", "v<<C-\\><C-N>")
 
+-- Ctrl+Left/Right use word boundary
+noremap("n", "<C-Left>", "b")
+noremap("n", "<C-Right>", "w")
+
 -- alt left,right to navigate jumplist
 noremap("n", "<A-Left>", "<C-O>")
 noremap("n", "<A-Right>", "<C-I>")
