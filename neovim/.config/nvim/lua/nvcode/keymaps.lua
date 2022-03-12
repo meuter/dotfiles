@@ -74,6 +74,7 @@ noremap("v", "<Tab>", ">gv")
 noremap("n", "<Tab>", "v><C-\\><C-N>")
 noremap("v", "<S-Tab>", "<gv")
 noremap("n", "<S-Tab>", "v<<C-\\><C-N>")
+noremap("i", "<S-Tab>", "<C-\\><C-N>v<<C-\\><C-N>^i")
 
 -- Ctrl+Left/Right use word boundary
 noremap("n", "<C-Left>", "b")
