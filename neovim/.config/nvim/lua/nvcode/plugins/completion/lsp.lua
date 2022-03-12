@@ -49,6 +49,11 @@ local function configure_lsp()
             opts = vim.tbl_deep_extend("force", jsonls_opts, opts)
         end
 
+        if server.name == "clangd" then
+            local clangd_opts = require("nvcode.plugins.completion.clangd")
+            opts = vim.tbl_deep_extend("force", clangd_opts, opts)
+        end
+
         server:setup(opts)
     end)
 end
