@@ -94,8 +94,8 @@ noremap("n", "<A-Down>", ":MoveLine(1)<CR>")
 noremap("n", "<A-Up>", ":MoveLine(-1)<CR>")
 noremap("v", "<A-Down>", ":MoveBlock(1)<CR>")
 noremap("v", "<A-Up>", ":MoveBlock(-1)<CR>")
-noremap("i", "<A-Down>", "<C-\\><C-N>:MoveLine(1)<CR>")
-noremap("i", "<A-Up>", "<C-\\><C-N>:MoveLine(1)<CR>")
+noremap("i", "<A-Down>", "<C-\\><C-N>:MoveLine(1)<CR>i")
+noremap("i", "<A-Up>", "<C-\\><C-N>:MoveLine(-1)<CR>i")
 
 -- code navigation using LSP server
 remap_all_modes("<F1>", "<CMD>lua vim.lsp.buf.hover()<CR>")
