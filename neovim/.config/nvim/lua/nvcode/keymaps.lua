@@ -23,6 +23,10 @@ local function remap_all_modes(key, command)
     noremap("v", key, "<C-\\><C-N>" .. command)
 end
 
+-- ctrl+w should work in insert and visual mode
+noremap("i", "<C-w>", "<C-\\><C-N><C-w>")
+noremap("v", "<C-w>", "<C-\\><C-N><C-w>")
+
 -- ctrl+p to open file
 remap_all_modes("<C-p>", "<CMD>ProjectFiles<CR>")
 
