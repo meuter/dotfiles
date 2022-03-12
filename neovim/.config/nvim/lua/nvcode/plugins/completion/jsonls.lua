@@ -1,5 +1,5 @@
 local default_schemas = nil
-local status_ok, jsonls_settings = pcall(require, "nlspsettings.jsonls")
+local status_ok, jsonls_settings = pcall(require, "nlspsettings.loaders.json")
 if status_ok then
   default_schemas = jsonls_settings.get_default_schemas()
 end
@@ -168,6 +168,7 @@ local schemas = {
   },
 }
 
+
 local function extend(tab1, tab2)
     for _, value in ipairs(tab2) do
         table.insert(tab1, value)
@@ -177,7 +178,7 @@ end
 
 local extended_schemas = extend(schemas, default_schemas)
 
-local opts = {
+return {
   settings = {
     json = {
       schemas = extended_schemas,
@@ -194,4 +195,3 @@ local opts = {
   },
 }
 
-return opts
