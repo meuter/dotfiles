@@ -171,6 +171,22 @@ function install_nodejs() {
     initrc 'export PATH=~/.local/bin:$PATH'
 }
 
+function install_rust() {
+    banner "Installing rust"
+    local script="/tmp/rust_bootstrap.sh"
+    curl -L https://sh.rustup.rs --output ${script}
+    chmod u+x ${script}
+    CARGO_HOME=~/.local/cargo RUSTUP_HOME=~/.local/rustup ${script} -y
+    initrc 'export CARGO_HOME=~/.local/cargo'
+    initrc 'export RUSTUP_HOME=~/.local/rustup'
+    initrc 'source /home/cme/.local/cargo/env'
+}
+
+function install_ripgrep() {
+    banner "Installing ripgrep"
+    cargo install ripgrep
+}
+
 function install_neovim() {
     banner "Installing NeoVIM"
     local version=${1-v0.6.1}
@@ -211,6 +227,8 @@ install_exa
 install_bat
 install_bfs
 install_fzf
+install_rust
+install_ripgrep
 install_lazygit
 install_nodejs
 install_neovim
