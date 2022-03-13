@@ -180,6 +180,9 @@ function install_rust() {
     initrc 'export CARGO_HOME=~/.local/cargo'
     initrc 'export RUSTUP_HOME=~/.local/rustup'
     initrc 'source /home/cme/.local/cargo/env'
+    export CARGO_HOME=~/.local/cargo
+    export RUSTUP_HOME=~/.local/rustup
+    source ~/.local/cargo/env
 }
 
 function install_ripgrep() {
