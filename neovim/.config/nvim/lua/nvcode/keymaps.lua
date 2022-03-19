@@ -120,8 +120,8 @@ noremap("n", "<C-d>", "<CMD>DiffviewOpen<CR>")
 remap_for_filetype("DiffviewFiles", "n", "<C-d>", "<CMD>DiffviewClose<CR>")
 remap_for_filetype("DiffviewFiles", "n", "<esc><esc>", "<CMD>DiffviewClose<CR>")
 
--- ctrl+a to toggle copy friendly mode
-noremap("n", "<C-a>", "<CMD>ToggleMouseCopy<CR>")
+-- ctrl+a to select all in file
+noremap("n", "<C-a>", "gg<S-v>G")
 
 -- ctrl+o to search function
 remap_all_modes("<C-o>", "<CMD>SearchFunction<CR>")
