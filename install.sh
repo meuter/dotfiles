@@ -109,9 +109,9 @@ function install_exa() {
 
 function install_bat() {
     banner "Installing bat"
-    local version=${1-v0.18.3}
-    local tarball=bat-${version}-x86_64-unknown-linux-musl.tar.gz
-    curl -L https://github.com/sharkdp/bat/releases/download/${version}/${tarball} --output /tmp/${tarball}
+    local version=${1-0.18.3}
+    local tarball=bat-v${version}-x86_64-unknown-linux-musl.tar.gz
+    curl -L https://github.com/sharkdp/bat/releases/download/v${version}/${tarball} --output /tmp/${tarball}
     pushd .
         cd /tmp
         tar xvf /tmp/${tarball}
@@ -220,11 +220,11 @@ function install_neovim() {
     done
 }
 
-install_gnu_stow 2.3.1
-install_libtree 3.1.0
-install_starship 1.6.2
-install_exa 0.10.1
-install_bat
+install_gnu_stow        2.3.1
+install_libtree         3.1.0
+install_starship        1.6.2
+install_exa             0.10.1
+install_bat             0.20.0
 install_bfs
 install_fzf
 install_rust
