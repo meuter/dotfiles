@@ -226,7 +226,7 @@ install_starship        1.6.2
 install_exa             0.10.1
 install_bat             0.20.0
 install_bfs
-install_fzf
+install_fzf               0.30.0
 install_rust
 install_ripgrep
 install_lazygit
