@@ -192,8 +192,8 @@ function install_ripgrep() {
 
 function install_neovim() {
     banner "Installing NeoVIM"
-    local version=${1-v0.6.1}
-    curl -L https://github.com/neovim/neovim/releases/download/${version}/nvim.appimage --output ${BIN}/nvim
+    local version=${1-0.6.1}
+    curl -L https://github.com/neovim/neovim/releases/download/v${version}/nvim.appimage --output ${BIN}/nvim
     chmod u+x ${BIN}/nvim
     stow neovim
     initrc 'export PATH=~/.local/bin:$PATH'
@@ -231,6 +231,7 @@ install_rust
 install_ripgrep
 install_lazygit         0.34
 install_nodejs          16.14.2
-install_neovim
+install_neovim          0.7.0
+
 configure_bash
 configure_git

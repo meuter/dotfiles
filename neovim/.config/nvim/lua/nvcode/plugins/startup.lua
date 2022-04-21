@@ -1,4 +1,5 @@
 local ui = require("nvcode.plugins.ui")
+
 local treesitter = require("nvcode.plugins.treesitter")
 local terminal = require("nvcode.plugins.terminal")
 local explorer = require("nvcode.plugins.explorer")
