@@ -80,7 +80,7 @@ function install_libtree() {
 
 function install_starship() {
     banner "Installing starship"
-    local version=${1-v1.1.1}
+    local version=${1-v1.6.2}
     local tarball=starship-x86_64-unknown-linux-musl.tar.gz
     curl -L https://github.com/starship/starship/releases/download/${version}/${tarball} --output /tmp/${tarball}
     pushd .
