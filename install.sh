@@ -146,7 +146,7 @@ function install_fzf() {
 
 function install_lazygit() {
     banner "Installing lazygit"
-    local version=${1-0.31.4}
+    local version=${1-0.34}
     local tarball=lazygit_${version}_Linux_x86_64.tar.gz
     curl -L https://github.com/jesseduffield/lazygit/releases/download/v${version}/${tarball} --output /tmp/${tarball}
     pushd .
@@ -160,9 +160,9 @@ function install_lazygit() {
 
 function install_nodejs() {
     banner "Installing nodejs"
-    local version=${1-v16.13.1}
-    local tarball=node-${version}-linux-x64.tar.gz
-    curl -L https://nodejs.org/download/release/${version}/${tarball} --output /tmp/${tarball}
+    local version=${1-16.13.1}
+    local tarball=node-v${version}-linux-x64.tar.gz
+    curl -L https://nodejs.org/download/release/v${version}/${tarball} --output /tmp/${tarball}
     pushd .
         cd ~/.local
         tar xvf /tmp/${tarball} --strip-components=1 --exclude="*/CHANGELOG.md" --exclude="*/README.md" --exclude="*/LICENSE"
@@ -226,12 +226,11 @@ install_starship        1.6.2
 install_exa             0.10.1
 install_bat             0.20.0
 install_bfs
-install_fzf               0.30.0
+install_fzf             0.30.0
 install_rust
 install_ripgrep
-install_lazygit
-install_nodejs
+install_lazygit         0.34
+install_nodejs          16.14.2
 install_neovim
-
 configure_bash
 configure_git
