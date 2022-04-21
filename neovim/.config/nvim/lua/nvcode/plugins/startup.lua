@@ -27,7 +27,6 @@ local function startup(use)
     git.startup(use)
     comment.startup(use)
 
-    --   use "windwp/nvim-autopairs" -- Autopairs, integrates with both cmp and treesitter
     --   use "lewis6991/impatient.nvim"
     --   use "folke/which-key.nvim"
 
