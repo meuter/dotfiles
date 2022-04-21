@@ -23,3 +23,5 @@ vim.cmd [[ command! SearchFunction execute 'lua require("nvcode.plugins.telescop
 vim.cmd [[ command! ToggleMouseCopy execute 'lua require("nvcode.plugins.ui.indentline").toggle_mouse_copy()<CR>' ]]
 
 vim.cmd [[ command! NvimTreeCollapseAll execute 'lua require("nvim-tree.lib").collapse_all()<CR>' ]]
+
+vim.cmd [[ command! GitDiff execute 'DiffviewOpen' ]]
