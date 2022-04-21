@@ -72,17 +72,17 @@ function configure_bash() {
 
 function install_libtree() {
     banner "Installing libtree"
-    local version=${1-v3.1.0}
-    curl -L https://github.com/haampie/libtree/releases/download/${version}/libtree_x86_64 --output ${BIN}/libtree
+    local version=${1-3.1.0}
+    curl -L https://github.com/haampie/libtree/releases/download/v${version}/libtree_x86_64 --output ${BIN}/libtree
     chmod u+x ${BIN}/libtree
     initrc 'export PATH=~/.local/bin:$PATH'
 }
 
 function install_starship() {
     banner "Installing starship"
-    local version=${1-v1.6.2}
+    local version=${1-1.6.2}
     local tarball=starship-x86_64-unknown-linux-musl.tar.gz
-    curl -L https://github.com/starship/starship/releases/download/${version}/${tarball} --output /tmp/${tarball}
+    curl -L https://github.com/starship/starship/releases/download/v${version}/${tarball} --output /tmp/${tarball}
     pushd .
         cd ${BIN}
         tar xvf /tmp/${tarball}
@@ -95,9 +95,9 @@ function install_starship() {
 
 function install_exa() {
     banner "Installing exa"
-    local version=${1-v0.10.1}
-    local zipfile=exa-linux-x86_64-${version}.zip
-    curl -L https://github.com/ogham/exa/releases/download/${version}/${zipfile} --output /tmp/${zipfile}
+    local version=${1-0.10.1}
+    local zipfile=exa-linux-x86_64-v${version}.zip
+    curl -L https://github.com/ogham/exa/releases/download/v${version}/${zipfile} --output /tmp/${zipfile}
     pushd .
         cd ~/.local
         unzip -o /tmp/${zipfile}
@@ -220,13 +220,10 @@ function install_neovim() {
     done
 }
 
-install_gnu_stow
-configure_bash
-configure_git
-install_libtree
-install_starship
-
-install_exa
+install_gnu_stow 2.3.1
+install_libtree 3.1.0
+install_starship 1.6.2
+install_exa 0.10.1
 install_bat
 install_bfs
 install_fzf
@@ -235,3 +232,6 @@ install_ripgrep
 install_lazygit
 install_nodejs
 install_neovim
+
+configure_bash
+configure_git
