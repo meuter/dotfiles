@@ -72,7 +72,7 @@ function configure_bash() {
 
 function install_libtree() {
     banner "Installing libtree"
-    local version=${1-v2.0.0}
+    local version=${1-v3.1.0}
     curl -L https://github.com/haampie/libtree/releases/download/${version}/libtree_x86_64 --output ${BIN}/libtree
     chmod u+x ${BIN}/libtree
     initrc 'export PATH=~/.local/bin:$PATH'
