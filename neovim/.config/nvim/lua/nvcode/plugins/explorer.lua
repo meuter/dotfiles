@@ -114,7 +114,7 @@ function M.startup(use)
         requires = {
             'kyazdani42/nvim-web-devicons',
         },
-        config = configure_nvim_tree
+        config = configure_nvim_tree()
     }
 end
 

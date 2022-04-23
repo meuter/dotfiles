@@ -142,7 +142,7 @@ function M.startup(use)
             {'nvim-lua/plenary.nvim'},
             {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
         },
-        config = configure_telescope
+        config = configure_telescope()
     }
 
     use {
@@ -151,7 +151,7 @@ function M.startup(use)
             {'tami5/sqlite.lua', module = 'sqlite'},
             {'nvim-telescope/telescope.nvim'},
         },
-        config = configure_neoclip
+        config = configure_neoclip()
     }
 end
 

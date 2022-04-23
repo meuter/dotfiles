@@ -7,6 +7,7 @@ local telescope = require("nvcode.plugins.telescope")
 local completion = require("nvcode.plugins.completion")
 local git = require("nvcode.plugins.git")
 local comment = require("nvcode.plugins.comment")
+local debugger = require("nvcode.plugins.debugger")
 
 local function startup(use)
     -- basics
@@ -18,6 +19,7 @@ local function startup(use)
     use "fedepujol/move.nvim"            -- move lines around in V mode
     use "kheaactua/aosp-vim-syntax"      -- syntax highlight for Android.bp, XML manifest, AIDL, HIDL, etc.
 
+    -- groups of plugins centered around certain topics
     ui.startup(use)
     treesitter.startup(use)
     terminal.startup(use)
@@ -26,13 +28,7 @@ local function startup(use)
     completion.startup(use)
     git.startup(use)
     comment.startup(use)
-
-    --   use "lewis6991/impatient.nvim"
-    --   use "folke/which-key.nvim"
-
-    --   -- LSP
-    --   use "tamago324/nlsp-settings.nvim" -- language server settings defined in json for
-    --   use "jose-elias-alvarez/null-ls.nvim" -- for formatters and linters
+    debugger.startup(use)
 end
 
 return startup
