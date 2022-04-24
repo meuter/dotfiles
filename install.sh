@@ -220,6 +220,9 @@ function install_neovim() {
     banner "Installing NeoVim related NodeJS packages"
     npm install -g neovim tree-sitter remark
 
+    banner "Installing NeoVim related Python packages"
+    pip install --user neovim debugpy
+
     banner "Installer NeoVIM packages"
     nvim --headless -c 'autocmd User PackerComplete quitall' -c "PackerCompile" -c 'PackerSync'
 

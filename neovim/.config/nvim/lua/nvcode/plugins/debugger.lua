@@ -6,12 +6,12 @@ local function configure_nvim_dap()
     if not ok then return end
 
     -- configuration for LLDB
-    lldb_adapter = {
+    dap.adapters.lldb = {
         type = 'executable',
         command = os.getenv("HOME") .. '/.local/bin/lldb-vscode',
         name = "lldb"
     }
-    lldb_configuration = {
+    dap.configurations.c = {
         {
             name = "Launch",
             type = "lldb",
@@ -21,18 +21,45 @@ local function configure_nvim_dap()
                 return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
             end,
             cwd = '${workspaceFolder}',
-            stopOnEntry = true,
             args = {},
             runInTerminal = false,
             postRunCommands = { 'process handle -p true -s false -n false SIGWINCH' }
         },
     }
+    dap.configurations.cpp = dap.configurations.c
+    dap.configurations.rust = dap.configurations.c
 
-    -- configurations for C/C++/Rust
-    dap.adapters.lldb = lldb_adapter
-    dap.configurations.cpp = lldb_configuration
-    dap.configurations.c = lldb_configuration
-    dap.configurations.rust = lldb_configuration
+    -- configuration for Python
+    dap.adapters.python = {
+        type = 'executable';
+        command = 'python';
+        args = { '-m', 'debugpy.adapter' };
+    }
+    dap.configurations.python = {
+        {
+            -- The first three options are required by nvim-dap
+            type = 'python'; -- the type here established the link to the adapter definition: `dap.adapters.python`
+            request = 'launch';
+            name = "Launch file";
+
+            -- Options below are for debugpy, see https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings for supported options
+
+            program = "${file}"; -- This configuration will launch the current file if used.
+            pythonPath = function()
+                -- debugpy supports launching an application with a different interpreter then the one used to launch debugpy itself.
+                -- The code below looks for a `venv` or `.venv` folder in the current directly and uses the python within.
+                -- You could adapt this - to for example use the `VIRTUAL_ENV` environment variable.
+                local cwd = vim.fn.getcwd()
+                if vim.fn.executable(cwd .. '/venv/bin/python') == 1 then
+                    return cwd .. '/venv/bin/python'
+                elseif vim.fn.executable(cwd .. '/.venv/bin/python') == 1 then
+                    return cwd .. '/.venv/bin/python'
+                else
+                    return '/usr/bin/python'
+                end
+            end;
+        },
+    }
 
     -- gutter symbols
     vim.fn.sign_define('DapBreakpoint', { text = '🔴', texthl = '', linehl = '', numhl = '' })
@@ -95,16 +122,15 @@ local function configure_nvim_dap_ui()
     })
 
     dap.listeners.after.event_initialized["dapui_config"] = function()
-        print("open")
         dapui.open()
     end
     dap.listeners.before.event_terminated["dapui_config"] = function()
-        print("close")
         dapui.close()
+        dap.repl.close()
     end
     dap.listeners.before.event_exited["dapui_config"] = function()
-        print("close")
         dapui.close()
+        dap.repl.close()
     end
 
 end
