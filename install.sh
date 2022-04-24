@@ -171,6 +171,19 @@ function install_nodejs() {
     initrc 'export PATH=~/.local/bin:$PATH'
 }
 
+function install_clang() {
+    banner "Installing clang"
+    local version=${1-14.0.0}
+    local tarball=clang+llvm-${version}-x86_64-linux-gnu-ubuntu-18.04.tar.xz
+    curl -L https://github.com/llvm/llvm-project/releases/download/llvmorg-${version}/${tarball} --output /tmp/${tarball}
+    pushd .
+        cd ~/.local
+        tar xvf /tmp/${tarball} --strip-components=1
+        rm -rf /tmp/${tarball}
+    popd
+    initrc 'export PATH=~/.local/bin:$PATH'
+}
+
 function install_rust() {
     banner "Installing rust"
     local script="/tmp/rust_bootstrap.sh"
@@ -231,7 +244,9 @@ install_rust
 install_ripgrep
 install_lazygit         0.34
 install_nodejs          16.14.2
+install_clang           14.0.0
 install_neovim          0.7.0
 
 configure_bash
 configure_git
+

@@ -8,7 +8,7 @@ local function configure_nvim_dap()
     -- configuration for LLDB
     lldb_adapter = {
         type = 'executable',
-        command = '/usr/sbin/lldb-vscode', -- TODO(cme): install lldb in .local from install.sh
+        command = os.getenv("HOME") .. '/.local/bin/lldb-vscode',
         name = "lldb"
     }
     lldb_configuration = {
