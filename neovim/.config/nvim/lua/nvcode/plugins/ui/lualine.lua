@@ -73,8 +73,8 @@ local function configure_lualine()
             theme = "ayu_dark",
             component_separators = { left = "", right = "" },
             section_separators = { left = "", right = "" },
-            disabled_filetypes = { "NvimTree", "Outline" },
             always_divide_middle = true,
+            globalstatus=true
         },
         sections = {
             lualine_a = { mode },

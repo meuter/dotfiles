@@ -36,7 +36,8 @@ local options = {
     autoread = true,                         -- reload file if modified outside of neovim
     hidden = true,                           -- hide buffer when switching
     foldenable = false,                      -- disable folding
-    showcmd = false                          -- faster over slow SSH
+    showcmd = false,                         -- faster over slow SSH
+    laststatus=3                             -- one global status bar
 }
 
 for k, v in pairs(options) do
@@ -46,5 +47,4 @@ end
 vim.opt.shortmess:append "c"
 vim.opt.whichwrap:append "<,>,[,],h,l"
 vim.opt.iskeyword:append "-"
-
 
