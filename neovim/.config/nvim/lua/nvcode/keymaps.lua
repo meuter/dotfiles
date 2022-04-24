@@ -35,8 +35,8 @@ remap_all_modes("<C-k>", "<CMD>Telescope commands<CR>")
 -- ctrl+n to navigate to another directory in ~/
 remap_all_modes("<C-n>", "<CMD>Navigate<CR>")
 
--- ctrl+y same as ctrl+ù for live grep search
-remap_all_modes("<C-Y>", "<CMD>Telescope live_grep<CR>")
+-- ctrl+y same as ctrl+y for live grep search
+remap_all_modes("<C-y>", "<CMD>Telescope live_grep<CR>")
 
 -- alt+p to open neoclip
 remap_all_modes("<C-A-p>", "<CMD>Telescope neoclip<CR>")
