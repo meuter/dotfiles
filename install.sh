@@ -203,6 +203,11 @@ function install_ripgrep() {
     cargo install ripgrep
 }
 
+function install_git_delta() {
+    banner "Installing git-delta"
+    cargo install git-delta
+}
+
 function install_neovim() {
     banner "Installing NeoVIM"
     local version=${1-0.6.1}
@@ -259,6 +264,7 @@ function install_component() {
             bfs)        install_bfs         ;;
             rust)       install_rust        ;;
             ripgrep)    install_ripgrep     ;;
+            delta)      install_git_delta   ;;
             all)        install_all         ;;
         esac
         shift
@@ -276,6 +282,7 @@ function install_all() {
         fzf \
         rust \
         ripgrep \
+        delta \
         lazygit \
         nodejs \
         clang \
