@@ -1,5 +1,5 @@
-#! /bin/bash
-set -euo pipefail
+#! /usr/bin/env bash
+set -eo pipefail
 
 BIN=~/.local/bin
 SRC=~/.local/src
@@ -48,7 +48,7 @@ function install_gnu_stow() {
     export PERL5LIB=~/.local/share/perl/
 }
 
-function configure_git() {
+function install_git_config() {
     banner "Configuring git"
     if [ -f ~/.gitconfig ]; then
         mv -v ~/.gitconfig ~/.gitconfig.bak
@@ -60,7 +60,7 @@ function configure_git() {
     initrc 'alias g="git lolg"'
 }
 
-function configure_bash() {
+function install_bash_config() {
     banner "Configuring bash"
     if [ -f ~/.inputrc ]; then
         mv -v ~/.inputrc ~/.inputrc.bak
@@ -206,8 +206,13 @@ function install_ripgrep() {
 function install_neovim() {
     banner "Installing NeoVIM"
     local version=${1-0.6.1}
-    curl -L https://github.com/neovim/neovim/releases/download/v${version}/nvim.appimage --output ${BIN}/nvim
-    chmod u+x ${BIN}/nvim
+    local tarball=nvim-linux64.tar.gz
+    curl -L https://github.com/neovim/neovim/releases/download/v${version}/${tarball} --output /tmp/${tarball}
+    pushd .
+        cd ~/.local
+        tar xvf /tmp/${tarball} --strip-components=1
+        rm -rf /tmp/${tarball}
+    popd
     stow neovim
     initrc 'export PATH=~/.local/bin:$PATH'
     initrc 'alias vim=nvim'
@@ -236,20 +241,47 @@ function install_neovim() {
     done
 }
 
-install_gnu_stow        2.3.1
-install_libtree         3.1.0
-install_starship        1.6.2
-install_exa             0.10.1
-install_bat             0.20.0
-install_bfs
-install_fzf             0.30.0
-install_rust
-install_ripgrep
-install_lazygit         0.34
-install_nodejs          16.14.2
-install_clang           14.0.0
-install_neovim          0.7.0
+function install_component() {
+    for component in "$@"; do
+        case $1 in
+            stow)       install_gnu_stow    2.3.1;;
+            libtree)    install_libtree     3.1.0;;
+            starship)   install_starship    1.7.1;;
+            exa)        install_exa         0.10.1;;
+            bat)        install_bat         0.20.0;;
+            fzf)        install_fzf         0.30.0;;
+            lazygit)    install_lazygit     0.34;;
+            nodejs)     install_nodejs      16.14.2;;
+            clang)      install_clang       14.0.0;;
+            neovim)     install_neovim      0.7.0;;
+            bash)       install_bash_config ;;
+            git)        install_git_config  ;;
+            bfs)        install_bfs         ;;
+            rust)       install_rust        ;;
+            ripgrep)    install_ripgrep     ;;
+            all)        install_all         ;;
+        esac
+        shift
+    done
+}
 
-configure_bash
-configure_git
+function install_all() {
+    install_component \
+        stow \
+        libtree \
+        starship \
+        exa \
+        bat \
+        bfs \
+        fzf \
+        rust \
+        ripgrep \
+        lazygit \
+        nodejs \
+        clang \
+        neovim \
+        bash \
+        git
+}
 
+install_component $@
