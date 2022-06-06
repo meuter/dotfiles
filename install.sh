@@ -11,8 +11,7 @@ function banner() {
     local normal="\e[0m"
     echo
     printf "${white_on_green}------------------------------------------------------------${normal}\n"
-    printf "${white_on_green}------------------------------------------------------------${normal}\r"
-    printf "${white_on_green}-- ${1} ${normal}\n"
+    printf "${white_on_green}-- %-57s${normal}\n" "${1}"
     printf "${white_on_green}------------------------------------------------------------${normal}\n"
     echo
 }
@@ -259,7 +258,7 @@ function install_neovim() {
     nvim --headless -c "TSInstallSync all" -c "q"
 
     banner "Installer NeoVIM LSP servers"
-    local lsp_servers="sumneko_lua tsserver eslint jsonls html yamlls pyright clangd cmake bashls dockerls remark_ls gopls rust_analyzer"
+    local lsp_servers="sumneko_lua tsserver eslint jsonls html yamlls pyright clangd cmake bashls dockerls remark_ls rust_analyzer"
     for lsp_server in ${lsp_servers}; do
         nvim --headless -c "LspInstall --sync ${lsp_server}" +qa
     done
