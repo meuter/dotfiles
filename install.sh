@@ -253,10 +253,10 @@ function install_component() {
             libtree)    install_libtree     3.1.0;;
             starship)   install_starship    1.7.1;;
             exa)        install_exa         0.10.1;;
-            bat)        install_bat         0.20.0;;
+            bat)        install_bat         0.21.0;;
             fzf)        install_fzf         0.30.0;;
             lazygit)    install_lazygit     0.34;;
-            nodejs)     install_nodejs      16.14.2;;
+            nodejs)     install_nodejs      16.15.1;;
             clang)      install_clang       14.0.0;;
             neovim)     install_neovim      0.7.0;;
             bash)       install_bash_config ;;
