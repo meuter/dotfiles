@@ -184,6 +184,25 @@ function install_clang() {
     initrc 'export PATH=~/.local/bin:$PATH'
 }
 
+function install_go() {
+    banner "Installing go"
+    local version=${1-1.18.3}
+    local tarball=go${version}.linux-amd64.tar.gz
+    curl -L https://go.dev/dl/${tarball} --output /tmp/${tarball}
+    pushd .
+        tar -C ~/.local -xvf /tmp/${tarball}
+        rm -rf /tmp/${tarball}
+    popd
+
+    export GOROOT=/home/cme/.local/go
+    export GOPATH=/home/cme/.local/go/packages
+    export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+
+    initrc 'export GOROOT=/home/cme/.local/go'
+    initrc 'export GOPATH=/home/cme/.local/go/packages'
+    initrc 'export PATH=$PATH:$GOROOT/bin:$GOPATH/bin'
+}
+
 function install_rust() {
     banner "Installing rust"
     local script="/tmp/rust_bootstrap.sh"
@@ -240,7 +259,7 @@ function install_neovim() {
     nvim --headless -c "TSInstallSync all" -c "q"
 
     banner "Installer NeoVIM LSP servers"
-    local lsp_servers="sumneko_lua tsserver eslint jsonls html yamlls pyright clangd cmake bashls dockerls remark_ls"
+    local lsp_servers="sumneko_lua tsserver eslint jsonls html yamlls pyright clangd cmake bashls dockerls remark_ls gopls rust_analyzer"
     for lsp_server in ${lsp_servers}; do
         nvim --headless -c "LspInstall --sync ${lsp_server}" +qa
     done
@@ -259,6 +278,7 @@ function install_component() {
             nodejs)     install_nodejs      16.15.1;;
             clang)      install_clang       14.0.0;;
             neovim)     install_neovim      0.7.0;;
+            go)         install_go          1.18.3;;
             bash)       install_bash_config ;;
             git)        install_git_config  ;;
             bfs)        install_bfs         ;;
@@ -287,6 +307,7 @@ function install_all() {
         nodejs \
         clang \
         neovim \
+        go \
         bash \
         git
 }
