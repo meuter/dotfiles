@@ -240,28 +240,17 @@ function install_neovim() {
     initrc 'export PATH=~/.local/bin:$PATH'
     initrc 'alias vim=nvim'
 
-    banner "Installing packer"
-    local packer=~/.local/share/nvim/site/pack/packer/start/packer.nvim
-    rm -rf ${packer}
-    git clone --depth 1 https://github.com/wbthomason/packer.nvim ${packer}
-
     banner "Installing NeoVim related NodeJS packages"
     npm install -g neovim tree-sitter remark
 
     banner "Installing NeoVim related Python packages"
     pip install --user neovim debugpy
 
-    banner "Installer NeoVIM packages"
-    nvim --headless -c 'autocmd User PackerComplete quitall' -c "PackerCompile" -c 'PackerSync'
+    banner "Installing NeoVim config"
+    nvim --headless -u ~/.config/nvim/install.lua
 
-    banner "Compiling Treesitter parser"
-    nvim --headless -c "TSInstallSync all" -c "q"
-
-    banner "Installer NeoVIM LSP servers"
-    local lsp_servers="sumneko_lua tsserver eslint jsonls html yamlls pyright clangd cmake bashls dockerls remark_ls rust_analyzer"
-    for lsp_server in ${lsp_servers}; do
-        nvim --headless -c "LspInstall --sync ${lsp_server}" +qa
-    done
+    # for future reference:
+    # local lsp_servers="sumneko_lua tsserver eslint jsonls html yamlls pyright clangd cmake bashls dockerls remark_ls rust_analyzer"
 }
 
 function install_component() {

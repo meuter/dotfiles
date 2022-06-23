@@ -15,10 +15,13 @@ DOCKER_BUILD_ARGS = \
 DOCKER_RUN_ARGS = \
 	-h dotfiles \
 	-ti --rm \
+	--privileged --cap-add=SYS_PTRACE \
+	--security-opt seccomp=unconfined \
+	-h test \
 	$(DOCKER_BUILD_TAG)
 
 build: docker/$(DISTRO)/Dockerfile
 	docker build . $(DOCKER_BUILD_ARGS) -f $<
 
-run:
+test:
 	docker run $(DOCKER_RUN_ARGS) || true
