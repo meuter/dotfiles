@@ -1,5 +1,13 @@
 local which_key = require("which-key")
 
+which_key.setup {
+    window = {
+        border = "single",
+        margin = { 0, 0, 0, 0 }, -- extra window margin [top, right, bottom, left]
+        padding = { 0, 2, 0, 2 }, -- extra window padding [top, right, bottom, left]
+    }
+}
+
 which_key.register({
 
     f = {
