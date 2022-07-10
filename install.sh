@@ -294,8 +294,8 @@ function install_all() {
         lazygit \
         nodejs \
         clang \
-        neovim \
         go \
+        neovim \
         bash \
         git
 }
