@@ -352,6 +352,7 @@ function install_all() {
         lazygit \
         nodejs \
         clang \
+        tmux \
         go \
         neovim \
         bash \
