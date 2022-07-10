@@ -202,6 +202,63 @@ function install_go() {
     initrc 'export PATH=$PATH:$GOROOT/bin:$GOPATH/bin'
 }
 
+function install_tmux() {
+    banner "Installing libevent (tmux)"
+    local libevent_version=2.1.12
+    local libevent_name=libevent-${libevent_version}-stable
+    local libevent_tarball=${libevent_name}.tar.gz
+    curl -L https://github.com/libevent/libevent/releases/download/release-${libevent_version}-stable/${libevent_tarball} --output /tmp/${libevent_tarball}
+    pushd .
+        cd /tmp/
+        tar xvf ${libevent_tarball}
+        rm -v ${libevent_tarball}
+        cd ${libevent_name}
+        ./configure --prefix=${HOME}/.local --enable-shared --disable-openssl
+        make -j && make install
+        cd ~
+        rm -rf /tmp/${libevent_name}
+    popd
+
+
+    banner "Installing ncurses (tmux)"
+    local ncurses_version=6.3
+    local ncurses_name=ncurses-${ncurses_version}
+    local ncurses_tarball=${ncurses_name}.tar.gz
+    curl -L https://ftp.gnu.org/pub/gnu/ncurses/${ncurses_tarball} --output /tmp/${ncurses_tarball}
+    pushd .
+        cd /tmp
+        tar xvf ${ncurses_tarball}
+        rm -v ${ncurses_tarball}
+        cd ${ncurses_name}
+        ./configure --prefix=${HOME}/.local --with-shared --with-termlib --enable-pc-files  --with-pkg-config-libdir=${HOME}/.local/lib/pkgconfig
+        make -j && make install
+        cd ~
+        rm -rf /tmp/${ncurses_name}
+    popd
+
+    banner "Installing tmux"
+    local version=${1-3.3}
+    local name=tmux-${version}
+    local tarball=${name}.tar.gz
+    curl -L https://github.com/tmux/tmux/releases/download/${version}/${tarball} --output /tmp/${tarball}
+    pushd .
+        cd /tmp
+        tar xvf /tmp/${tarball}
+        rm -v ${tarball}
+        cd ${name}
+        ./configure CPPFLAGS="-I/home/cme/.local/include/ -I/home/cme/.local/include/ncurses/" LDFLAGS=-L/home/cme/.local/lib --prefix=/home/cme/.local/
+        make -j && make install
+        cd ~
+        rm -rf ~/.local/lib/libtinfo*
+        rm -rf /tmp/${name}
+    popd
+
+    stow tmux
+
+    initrc 'export PATH=~/.local/bin:$PATH'
+    initrc 'export LD_LIBRARY_PATH=~/.local/lib'
+}
+
 function install_rust() {
     banner "Installing rust"
     local script="/tmp/rust_bootstrap.sh"
@@ -267,6 +324,7 @@ function install_component() {
             clang)      install_clang       14.0.0;;
             neovim)     install_neovim      0.7.0;;
             go)         install_go          1.18.3;;
+            tmux)       install_tmux        3.3;;
             bash)       install_bash_config ;;
             git)        install_git_config  ;;
             bfs)        install_bfs         ;;
