@@ -195,7 +195,7 @@ function install_go() {
 
     export GOROOT=/home/cme/.local/go
     export GOPATH=/home/cme/.local/go/packages
-    export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+    export PATH=$GOROOT/bin:$GOPATH/bin:$PATH
 
     initrc 'export GOROOT=/home/cme/.local/go'
     initrc 'export GOPATH=/home/cme/.local/go/packages'
