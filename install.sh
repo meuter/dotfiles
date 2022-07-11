@@ -199,7 +199,7 @@ function install_go() {
 
     initrc 'export GOROOT=/home/cme/.local/go'
     initrc 'export GOPATH=/home/cme/.local/go/packages'
-    initrc 'export PATH=$PATH:$GOROOT/bin:$GOPATH/bin'
+    initrc 'export PATH=$GOROOT/bin:$GOPATH/bin:$PATH'
 }
 
 function install_tmux() {
