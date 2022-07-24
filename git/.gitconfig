@@ -13,3 +13,5 @@
         undo = reset HEAD^1
 [credential]
         helper = cache
+[init]
+	defaultBranch = main
