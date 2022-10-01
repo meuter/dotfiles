@@ -322,7 +322,7 @@ function install_component() {
             lazygit)    install_lazygit     0.34;;
             nodejs)     install_nodejs      16.15.1;;
             clang)      install_clang       14.0.0;;
-            neovim)     install_neovim      0.7.2;;
+            neovim)     install_neovim      0.8.0;;
             go)         install_go          1.18.3;;
             tmux)       install_tmux        3.3;;
             bash)       install_bash_config ;;
