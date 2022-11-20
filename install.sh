@@ -340,7 +340,6 @@ function install_component() {
 function install_all() {
     install_component \
         stow \
-        libtree \
         starship \
         exa \
         bat \
@@ -349,7 +348,6 @@ function install_all() {
         rust \
         ripgrep \
         delta \
-        lazygit \
         nodejs \
         clang \
         tmux \
