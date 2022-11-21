@@ -297,17 +297,8 @@ function install_neovim() {
     initrc 'export PATH=~/.local/bin:$PATH'
     initrc 'alias vim=nvim'
 
-    banner "Installing NeoVim related NodeJS packages"
-    npm install -g neovim tree-sitter remark
-
-    banner "Installing NeoVim related Python packages"
-    pip install --user neovim debugpy
-
     banner "Installing NeoVim config"
     nvim --headless -u ~/.config/nvim/install.lua
-
-    # for future reference:
-    # local lsp_servers="sumneko_lua tsserver eslint jsonls html yamlls pyright clangd cmake bashls dockerls remark_ls rust_analyzer"
 }
 
 function install_component() {
@@ -320,7 +311,7 @@ function install_component() {
             bat)        install_bat         0.21.0;;
             fzf)        install_fzf         0.30.0;;
             lazygit)    install_lazygit     0.34;;
-            nodejs)     install_nodejs      16.15.1;;
+            nodejs)     install_nodejs      18.12.1;;
             clang)      install_clang       14.0.0;;
             neovim)     install_neovim      0.8.1;;
             go)         install_go          1.18.3;;
