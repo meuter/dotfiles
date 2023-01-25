@@ -42,7 +42,7 @@ install_gcc:
 	nix-env --set-flag priority 0 $$(nix-env -q | grep gcc)
 
 install_clang:
-	$(call nix_install, clang_14)
+	$(call nix_install, clang_14 clang-tools_14)
 	nix-env --set-flag priority 1 $$(nix-env -q | grep clang)
 
 install_rust: install_stow configure_bash
