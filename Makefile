@@ -33,8 +33,20 @@ install_fzf: install_stow configure_bash
 	$(call nix_install, fzf)
 	stow fzf
 
-install_nodejs: 
-	$(call nix_install, nodejs-18_x)
+install_gcc: 
+	$(call nix_install, gcc11)
+	nix-env --set-flag priority 0 $$(nix-env -q | grep gcc)
+
+install_clang: 
+	$(call nix_install, clang_14)
+	nix-env --set-flag priority 1 $$(nix-env -q | grep clang)
+
+install_rust: install_stow configure_bash
+	$(call nix_install, rustc cargo)
+	stow rust
+	nix-env --set-flag priority 1 $$(nix-env -q | grep rustc)
+	nix-env --set-flag priority 1 $$(nix-env -q | grep cargo)
+	$(call nix_install, rustup)
 
 install_all: \
 	install_essentials \
@@ -43,7 +55,9 @@ install_all: \
 	install_starship \
 	install_exa \
 	install_fzf \
-	install_nodejs
+	install_gcc \
+	install_clang \
+	install_rust
 
 deepclean:
 	nix-env -e '*'
