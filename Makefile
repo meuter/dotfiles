@@ -18,10 +18,15 @@ install_git: install_stow configure_bash
 	$(call nix_install, git delta)
 	stow git
 
+install_starship:
+	$(call nix_install, starship)
+	stow starship
+
 install_all: \
 	configure_bash \
 	install_stow \
-	install_git
+	install_git \
+	install_starship
 
 deepclean:
 	nix-env -e '*'
