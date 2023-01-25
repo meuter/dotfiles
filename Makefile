@@ -12,7 +12,7 @@ configure_bash:
 	fi
 
 install_essentials:
-	$(call nix_install, zip unzip curl wget htop tree)
+	$(call nix_install, zip unzip curl wget htop tree bfs)
 
 install_stow:
 	$(call nix_install, stow)
@@ -24,6 +24,10 @@ install_git: install_stow configure_bash
 install_starship: install_stow configure_bash
 	$(call nix_install, starship)
 	stow starship
+
+install_exa: install_stow configure_bash
+	$(call nix_install, exa)
+	stow exa
 
 install_all: \
 	configure_bash \
