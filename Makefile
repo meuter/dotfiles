@@ -48,9 +48,7 @@ install_clang:
 install_rust: install_stow configure_bash
 	$(call nix_install, rustc cargo)
 	stow rust
-	nix-env --set-flag priority 1 $$(nix-env -q | grep rustc)
-	nix-env --set-flag priority 1 $$(nix-env -q | grep cargo)
-	$(call nix_install, rustup)
+
 
 install_nodejs:
 	$(call nix_install, nodejs-18_x)
@@ -72,10 +70,10 @@ install_fd:
 install_neovim: install_stow configure_bash \
 	install_fzf install_fd install_ripgrep install_essentials \
 	install_nodejs install_python install_git install_gcc \
-	install_go install_rust 
+	install_go install_rust
 	$(call nix_install, neovim)
-	stow neovim 
-	make -f ~/.config/nvim/Makefile install
+	stow neovim
+	nvim --headless "+Lazy! sync" +qa
 
 install_all: \
 	install_essentials \
