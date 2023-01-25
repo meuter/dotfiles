@@ -33,13 +33,17 @@ install_fzf: install_stow configure_bash
 	$(call nix_install, fzf)
 	stow fzf
 
+install_nodejs: 
+	$(call nix_install, nodejs-18_x)
+
 install_all: \
 	install_essentials \
 	install_stow \
 	install_git \
 	install_starship \
 	install_exa \
-	install_fzf
+	install_fzf \
+	install_nodejs
 
 deepclean:
 	nix-env -e '*'
