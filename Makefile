@@ -1,27 +1,29 @@
-DISTRO   ?= ubuntu/20.04
+define nix_install
+	nix-env -iA $(addprefix nixpkgs.,$(1))
+endef
 
+configure_bash:
+	mkdir -p ~/.bashrc.d
+	if ! grep -e ^for.*bashrc.d ~/.bashrc > /dev/null; then \
+		echo 'for file in ~/.bashrc.d/*.bashrc; do source $$file; done' >> ~/.bashrc; \
+	fi
 
-DOCKER_BUILD_TAG = \
-	$(shell id -un)/dotfiles/$(DISTRO)
+install_nix:
+	sh <(curl -L https://nixos.org/nix/install) --daemon
 
-DOCKER_BUILD_ARGS = \
-	--build-arg USER_ID=$(shell id -u) \
-	--build-arg USER_NAME=$(shell id -un) \
-	--build-arg GROUP_ID=$(shell id -g) \
-	--build-arg GROUP_NAME=$(shell id -gn) \
-	--progress plain \
-	-t $(DOCKER_BUILD_TAG)
+install_stow:
+	$(call nix_install, stow)
 
-DOCKER_RUN_ARGS = \
-	-h dotfiles \
-	-ti --rm \
-	--privileged --cap-add=SYS_PTRACE \
-	--security-opt seccomp=unconfined \
-	-h test \
-	$(DOCKER_BUILD_TAG)
+install_git: install_stow configure_bash
+	$(call nix_install, git delta)
+	stow git
 
-build: docker/$(DISTRO)/Dockerfile
-	docker build . $(DOCKER_BUILD_ARGS) -f $<
+install_all: \
+	configure_bash \
+	install_stow \
+	install_git
 
-test:
-	docker run $(DOCKER_RUN_ARGS) || true
+deepclean:
+	nix-env -e '*'
+	sed -i -e '/^for.*bashrc\.d/d' ~/.bashrc
+	rm -rf ~/.local ~/.gitconfig ~/.config ~/.inputrc ~/.bashrc.d
