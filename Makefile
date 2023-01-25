@@ -29,12 +29,17 @@ install_exa: install_stow configure_bash
 	$(call nix_install, exa)
 	stow exa
 
+install_fzf: install_stow configure_bash 
+	$(call nix_install, fzf)
+	stow fzf
+
 install_all: \
-	configure_bash \
 	install_essentials \
 	install_stow \
 	install_git \
-	install_starship 
+	install_starship \
+	install_exa \
+	install_fzf
 
 deepclean:
 	nix-env -e '*'
