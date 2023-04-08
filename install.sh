@@ -167,6 +167,7 @@ function install_nodejs() {
         tar xvf /tmp/${tarball} --strip-components=1 --exclude="*/CHANGELOG.md" --exclude="*/README.md" --exclude="*/LICENSE"
         rm -rf /tmp/${tarball}
     popd
+    npm config set prefix '~/.local/'
     initrc 'export PATH=~/.local/bin:$PATH'
 }
 
@@ -296,9 +297,6 @@ function install_neovim() {
     stow neovim
     initrc 'export PATH=~/.local/bin:$PATH'
     initrc 'alias vim=nvim'
-
-    banner "Installing NeoVim config"
-    nvim --headless -u ~/.config/nvim/install.lua
 }
 
 function install_component() {
@@ -311,9 +309,9 @@ function install_component() {
             bat)        install_bat         0.21.0;;
             fzf)        install_fzf         0.30.0;;
             lazygit)    install_lazygit     0.34;;
-            nodejs)     install_nodejs      18.12.1;;
+            nodejs)     install_nodejs      16.16.0;;
             clang)      install_clang       14.0.0;;
-            neovim)     install_neovim      0.8.1;;
+            neovim)     install_neovim      0.9.0;;
             go)         install_go          1.18.3;;
             tmux)       install_tmux        3.3;;
             bash)       install_bash_config ;;
