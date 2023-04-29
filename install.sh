@@ -274,6 +274,20 @@ function install_rust() {
     source ~/.local/cargo/env
 }
 
+function install_java() {
+    banner "Installing sdkman"
+    local script="/tmp/sdkman_bootstrap.sh"
+    curl -L https://get.sdkman.io/ --output ${script}
+    chmod u+x ${script}
+    SDKMAN_DIR=~/.local/sdkman SDKMAN_DIR_RAW=$SDKMAN_DIR ${script}
+    export SDKMAN_DIR=~/.local/sdkman
+    export SDKMAN_DIR_RAW=~/.local/sdkman
+    source ~/.local/sdkman/bin/sdkman-init.sh
+    sdk install java 17.0.7-amzn
+    sdk install gradle 7.5.1
+    sdk install kotlin 1.8.20
+}
+
 function install_ripgrep() {
     banner "Installing ripgrep"
     cargo install ripgrep
@@ -320,6 +334,7 @@ function install_component() {
             rust)       install_rust        ;;
             ripgrep)    install_ripgrep     ;;
             delta)      install_git_delta   ;;
+            java)       install_java        ;;
             all)        install_all         ;;
         esac
         shift
