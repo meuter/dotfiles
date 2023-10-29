@@ -1,0 +1,5 @@
+# vim:ft=yaml.ansible
+---
+nodejs_version: 18.18.2
+nodejs_url: https://nodejs.org/download/release/v{{ nodejs_version }}/node-v{{ nodejs_version }}-linux-x64.tar.gz
+

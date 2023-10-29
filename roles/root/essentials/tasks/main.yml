@@ -1,0 +1,35 @@
+# vim:ft=yaml.ansible
+---
+- name: Become root
+  become: true
+  block:
+    - name: Wait for any possibly running unattended upgrade to finish
+      ansible.builtin.raw: >-
+        systemd-run \
+          --property="After=apt-daily.service apt-daily-upgrade.service" \
+          --wait /bin/true
+      changed_when: false
+
+    - name: Remove unattented upgrades
+      ansible.builtin.package:
+        pkg:
+          - unattended-upgrades
+        state: absent
+        update_cache: true
+
+    - name: Install essential packages
+      ansible.builtin.package:
+        pkg:
+          - file
+          - git
+          - dnsutils
+          - iputils-ping
+          - make
+          - ncdu
+          - htop
+          - tree
+          - unzip
+          - vim
+          - cmake
+        state: present
+        update_cache: true

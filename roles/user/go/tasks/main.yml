@@ -1,0 +1,25 @@
+# vim:ft=yaml.ansible
+---
+- name: Create directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: ug+rwx
+  with_items:
+    - /home/{{ ansible_user_id }}/.local/
+
+- name: Download and extract archive
+  ansible.builtin.unarchive:
+    src: "{{ go_url }}"
+    remote_src: true
+    dest: /home/{{ ansible_user_id }}/.local/
+    creates: /home/{{ ansible_user_id }}/.local/go/go
+
+- name: Patch ~/.bashrc
+  ansible.builtin.lineinfile:
+    path: /home/{{ ansible_user_id }}/.bashrc
+    line: "{{ item }}"
+  with_items:
+    - export GOROOT=/home/cme/.local/go
+    - export GOPATH=/home/cme/.local/go/packages
+    - export PATH=$GOROOT/bin:$GOPATH/bin:$PATH

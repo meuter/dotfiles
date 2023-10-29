@@ -1,0 +1,85 @@
+#! /bin/env ansible-playbook
+#
+# vim:ft=yaml.ansible
+---
+# NOTE(cme): This is needed otherwise, if one pass a tag when invoking the playbook
+#            the always tag is removed, and all gathering fact steps are skipped.
+#            https://github.com/ansible/ansible/issues/57529
+- name: Setup
+  hosts: all
+
+- name: Install root packages
+  hosts: all
+  tags: root
+  roles:
+
+    - role: root/essentials
+      tags: essentials
+
+    - role: root/docker
+      tags: docker
+
+- name: Install user package
+  hosts: all
+  tags: user
+  roles:
+    - role: user/bat
+      bat_version: 0.24.0
+      tags: bat
+
+    - role: user/clang
+      clang_version: 14.0.0
+      tags: clang
+
+    - role: user/delta
+      delta_version: 0.16.5
+      tags: delta, git-delta
+
+    - role: user/exa
+      exa_version: 0.10.1
+      tags: exa
+
+    - role: user/fzf
+      fzf_version: 0.43.0
+      tags: fzf
+
+    - role: user/go
+      go_version: 1.21.3
+      tags: go, golang
+
+    - role: user/nodejs
+      nodejs_version: 18.18.2
+      tags: nodejs, node
+
+    - role: user/ripgrep
+      ripgrep_version: 13.0.0
+      tags: rg, ripgrep
+
+    - role: user/rust
+      tags: rust, cargo
+
+    - role: user/starship
+      starship_version: 1.16.0
+      tags: starship
+
+    - role: user/neovim
+      neovim_version: 0.9.4
+      tags: neovim, nvim
+
+
+- name: Install user config
+  hosts: all
+  tags: config, user
+  roles:
+
+    - role: config/git
+      git_email: cedric.meuter@gmail.com
+      tags: git_config
+
+    - role: config/neovim
+      neovim_config_repo: https://github.com/meuter/nvim
+      tags: neovim_config
+
+    - role: config/starship
+      tags: starship_config
+

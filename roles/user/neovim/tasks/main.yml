@@ -1,0 +1,26 @@
+# vim:ft=yaml.ansible
+---
+- name: Create directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: ug+rwx
+  with_items:
+    - /home/{{ ansible_user_id }}/.local/
+
+- name: Download and extract archive
+  ansible.builtin.unarchive:
+    src: "{{ neovim_url }}"
+    remote_src: true
+    dest: /home/{{ ansible_user_id }}/.local/
+    extra_opts:
+      - --strip-components=1
+    creates: /home/{{ ansible_user_id }}/.local/bin/neovim
+
+- name: Patch ~/.bashrc
+  ansible.builtin.lineinfile:
+    path: /home/{{ ansible_user_id }}/.bashrc
+    line: "{{ item }}"
+  with_items:
+    - export PATH=~/.local/bin:$PATH
+    - command -v nvim &> /dev/null && alias vim=nvim

@@ -1,0 +1,6 @@
+# vim:ft=yaml.ansible
+---
+bat_version: 0.24.0
+bat_url: https://github.com/sharkdp/bat/releases/download/v{{ bat_version }}/bat-v{{ bat_version }}-x86_64-unknown-linux-musl.tar.gz
+bat_extracted: /tmp/bat-v{{ bat_version }}/
+bat_folder: "{{ bat_url | basename | splitext | first | splitext | first }}"

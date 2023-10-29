@@ -1,0 +1,13 @@
+# vim:ft=yaml.ansible
+---
+- name: Check if config is already present
+  ansible.builtin.stat:
+    path: "/home/{{ ansible_user_id }}/.config/nvim/init.lua"
+  register: nvim_config
+
+- name: Clone config
+  ansible.builtin.git:
+    repo: "{{ neovim_config_repo }}"
+    dest: /home/{{ ansible_user_id }}/.config/nvim
+    update: false
+  when: not nvim_config.stat.exists

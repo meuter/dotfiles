@@ -1,0 +1,9 @@
+# vim:ft=yaml.ansible
+---
+dependencies:
+  - role: user/neovim
+  - role: user/nodejs
+  - role: user/rust
+  - role: user/clang
+  - role: user/go
+  - role: user/ripgrep

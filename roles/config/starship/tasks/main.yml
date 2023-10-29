@@ -1,0 +1,15 @@
+# vim:ft=yaml.ansible
+---
+- name: Create directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: ug+rwx
+  with_items:
+    - /home/{{ ansible_user_id }}/.local/bin
+
+- name: Copying config file
+  ansible.builtin.copy:
+    src: starship.toml
+    dest: /home/{{ ansible_user_id }}/.config/starship.toml
+    mode: ug+rw

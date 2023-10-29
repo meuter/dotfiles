@@ -1,0 +1,4 @@
+# vim:ft=yaml.ansible
+---
+git_name: Cédric Meuter
+git_email: cedric.meuter@gmail.com

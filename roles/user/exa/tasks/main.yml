@@ -1,0 +1,48 @@
+# vim:ft=yaml.ansible
+---
+- name: Create directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: ug+rwx
+  with_items:
+    - "{{ exa_extracted }}"
+    - /home/{{ ansible_user_id }}/.local/bin
+    - /home/{{ ansible_user_id }}/.local/share/man/man1
+    - /home/{{ ansible_user_id }}/.local/share/man/man5
+
+- name: Download and extract archive
+  ansible.builtin.unarchive:
+    src: "{{ exa_url }}"
+    dest: "{{ exa_extracted }}"
+    remote_src: true
+
+- name: Install binary
+  ansible.builtin.copy:
+    src: "{{ exa_extracted }}/bin/exa"
+    dest: /home/{{ ansible_user_id }}/.local/bin/exa
+    remote_src: true
+    mode: ug+rwx
+
+- name: Install manpages (1/2)
+  ansible.builtin.copy:
+    src: "{{ exa_extracted }}/man/exa.1"
+    dest: /home/{{ ansible_user_id }}/.local/share/man/man1/exa.1
+    remote_src: true
+    mode: ug+rw
+
+- name: Install manpages (2/2)
+  ansible.builtin.copy:
+    src: "{{ exa_extracted }}/man/exa_colors.5"
+    dest: /home/{{ ansible_user_id }}/.local/share/man/man5/exa_colors.5
+    remote_src: true
+    mode: ug+rw
+
+- name: Patch ~/.bashrc
+  ansible.builtin.lineinfile:
+    path: /home/{{ ansible_user_id }}/.bashrc
+    line: "{{ item }}"
+  with_items:
+    - export PATH=~/.local/bin:$PATH
+    - export MANPATH=~/.local/share/man:$MANPATH
+    - command -v exa &> /dev/null && alias ls=exa

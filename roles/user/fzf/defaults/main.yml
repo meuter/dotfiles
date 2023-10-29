@@ -1,0 +1,5 @@
+# vim:ft=yaml.ansible
+---
+fzf_version: 0.43.0
+fzf_url: https://github.com/junegunn/fzf/releases/download/{{ fzf_version }}/fzf-{{ fzf_version }}-linux_amd64.tar.gz
+fzf_bash_completion_url: https://raw.githubusercontent.com/junegunn/fzf/{{ fzf_version }}/shell/key-bindings.bash

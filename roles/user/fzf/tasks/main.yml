@@ -1,0 +1,31 @@
+# vim:ft=yaml.ansible
+---
+- name: Create directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: ug+rwx
+  with_items:
+    - /home/{{ ansible_user_id }}/.local/bin
+    - /home/{{ ansible_user_id }}/.local/share/fzf/
+
+- name: Download and extract archive
+  ansible.builtin.unarchive:
+    src: "{{ fzf_url }}"
+    remote_src: true
+    dest: /home/{{ ansible_user_id }}/.local/bin
+    creates: /home/{{ ansible_user_id }}/.local/bin/fzf
+
+- name: Download and install bash completion
+  ansible.builtin.get_url:
+    url: "{{ fzf_bash_completion_url }}"
+    dest: /home/{{ ansible_user_id }}/.local/share/fzf/{{ fzf_bash_completion_url | basename }}
+    mode: ug+rw
+
+- name: Patch ~/.bashrc
+  ansible.builtin.lineinfile:
+    path: /home/{{ ansible_user_id }}/.bashrc
+    line: "{{ item }}"
+  with_items:
+    - export PATH=~/.local/bin:$PATH
+    - source ~/.local/share/fzf/key-bindings.bash

@@ -1,0 +1,5 @@
+# vim:ft=yaml.ansible
+---
+clang_version: 14.0.0
+clang_url: "https://github.com/llvm/llvm-project/releases/download/llvmorg-{{ clang_version }}/\
+            clang+llvm-{{ clang_version }}-x86_64-linux-gnu-ubuntu-18.04.tar.xz"

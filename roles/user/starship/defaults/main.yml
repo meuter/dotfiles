@@ -1,0 +1,4 @@
+# vim:ft=yaml.ansible
+---
+starship_version: 1.16.0
+starship_url: https://github.com/starship/starship/releases/download/v{{ starship_version }}/starship-x86_64-unknown-linux-musl.tar.gz

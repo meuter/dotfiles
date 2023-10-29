@@ -1,0 +1,6 @@
+# vim:ft=yaml.ansible
+---
+rust_installer_url: https://sh.rustup.rs
+rust_installer: /tmp/rustup.sh
+rust_cargo_home: /home/{{ ansible_user_id }}/.local/cargo
+rust_rustup_home: /home/{{ ansible_user_id }}/.local/rustup

@@ -1,0 +1,4 @@
+# vim:ft=yaml.ansible
+---
+neovim_version: 0.9.4
+neovim_url: https://github.com/neovim/neovim/releases/download/v{{ neovim_version }}/nvim-linux64.tar.gz

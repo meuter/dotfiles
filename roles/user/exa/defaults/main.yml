@@ -1,0 +1,5 @@
+# vim:ft=yaml.ansible
+---
+exa_version: 0.10.0
+exa_url: https://github.com/ogham/exa/releases/download/v{{ exa_version }}/exa-linux-x86_64-musl-v{{ exa_version }}.zip
+exa_extracted: /tmp/exa-v{{ exa_version }}/

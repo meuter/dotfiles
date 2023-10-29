@@ -1,0 +1,30 @@
+# vim:ft=yaml.ansible
+---
+- name: Create directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: ug+rwx
+  with_items:
+    - "{{ delta_extracted }}"
+    - /home/{{ ansible_user_id }}/.local/bin
+
+- name: Download and extract archive
+  ansible.builtin.unarchive:
+    src: "{{ delta_url }}"
+    dest: "{{ delta_extracted }}"
+    remote_src: true
+
+- name: Install binary
+  ansible.builtin.copy:
+    src: "{{ delta_extracted }}/{{ delta_folder }}/delta"
+    dest: /home/{{ ansible_user_id }}/.local/bin/delta
+    remote_src: true
+    mode: ug+rwx
+
+- name: Patch ~/.bashrc
+  ansible.builtin.lineinfile:
+    path: /home/{{ ansible_user_id }}/.bashrc
+    line: "{{ item }}"
+  with_items:
+    - export PATH=~/.local/bin:$PATH

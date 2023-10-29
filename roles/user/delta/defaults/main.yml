@@ -1,0 +1,6 @@
+# vim:ft=yaml.ansible
+---
+delta_version: 0.16.5
+delta_url: https://github.com/dandavison/delta/releases/download/{{ delta_version }}/delta-{{ delta_version }}-x86_64-unknown-linux-musl.tar.gz
+delta_extracted: /tmp/delta-v{{ delta_version }}/
+delta_folder: "{{ delta_url | basename | splitext | first | splitext | first }}"

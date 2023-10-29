@@ -1,0 +1,39 @@
+# vim:ft=yaml.ansible
+---
+- name: Create directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: ug+rwx
+  with_items:
+    - "{{ ripgrep_extracted }}"
+    - /home/{{ ansible_user_id }}/.local/bin
+    - /home/{{ ansible_user_id }}/.local/share/man/man1
+
+- name: Download and extract archive
+  ansible.builtin.unarchive:
+    src: "{{ ripgrep_url }}"
+    dest: "{{ ripgrep_extracted }}"
+    remote_src: true
+
+- name: Install binary
+  ansible.builtin.copy:
+    src: "{{ ripgrep_extracted }}/{{ ripgrep_folder }}/rg"
+    dest: /home/{{ ansible_user_id }}/.local/bin/rg
+    remote_src: true
+    mode: ug+rwx
+
+- name: Install manpages
+  ansible.builtin.copy:
+    src: "{{ ripgrep_extracted }}/{{ ripgrep_folder }}/doc/rg.1"
+    dest: /home/{{ ansible_user_id }}/.local/share/man/man1/rg.1
+    remote_src: true
+    mode: ug+rw
+
+- name: Patch ~/.bashrc
+  ansible.builtin.lineinfile:
+    path: /home/{{ ansible_user_id }}/.bashrc
+    line: "{{ item }}"
+  with_items:
+    - export PATH=~/.local/bin:$PATH
+    - export MANPATH=~/.local/share/man:$MANPATH

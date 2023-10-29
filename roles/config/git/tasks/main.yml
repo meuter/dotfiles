@@ -1,0 +1,17 @@
+# vim:ft=yaml.ansible
+---
+- name: Install ~/.gitconfig
+  ansible.builtin.template:
+    src: .gitconfig.j2
+    dest: /home/{{ ansible_user_id }}/.gitconfig
+    mode: u+rw,go+r
+
+- name: Patch ~/.bashrc
+  ansible.builtin.lineinfile:
+    path: /home/{{ ansible_user_id }}/.bashrc
+    line: "{{ item }}"
+  with_items:
+    - alias w="git status -s"
+    - alias d="git diff"
+    - alias l="git lol"
+    - alias g="git lolg"

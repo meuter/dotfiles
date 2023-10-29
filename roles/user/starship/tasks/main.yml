@@ -1,0 +1,24 @@
+# vim:ft=yaml.ansible
+---
+- name: Create directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: ug+rwx
+  with_items:
+    - /home/{{ ansible_user_id }}/.local/bin
+
+- name: Download and extract archive
+  ansible.builtin.unarchive:
+    src: "{{ starship_url }}"
+    remote_src: true
+    dest: /home/{{ ansible_user_id }}/.local/bin
+    creates: /home/{{ ansible_user_id }}/.local/bin/starship
+
+- name: Patch ~/.bashrc
+  ansible.builtin.lineinfile:
+    path: /home/{{ ansible_user_id }}/.bashrc
+    line: "{{ item }}"
+  with_items:
+    - export PATH=~/.local/bin:$PATH
+    - command -v starship &> /dev/null && eval "$(starship init bash)"

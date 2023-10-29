@@ -1,0 +1,4 @@
+# vim:ft=yaml.ansible
+---
+go_version: 1.21.3
+go_url: https://go.dev/dl/go{{ go_version }}.linux-amd64.tar.gz

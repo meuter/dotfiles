@@ -1,0 +1,32 @@
+# vim:ft=yaml.ansible
+---
+- name: Check if cargo is already installed
+  ansible.builtin.stat:
+    path: "{{ rust_cargo_home }}/bin/cargo"
+  register: cargo
+
+- name: Download installer
+  when: not cargo.stat.exists
+  ansible.builtin.get_url:
+    url: "{{ rust_installer_url }}"
+    dest: "{{ rust_installer }}"
+    mode: ug+rx
+    force: true
+
+- name: Run installer
+  when: not cargo.stat.exists
+  ansible.builtin.shell: >
+    CARGO_HOME={{ rust_cargo_home }}
+    RUSTUP_HOME={{ rust_rustup_home }}
+    {{ rust_installer }} -y --no-modify-path
+  args:
+    creates: "{{ rust_cargo_home }}/bin/cargo"
+
+- name: Patch ~/.bashrc
+  ansible.builtin.lineinfile:
+    path: /home/{{ ansible_user_id }}/.bashrc
+    line: "{{ item }}"
+  with_items:
+    - export CARGO_HOME=~/.local/cargo
+    - export RUSTUP_HOME=~/.local/rustup
+    - "[ -f /home/{{ ansible_user_id }}/.local/cargo/env ] && source /home/cme/.local/cargo/env"

@@ -1,0 +1,5 @@
+# vim:ft=yaml.ansible
+---
+dependencies:
+  - role: user/starship
+

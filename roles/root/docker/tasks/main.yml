@@ -1,0 +1,74 @@
+# vim:ft=yaml.ansible
+---
+- name: Become root
+  become: true
+  block:
+    - name: Remove docker package installed with apt
+      ansible.builtin.package:
+        pkg:
+          - docker.io
+          - docker-compose
+          - docker-compose-v2
+          - docker-doc
+          - podman-docker
+        state: absent
+
+    - name: Install required system packages
+      ansible.builtin.package:
+        pkg:
+          - ca-certificates
+          - curl
+          - gnupg
+          - apt-transport-https
+          - python3-pip
+          - python3-setuptools
+          - python3-venv
+          - python3-docker
+        state: present
+        update_cache: true
+
+    - name: Install docker-compose python bindings
+      ansible.builtin.pip:
+        name: docker-compose
+        state: present
+
+    - name: Add Docker GPG apt Key
+      ansible.builtin.apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add repository into sources list
+      ansible.builtin.apt_repository:
+        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_lsb.codename }} stable
+        state: present
+        filename: docker
+
+    - name: Install Docker
+      ansible.builtin.apt:
+        pkg:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-buildx-plugin
+          - docker-compose-plugin
+        state: present
+        update_cache: true
+
+    - name: Create 'docker' group
+      ansible.builtin.group:
+        name: docker
+        state: present
+
+    - name: Gathering info about non-root user
+      ansible.builtin.set_fact:
+        user: "{{ ansible_ssh_user | default(lookup('env', 'USER')) }}"
+
+    - name: Adding user 'docker' group {{ user }}
+      ansible.builtin.user:
+        name: "{{ user }}"
+        groups: docker
+        append: true
+
+    - name: Reset connection to take into account new group
+      ansible.builtin.meta:
+        reset_connection
