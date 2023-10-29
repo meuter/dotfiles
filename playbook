@@ -83,3 +83,6 @@
     - role: config/starship
       tags: starship_config
 
+    - role: config/bash
+      tags: bash_config
+

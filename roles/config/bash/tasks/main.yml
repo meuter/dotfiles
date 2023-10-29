@@ -1,0 +1,7 @@
+# vim:ft=yaml.ansible
+---
+- name: Copying config file
+  ansible.builtin.copy:
+    src: .inputrc
+    dest: /home/{{ ansible_user_id }}/.inputrc
+    mode: ug+rw
