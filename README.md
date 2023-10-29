@@ -26,13 +26,19 @@ Install Ansible
 To install everyting on localhost:
 
 ```bash
-./playbook -t user
+./playbook -K
 ```
 
-To install everything on a distant machine:
+To install everything on a distant machine (pay attention to the `,`!):
 
 ```bash
-./playbook -i some.distant.machine.com -t user
+./playbook -i some.distant.machine.com,
+```
+
+To install one the packages and config that do not require sudo privileges
+
+```bash
+./playbook -t user
 ```
 
 To install only one packages:
@@ -47,5 +53,10 @@ To install only one package including its custon config:
 ./playboot -t neovim_config
 ```
 
+These options can be combined: e.g. to install docker (which requires sudo privileges) and 
+a fully configured neovim on a distant machine:
 
+```bash
+./playbook -i some.distant.machine.com, -t neovim_config,docker -K
+```
 
