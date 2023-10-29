@@ -6,7 +6,7 @@
     state: directory
     mode: ug+rwx
   with_items:
-    - /home/{{ ansible_user_id }}/.local/bin
+    - /home/{{ ansible_user_id }}/.config
 
 - name: Copying config file
   ansible.builtin.copy:
