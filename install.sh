@@ -256,6 +256,12 @@ function install_tmux() {
 
     stow tmux
 
+    # Install all tpm packages (https://github.com/tmux-plugins/tpm/issues/6)
+    tmux start-server
+    tmux new-session -d
+    ~/.config/tmux/plugins/tpm/scripts/install_plugins.sh
+    tmux kill-server
+
     initrc 'export PATH=~/.local/bin:$PATH'
     initrc 'export LD_LIBRARY_PATH=~/.local/lib'
 }
