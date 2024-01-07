@@ -257,10 +257,16 @@ function install_tmux() {
     stow tmux
 
     # Install all tpm packages (https://github.com/tmux-plugins/tpm/issues/6)
+    set -x
+    export PATH=~/.local/bin:$PATH
+    export LD_LIBRARY_PATH=~/.local/lib
+    export TMUX_PLUGIN_MANAGER_PATH=~/.config/tmux/plugins/
+    git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
     tmux start-server
     tmux new-session -d
     ~/.config/tmux/plugins/tpm/scripts/install_plugins.sh
     tmux kill-server
+    set +x
 
     initrc 'export PATH=~/.local/bin:$PATH'
     initrc 'export LD_LIBRARY_PATH=~/.local/lib'
@@ -329,7 +335,7 @@ function install_component() {
             bat)        install_bat         0.21.0;;
             fzf)        install_fzf         0.30.0;;
             lazygit)    install_lazygit     0.34;;
-            nodejs)     install_nodejs      16.16.0;;
+            nodejs)     install_nodejs      20.11.0;;
             clang)      install_clang       14.0.0;;
             neovim)     install_neovim      0.9.2;;
             go)         install_go          1.18.3;;
