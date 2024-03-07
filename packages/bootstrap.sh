@@ -1,12 +1,12 @@
 #!/bin/false "This script should be sourced in a shell, not executed directly"
 set -eo pipefail
 
-REPO_ROOT=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-INSTALL_PREFIX=${HOME}/.local
-BIN=${INSTALL_PREFIX}/bin
-SRC=${INSTALL_PREFIX}/src
-SHARE=${INSTALL_PREFIX}/share
-PKG_INSTALLED=${INSTALL_PREFIX}/etc/pkg/installed
+DOTFILES_ROOT=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+DOTFILES_PREFIX=${HOME}/.local
+DOTFILES_BIN=${DOTFILES_PREFIX}/bin
+DOTFILES_SRC=${DOTFILES_PREFIX}/src
+DOTFILES_SHARE=${DOTFILES_PREFIX}/share
+DOTFILES_INSTALLED=${DOTFILES_PREFIX}/etc/pkg/installed
 
 function banner() {
     local green="\e[97m\e[102m"
@@ -21,27 +21,27 @@ function banner() {
 function install() {
     banner "Installing ${1}..."
     pushd .
-        cd ${REPO_ROOT}/${1}/
+        cd ${DOTFILES_ROOT}/${1}/
         source package.sh
         install_package
         init_package
-	ln -fv -s ${REPO_ROOT}/${1}/ ${PKG_INSTALLED}/
+	ln -fv -s ${DOTFILES_ROOT}/${1}/ ${DOTFILES_INSTALLED}/
     popd 
 }
 
 function uninstall() {
     banner "Uninstalling ${1}..."
     pushd .
-        cd ${REPO_ROOT}/${1}/
+        cd ${DOTFILES_ROOT}/${1}/
         source package.sh
         uninstall_package
-        rm -vf ${PKG_INSTALLED}/${1}
+        rm -vf ${DOTFILES_INSTALLED}/${1}
     popd
 }
 
 function bootstrap() {
-    mkdir -pv ${BIN} ${SRC} ${SHARE} ${PKG_INSTALLED}
-    for installed_package in $(find -L ${PKG_INSTALLED} -name package.sh); do
+    mkdir -pv ${DOTFILES_BIN} ${DOTFILES_SRC} ${DOTFILES_SHARE} ${DOTFILES_INSTALLED}
+    for installed_package in $(find -L ${DOTFILES_INSTALLED} -name package.sh); do
 	source ${installed_package}
 	init_package
     done 
