@@ -41,14 +41,16 @@ function install() {
 
 
     for package in ${to_install}; do
-        info "Installing ${package}..."
-        pushd . &> /dev/null
-            cd ${DOTFILES_ROOT}/${package}/
-            source package.sh
-            install_package
-            init_package
-            ln -fv -s ${DOTFILES_ROOT}/${package}/ ${DOTFILES_INSTALLED}/
-        popd &> /dev/null
+        if ! is_installed ${package}; then
+            info "Installing ${package}..."
+            pushd . &> /dev/null
+                cd ${DOTFILES_ROOT}/${package}/
+                source package.sh
+                install_package
+                init_package
+                ln -fv -s ${DOTFILES_ROOT}/${package}/ ${DOTFILES_INSTALLED}/
+            popd &> /dev/null
+        fi
     done  
     info "All Done!"
 }

@@ -1,18 +1,19 @@
 #!/bin/false "This script should be sourced in a shell, not executed directly"
 set -eo pipefail
 
+
 function dependencies() {
-    echo "stow starship exa gitconfig rust git-delta ripgrep"
+    echo "rust"
 }
 
 function install_package() {
-    :;
+    cargo install git-delta
 }
 
 function uninstall_package() {
-    :;
+    cargo uninstall git-delta
 }
 
 function init_package() {
-    :;
+    echo -n
 }
