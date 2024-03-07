@@ -11,19 +11,19 @@ function install_package() {
     local tarball=stow-${STOW_VERSION}.tar.gz
     curl -L http://ftp.gnu.org/gnu/stow/${tarball} --output /tmp/${tarball}
     tar xvf /tmp/${tarball} -C ${DOTFILES_SRC}/
-    pushd .
+    pushd . &> /dev/null
         cd ${DOTFILES_SRC}/stow-${STOW_VERSION}/
         ./configure --prefix ~/.local/ && make install
         rm -rvf /tmp/${tarball} 
-    popd
+    popd &> /dev/null
 }
 
 function uninstall_package() {
-    pushd .
+    pushd . &> /dev/null
         cd ${DOTFILES_SRC}/stow-${STOW_VERSION}/
         make uninstall
 	cd /tmp && rm -rvf ${DOTFILES_SRC}/stow-${STOW_VERSION}/
-    popd
+    popd &> /dev/null
 }
 
 function init_package() {

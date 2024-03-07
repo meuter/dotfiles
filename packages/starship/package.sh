@@ -10,12 +10,11 @@ function dependencies() {
 function install_package() {
     local tarball=starship-x86_64-unknown-linux-musl.tar.gz
     curl -L https://github.com/starship/starship/releases/download/v${STARSHIP_VERSION}/${tarball} --output /tmp/${tarball}
-    pushd .
+    pushd . &> /dev/null
         cd ${DOTFILES_BIN}
         tar xvf /tmp/${tarball}
         rm -rf /tmp/${tarball}
-    popd
-    pwd
+    popd &> /dev/null
     cd config && stow -t ${HOME} .
 }
 

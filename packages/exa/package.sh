@@ -10,15 +10,16 @@ function dependencies() {
 function install_package() {
     local zipfile=exa-linux-x86_64-v${EXA_VERSION}.zip
     curl -L https://github.com/ogham/exa/releases/download/v${EXA_VERSION}/${zipfile} --output /tmp/${zipfile}
-    pushd .
-        cd ~/.local
+    pushd . &> /dev/null
+        cd ${DOTFILES_PREFIX}
         unzip -o /tmp/${zipfile}
         rm -rf /tmp/${zipfile}
-    popd
+    popd &> /dev/null
 }
 
 function uninstall_package() {
-    :;
+    rm -rvf ${DOTFILES_PREFIX}/man/{exa.*,exa_*} ${DOTFILES_PREFIX}/completions/exa.*
+    rm -rvf ${DOTFILES_BIN}/exa 
 }
 
 function init_package() {

@@ -9,11 +9,13 @@ export DOTFILES_SHARE=${DOTFILES_PREFIX}/share
 export DOTFILES_INSTALLED=${DOTFILES_PREFIX}/etc/pkg/installed
 
 function info() {
-    local green="\e[97m\e[102m"
+    local white_on_green="\e[97m\e[102m"
     local normal="\e[0m"
     echo
-    printf "${green}INFO${normal} ${1}"
-    printf "\n\n"
+    printf "${white_on_green}------------------------------------------------------------${normal}\n"
+    printf "${white_on_green}-- %-57s${normal}\n" "${1}"
+    printf "${white_on_green}------------------------------------------------------------${normal}\n"
+    echo
 }
 
 function is_installed() {
@@ -27,46 +29,42 @@ function is_installed() {
 
 function install() {
     if is_installed ${1}; then
-        info "${1} is already installed"
         return 0
     fi
 
-    info "Collecting dependencies for ${1}..."
     local to_install=${1}
-    pushd .
+    pushd . &> /dev/null
         cd ${DOTFILES_ROOT}/${1}/
         source package.sh
         to_install="$(dependencies) ${to_install}"
-    popd
+    popd &> /dev/null
 
-    echo ${to_install}
 
     for package in ${to_install}; do
         info "Installing ${package}..."
-        pushd .
+        pushd . &> /dev/null
             cd ${DOTFILES_ROOT}/${package}/
             source package.sh
             install_package
             init_package
             ln -fv -s ${DOTFILES_ROOT}/${package}/ ${DOTFILES_INSTALLED}/
-        popd
+        popd &> /dev/null
     done  
     info "All Done!"
 }
 
 function uninstall() {
     if ! is_installed ${1}; then
-        info "${1} is not installed"
         return 0
     fi
-
     info "Uninstalling ${1}..."
-    pushd .
+    pushd . &> /dev/null
+
         cd ${DOTFILES_ROOT}/${1}/
         source package.sh
         uninstall_package
         rm -vf ${DOTFILES_INSTALLED}/${1}
-    popd
+    popd &> /dev/null
     info "All Done!"
 }
 
