@@ -13,7 +13,7 @@ function info() {
     local normal="\e[0m"
     echo
     printf "${green}INFO${normal} ${1}"
-    echo
+    printf "\n\n"
 }
 
 function is_installed() {
@@ -73,9 +73,10 @@ function uninstall() {
 function bootstrap() {
     mkdir -pv ${DOTFILES_BIN} ${DOTFILES_SRC} ${DOTFILES_SHARE} ${DOTFILES_INSTALLED}
     for installed_package in $(find -L ${DOTFILES_INSTALLED} -name package.sh); do
-    source ${installed_package}
-    init_package
-    done 
+        source ${installed_package}
+        init_package
+    done
+    export PATH=${DOTFILES_BIN}:${PATH}
 }
 
 bootstrap

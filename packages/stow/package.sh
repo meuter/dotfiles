@@ -27,6 +27,5 @@ function uninstall_package() {
 }
 
 function init_package() {
-    export PATH=${DOTFILES_BIN}:$PATH
     export PERL5LIB=${SHARE}/perl/
 }
