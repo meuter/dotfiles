@@ -1,38 +1,28 @@
-#! /usr/bin/env bash
+#!/bin/false "This script should be sourced in a shell, not executed directly"
 set -eo pipefail
 
-VERSION=2.3.1
-BIN=~/.local/bin
-SRC=~/.local/src
-SHARE=~/.local/share
+STOW_VERSION=2.3.1
 
-function install() {
-    echo
-    echo 
-    echo "Installing GNU/Stow..."
-    echo
-    echo
-    mkdir -pv ${BIN} ${SRC} ${SHARE}
-    local tarball=stow-${VERSION}.tar.gz
+function install_package() {
+    local tarball=stow-${STOW_VERSION}.tar.gz
     curl -L http://ftp.gnu.org/gnu/stow/${tarball} --output /tmp/${tarball}
     tar xvf /tmp/${tarball} -C ${SRC}/
     pushd .
-        cd ${SRC}/stow-${VERSION}/
+        cd ${SRC}/stow-${STOW_VERSION}/
         ./configure --prefix ~/.local/ && make install
         rm -rvf /tmp/${tarball} 
     popd
-
 }
 
-function uninstall() {
+function uninstall_package() {
     pushd .
-        cd ${SRC}/stow-${VERSION}/
+        cd ${SRC}/stow-${STOW_VERSION}/
         make uninstall
+	cd /tmp && rm -rvf ${SRC}/stow-${STOW_VERSION}/
     popd
-    rm -rvf ${SRC}/stow-${VERSION}/
 }
 
-function initrc() {
+function init_package() {
     export PATH=${BIN}:$PATH
     export PERL5LIB=${SHARE}/perl/
 }
