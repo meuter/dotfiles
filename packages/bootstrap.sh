@@ -1,12 +1,12 @@
 #!/bin/false "This script should be sourced in a shell, not executed directly"
 set -eo pipefail
 
-DOTFILES_ROOT=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-DOTFILES_PREFIX=${HOME}/.local
-DOTFILES_BIN=${DOTFILES_PREFIX}/bin
-DOTFILES_SRC=${DOTFILES_PREFIX}/src
-DOTFILES_SHARE=${DOTFILES_PREFIX}/share
-DOTFILES_INSTALLED=${DOTFILES_PREFIX}/etc/pkg/installed
+export DOTFILES_ROOT=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+export DOTFILES_PREFIX=${HOME}/.local
+export DOTFILES_BIN=${DOTFILES_PREFIX}/bin
+export DOTFILES_SRC=${DOTFILES_PREFIX}/src
+export DOTFILES_SHARE=${DOTFILES_PREFIX}/share
+export DOTFILES_INSTALLED=${DOTFILES_PREFIX}/etc/pkg/installed
 
 function banner() {
     local green="\e[97m\e[102m"

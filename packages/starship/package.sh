@@ -1,22 +1,13 @@
 #! /usr/bin/env bash
 set -eo pipefail
 
-VERSION=1.17.1
-BIN=~/.local/bin
-SRC=~/.local/src
-SHARE=~/.local/share
+STARSHIP_VERSION=1.17.1
 
-function install() {
-    echo
-    echo 
-    echo "Installing Starship..."
-    echo
-    echo
-
+function install_package() {
     local tarball=starship-x86_64-unknown-linux-musl.tar.gz
-    curl -L https://github.com/starship/starship/releases/download/v${VERSION}/${tarball} --output /tmp/${tarball}
+    curl -L https://github.com/starship/starship/releases/download/v${STARSHIP_VERSION}/${tarball} --output /tmp/${tarball}
     pushd .
-        cd ${BIN}
+        cd ${DOTFILES_BIN}
         tar xvf /tmp/${tarball}
         rm -rf /tmp/${tarball}
     popd
@@ -24,12 +15,12 @@ function install() {
     cd config && stow -t ${HOME} .
 }
 
-function uninstall() {
+function uninstall_package() {
     stow -t ${HOME} -D config
-    rm -rf ${BIN}/starship
+    rm -rf ${DOTFILES_BIN}/starship
 }
 
-function initrc() {
+function init_package() {
     eval "$(starship init bash)"
 }
 
