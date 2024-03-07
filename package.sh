@@ -1,0 +1,1 @@
+packages/starship/package.sh

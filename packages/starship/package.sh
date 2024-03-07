@@ -20,7 +20,8 @@ function install() {
         tar xvf /tmp/${tarball}
         rm -rf /tmp/${tarball}
     popd
-    stow -t ${HOME} -d config
+    pwd
+    cd config && stow -t ${HOME} .
 }
 
 function uninstall() {
