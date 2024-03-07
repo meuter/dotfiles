@@ -3,6 +3,10 @@ set -eo pipefail
 
 STARSHIP_VERSION=1.17.1
 
+function dependencies() {
+    echo "stow"
+}
+
 function install_package() {
     local tarball=starship-x86_64-unknown-linux-musl.tar.gz
     curl -L https://github.com/starship/starship/releases/download/v${STARSHIP_VERSION}/${tarball} --output /tmp/${tarball}

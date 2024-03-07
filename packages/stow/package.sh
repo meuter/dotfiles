@@ -3,6 +3,10 @@ set -eo pipefail
 
 STOW_VERSION=2.3.1
 
+function dependencies() {
+    echo ""
+}
+
 function install_package() {
     local tarball=stow-${STOW_VERSION}.tar.gz
     curl -L http://ftp.gnu.org/gnu/stow/${tarball} --output /tmp/${tarball}
