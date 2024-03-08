@@ -1,6 +1,4 @@
 #!/bin/false "This script should be sourced in a shell, not executed directly"
-set -eo pipefail
-
 
 function dependencies() {
     echo "rust"

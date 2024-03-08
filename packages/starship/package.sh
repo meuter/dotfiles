@@ -1,5 +1,4 @@
-#! /usr/bin/env bash
-set -eo pipefail
+#!/bin/false "This script should be sourced in a shell, not executed directly"
 
 STARSHIP_VERSION=1.17.1
 

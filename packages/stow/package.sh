@@ -1,5 +1,4 @@
 #!/bin/false "This script should be sourced in a shell, not executed directly"
-set -eo pipefail
 
 STOW_VERSION=2.3.1
 

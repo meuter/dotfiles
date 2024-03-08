@@ -1,5 +1,4 @@
 #!/bin/false "This script should be sourced in a shell, not executed directly"
-set -eo pipefail
 
 EXA_VERSION=0.10.1
 

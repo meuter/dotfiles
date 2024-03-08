@@ -1,5 +1,4 @@
 #!/bin/false "This script should be sourced in a shell, not executed directly"
-set -eo pipefail
 
 export DOTFILES_ROOT=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 export DOTFILES_PREFIX=${HOME}/.local
