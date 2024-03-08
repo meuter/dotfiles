@@ -8,7 +8,7 @@ function install_package() {
     if [ -f ~/.gitconfig ]; then
         mv -v ~/.gitconfig ~/.gitconfig.bak
     fi
-    cd config && stow -t ${HOME} .
+    ln -sf ${DOTFILES_ROOT}/gitconfig/.gitconfig ~/.gitconfig
 }
 
 function uninstall_package() {
