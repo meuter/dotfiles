@@ -1,7 +1,7 @@
 #!/bin/false "This script should be sourced in a shell, not executed directly"
 
 function dependencies() {
-    echo "rust ripgrep nodejs"
+    echo "golang rust ripgrep nodejs"
 }
 
 function install_package() {

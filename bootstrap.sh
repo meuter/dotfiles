@@ -23,7 +23,7 @@ function info() {
 function is_installed() {
     local install_dir=${DOTFILES_INSTALLED}/${1}
     if [ -d "${install_dir}" ]; then
-       return 0 
+       return 0
     else
        return 1
     fi
@@ -53,7 +53,7 @@ function install() {
                 ln -fv -s ${DOTFILES_ROOT}/${package}/ ${DOTFILES_INSTALLED}/
             popd &> /dev/null
         fi
-    done  
+    done
     info "All Done!"
 }
 
@@ -79,7 +79,7 @@ function bootstrap() {
         ${DOTFILES_SHARE}\
         ${DOTFILES_INSTALLED}\
         ${DOTFILES_CONFIG}
-    
+
     export PATH=${DOTFILES_BIN}:${PATH}
 
     for installed_package in $(find -L ${DOTFILES_INSTALLED} -name package.sh); do
