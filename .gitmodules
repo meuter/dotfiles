@@ -1,4 +1,0 @@
-[submodule "neovim/.config/nvim"]
-	path = neovim/.config/nvim
-    url = https://github.com/meuter/nvim.git
-
