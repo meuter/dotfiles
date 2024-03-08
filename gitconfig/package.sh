@@ -12,6 +12,7 @@ function install_package() {
 }
 
 function uninstall_package() {
+    rm -f ~/.gitconfig
     unalias w
     unalias d
     unalias l
