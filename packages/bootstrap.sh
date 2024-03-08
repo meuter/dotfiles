@@ -58,9 +58,9 @@ function install() {
 }
 
 function uninstall() {
-#     if ! is_installed ${1}; then
-#         return 0
-#     fi
+    if ! is_installed ${1}; then
+        return 0
+    fi
     info "Uninstalling ${1}..."
     pushd . &> /dev/null
 
