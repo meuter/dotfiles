@@ -12,7 +12,10 @@ function install_package() {
 }
 
 function uninstall_package() {
-    echo -n
+    unalias w
+    unalias d
+    unalias l
+    unalias g
 }
 
 function init_package() {

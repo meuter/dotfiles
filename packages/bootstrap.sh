@@ -3,6 +3,8 @@
 export DOTFILES_ROOT=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 export DOTFILES_PREFIX=${HOME}/.local
 export DOTFILES_BIN=${DOTFILES_PREFIX}/bin
+export DOTFILES_LIB=${DOTFILES_PREFIX}/lib
+export DOTFILES_MAN=${DOTFILES_PREFIX}/man
 export DOTFILES_SRC=${DOTFILES_PREFIX}/src
 export DOTFILES_SHARE=${DOTFILES_PREFIX}/share
 export DOTFILES_INSTALLED=${DOTFILES_PREFIX}/etc/pkg/installed
@@ -56,9 +58,9 @@ function install() {
 }
 
 function uninstall() {
-    if ! is_installed ${1}; then
-        return 0
-    fi
+#     if ! is_installed ${1}; then
+#         return 0
+#     fi
     info "Uninstalling ${1}..."
     pushd . &> /dev/null
 
@@ -77,13 +79,13 @@ function bootstrap() {
         ${DOTFILES_SHARE}\
         ${DOTFILES_INSTALLED}\
         ${DOTFILES_CONFIG}
+    
+    export PATH=${DOTFILES_BIN}:${PATH}
 
     for installed_package in $(find -L ${DOTFILES_INSTALLED} -name package.sh); do
         source ${installed_package}
         init_package
     done
-
-    export PATH=${DOTFILES_BIN}:${PATH}
 }
 
 bootstrap

@@ -19,6 +19,7 @@ function install_package() {
 function uninstall_package() {
     rm -rvf ${DOTFILES_PREFIX}/man/{exa.*,exa_*} ${DOTFILES_PREFIX}/completions/exa.*
     rm -rvf ${DOTFILES_BIN}/exa 
+    unalias ls
 }
 
 function init_package() {

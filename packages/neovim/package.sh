@@ -1,6 +1,7 @@
 #!/bin/false "This script should be sourced in a shell, not executed directly"
 
 function dependencies() {
+    # TODO: nodejs and fzf ?
     echo "rust ripgrep"
 }
 
@@ -18,8 +19,13 @@ function install_package() {
 }
 
 function uninstall_package() {
-    rm -rf ${DOTFILES_CONFIG}/nvim/
-    rm -rf ${DOTFILES_SHARE}/nvim
+    rm -rvf \
+    	${DOTFILES_CONFIG}/nvim/ \
+	    ${DOTFILES_SHARE}/nvim/ \
+        ${DOTFILES_BIN}/nvim \
+        ${DOTFILES_LIB}/nvim \
+        ${DOTFILES_MAN}/man1/nvim.1
+    unalias vim
 }
 
 function init_package() {
