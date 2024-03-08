@@ -3,7 +3,7 @@
 STARSHIP_VERSION=1.17.1
 
 function dependencies() {
-    echo "stow"
+    :;
 }
 
 function install_package() {
@@ -14,7 +14,7 @@ function install_package() {
         tar xvf /tmp/${tarball}
         rm -rf /tmp/${tarball}
     popd &> /dev/null
-    cd config && stow -t ${HOME} .
+    ln -fs ${DOTFILES_ROOT}/starship/starship.toml ${DOTFILES_CONFIG}/
 }
 
 function uninstall_package() {

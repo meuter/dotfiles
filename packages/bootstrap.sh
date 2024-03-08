@@ -6,6 +6,7 @@ export DOTFILES_BIN=${DOTFILES_PREFIX}/bin
 export DOTFILES_SRC=${DOTFILES_PREFIX}/src
 export DOTFILES_SHARE=${DOTFILES_PREFIX}/share
 export DOTFILES_INSTALLED=${DOTFILES_PREFIX}/etc/pkg/installed
+export DOTFILES_CONFIG=${HOME}/.config
 
 function info() {
     local white_on_green="\e[97m\e[102m"
@@ -70,11 +71,18 @@ function uninstall() {
 }
 
 function bootstrap() {
-    mkdir -pv ${DOTFILES_BIN} ${DOTFILES_SRC} ${DOTFILES_SHARE} ${DOTFILES_INSTALLED}
+    mkdir -pv \
+        ${DOTFILES_BIN}\
+        ${DOTFILES_SRC}\
+        ${DOTFILES_SHARE}\
+        ${DOTFILES_INSTALLED}\
+        ${DOTFILES_CONFIG}
+
     for installed_package in $(find -L ${DOTFILES_INSTALLED} -name package.sh); do
         source ${installed_package}
         init_package
     done
+
     export PATH=${DOTFILES_BIN}:${PATH}
 }
 
