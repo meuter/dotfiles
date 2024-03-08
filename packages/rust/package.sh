@@ -8,7 +8,7 @@ function install_package() {
     local script="/tmp/rust_bootstrap.sh"
     curl -L https://sh.rustup.rs --output ${script}
     chmod u+x ${script}
-    CARGO_HOME=${DOTFILES_PREFIX}/cargo RUSTUP_HOME=${DOTFILES_PREFIX}/rustup ${script} -y
+    CARGO_HOME=${DOTFILES_PREFIX}/cargo RUSTUP_HOME=${DOTFILES_PREFIX}/rustup ${script} -y --no-modify-path
 }
 
 function uninstall_package() {
