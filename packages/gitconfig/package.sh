@@ -1,7 +1,7 @@
 #!/bin/false "This script should be sourced in a shell, not executed directly"
 
 function dependencies() {
-    echo ""
+    echo "rust git-delta"
 }
 
 function install_package() {

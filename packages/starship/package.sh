@@ -18,7 +18,7 @@ function install_package() {
 }
 
 function uninstall_package() {
-    stow -t ${HOME} -D config
+    rm ${DOTFILES_CONFIG}/starship.toml
     rm -rf ${DOTFILES_BIN}/starship
 }
 

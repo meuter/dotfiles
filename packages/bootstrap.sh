@@ -71,7 +71,7 @@ function uninstall() {
 }
 
 function bootstrap() {
-    mkdir -pv \
+    mkdir -p \
         ${DOTFILES_BIN}\
         ${DOTFILES_SRC}\
         ${DOTFILES_SHARE}\

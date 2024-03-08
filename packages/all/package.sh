@@ -1,7 +1,7 @@
 #!/bin/false "This script should be sourced in a shell, not executed directly"
 
 function dependencies() {
-    echo "stow starship exa gitconfig rust git-delta ripgrep"
+    echo "starship exa rust git-delta ripgrep gitconfig"
 }
 
 function install_package() {
