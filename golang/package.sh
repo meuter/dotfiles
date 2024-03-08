@@ -15,6 +15,7 @@ function install_package() {
 }
 
 function uninstall_package() {
+    chmod -R u+w ${DOTFILES_PREFIX}/go
     rm -rvf ${DOTFILES_PREFIX}/go
     unset GOROOT
     unset GOROOT

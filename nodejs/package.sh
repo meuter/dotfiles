@@ -17,6 +17,7 @@ function install_package() {
 }
 
 function uninstall_package() {
+    # TODO
     :;
 }
 

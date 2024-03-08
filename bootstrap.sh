@@ -63,7 +63,6 @@ function uninstall() {
     fi
     info "Uninstalling ${1}..."
     pushd . &> /dev/null
-
         cd ${DOTFILES_ROOT}/${1}/
         source package.sh
         uninstall_package
