@@ -30,7 +30,10 @@ function is_installed() {
     fi
 }
 
-function install() {
+# NOTE: use () instead of {} for the function
+#       body -> executed in it's own bash process
+function install_in_subprocess() (
+    set -eou pipefail
     if is_installed ${1}; then
         return 0
     fi
@@ -48,28 +51,45 @@ function install() {
             info "Installing ${package}..."
             pushd . &> /dev/null
                 cd ${DOTFILES_ROOT}/${package}/
+		set -ex
                 source package.sh
                 install_package
                 init_package
+		set +ex
                 ln -fv -s ${DOTFILES_ROOT}/${package}/ ${DOTFILES_INSTALLED}/
             popd &> /dev/null
         fi
     done
     info "All Done!"
+)
+
+function install() {
+    install_in_subprocess ${1}
+    bootstrap
 }
 
-function uninstall() {
+# NOTE: use () instead of {} for the function
+#       body -> executed in it's own bash process
+function uninstall_in_subprocess() (
+    set -eou pipefail
     if ! is_installed ${1}; then
         return 0
     fi
     info "Uninstalling ${1}..."
     pushd . &> /dev/null
         cd ${DOTFILES_ROOT}/${1}/
+	set -exu
         source package.sh
         uninstall_package
+	set +exu
         rm -vf ${DOTFILES_INSTALLED}/${1}
     popd &> /dev/null
     info "All Done!"
+)
+
+function uninstall() {
+    uninstall_in_subprocess ${1}
+    bootstrap
 }
 
 function bootstrap() {
