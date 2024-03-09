@@ -21,15 +21,31 @@ CAUTION: this is highly experimental! Use are your own risk ⚠
 
 # Installation
 
-Just clone, source `bootstrap.sh` in your `~/.bashrc` and you have access to
-one additional `dotfiles` command.
+Just clone the repo, then source `bootstrap.sh` in your `~/.bashrc`:
 
 ```bash
 git clone https://github.com/meuter/dotfiles ~/.dotfiles/
 echo ". ~/.dotfiles/bootstrap.sh" >> ~/.bashrc
 . ~/.dotfiles/bootstrap.sh
-dotfiles install neovim tmux 
+```
 
+You then have access to dedicated `dotfiles` command:
+
+```
+❯ dotfiles
+Usage:
+    dotfiles <command>
+
+Available Commands:
+    list                  list available packages
+    list_installed        list installed packages
+    check                 check all packages
+    install               install packages
+    uninstall             uninstall packages
+    help                  print this help message
+
+Examples:
+    dotfiles install neovim tmux
 ```
 
 # Structure of a Package
