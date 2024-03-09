@@ -10,7 +10,6 @@ function install_package() {
     curl -L https://go.dev/dl/${tarball} --output /tmp/${tarball}
     pushd . &> /dev/null
         tar -C ${DOTFILES_PREFIX} -xvf /tmp/${tarball}
-    	chmod -R u+w ${DOTFILES_PREFIX}/go
         rm -rf /tmp/${tarball}
     popd &> /dev/null
 }
@@ -19,10 +18,12 @@ function uninstall_package() {
     rm -rvf ${DOTFILES_PREFIX}/go
     unset GOROOT
     unset GOROOT
+    unset GOFLAGS=-modcacherw
 }
 
 function init_package() {
     export GOROOT=${DOTFILES_PREFIX}/go
     export GOPATH=${DOTFILES_PREFIX}/go/packages
+    export GOFLAGS=-modcacherw
     export PATH=$GOROOT/bin:$GOPATH/bin:$PATH
 }
