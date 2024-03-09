@@ -1,5 +1,9 @@
 #!/bin/false "This script should be sourced in a shell, not executed directly"
 
+###################################################################################################
+## Environment Variables 
+###################################################################################################
+
 export DOTFILES_ROOT=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 export DOTFILES_PREFIX=${HOME}/.local
 export DOTFILES_BIN=${DOTFILES_PREFIX}/bin
@@ -11,7 +15,11 @@ export DOTFILES_SHARE=${DOTFILES_PREFIX}/share
 export DOTFILES_INSTALLED=${DOTFILES_PREFIX}/etc/pkg/installed
 export DOTFILES_CONFIG=${HOME}/.config
 
-function info() {
+###################################################################################################
+## Private Functions
+###################################################################################################
+
+function __dotfiles_info() {
     local white_on_green="\e[97m\e[102m"
     local normal="\e[0m"
     echo
@@ -21,20 +29,12 @@ function info() {
     echo
 }
 
-function is_installed() {
-    local install_dir=${DOTFILES_INSTALLED}/${1}
-    if [ -d "${install_dir}" ]; then
-       return 0
-    else
-       return 1
-    fi
-}
-
-# NOTE: use () instead of {} for the function
-#       body -> executed in it's own bash process
-function install_in_subprocess() (
+# NOTE: use () instead of {} for the function body -> executed in it's own bash process
+function __dotfiles_install_in_subprocess() (
+    
     set -eou pipefail
-    if is_installed ${1}; then
+    
+    if dotfiles_is_installed ${1}; then
         return 0
     fi
 
@@ -45,10 +45,9 @@ function install_in_subprocess() (
         to_install="$(dependencies) ${to_install}"
     popd &> /dev/null
 
-
     for package in ${to_install}; do
-        if ! is_installed ${package}; then
-            info "Installing ${package}..."
+        if ! dotfiles_is_installed ${package}; then
+            __dotfiles_info "Installing ${package}..."
             pushd . &> /dev/null
                 cd ${DOTFILES_ROOT}/${package}/
 		set -ex
@@ -60,22 +59,17 @@ function install_in_subprocess() (
             popd &> /dev/null
         fi
     done
-    info "All Done!"
 )
 
-function install() {
-    install_in_subprocess ${1}
-    bootstrap
-}
-
-# NOTE: use () instead of {} for the function
-#       body -> executed in it's own bash process
-function uninstall_in_subprocess() (
+# NOTE: use () instead of {} for the function body -> executed in it's own bash process
+function __dotfiles_uninstall_in_subprocess() (
+    
     set -eou pipefail
-    if ! is_installed ${1}; then
+
+    if ! dotfiles_is_installed ${1}; then
         return 0
     fi
-    info "Uninstalling ${1}..."
+    __dotfiles_info "Uninstalling ${1}..."
     pushd . &> /dev/null
         cd ${DOTFILES_ROOT}/${1}/
 	set -exu
@@ -84,22 +78,18 @@ function uninstall_in_subprocess() (
 	set +exu
         rm -vf ${DOTFILES_INSTALLED}/${1}
     popd &> /dev/null
-    info "All Done!"
 )
 
-function uninstall() {
-    uninstall_in_subprocess ${1}
-    bootstrap
-}
-
-function bootstrap() {
+function __dotfiles_create_folders() {
     mkdir -p \
         ${DOTFILES_BIN}\
         ${DOTFILES_SRC}\
         ${DOTFILES_SHARE}\
         ${DOTFILES_INSTALLED}\
         ${DOTFILES_CONFIG}
+}
 
+function __dotfiles_init() {
     export PATH=${DOTFILES_BIN}:${PATH}
     export LD_LIBRARY_PATH=${DOTFILES_LIB}
 
@@ -109,5 +99,42 @@ function bootstrap() {
     done
 }
 
-bootstrap
+
+###################################################################################################
+## Public Functions
+###################################################################################################
+
+function dotfiles_is_installed() {
+    local install_dir=${DOTFILES_INSTALLED}/${1}
+    if [ -d "${install_dir}" ]; then
+       return 0
+    else
+       return 1
+    fi
+}
+
+function dotfiles_install() {
+    __dotfiles_create_folders
+    __dotfiles_install_in_subprocess ${1}
+    __dotfiles_init
+    __dotfiles_info "All Done!"
+}
+
+function dotfiles_uninstall() {
+    __dotfiles_create_folders
+    __dotfiles_uninstall_in_subprocess ${1}
+    __dotfiles_init
+    __dotfiles_info "All Done!"
+}
+
+function dotfiles_bootstrap() {
+    __dotfiles_create_folders
+    __dotfiles_init
+}
+
+###################################################################################################
+## Bootstrap Packages
+###################################################################################################
+
+dotfiles_bootstrap
 
