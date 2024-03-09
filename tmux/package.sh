@@ -13,13 +13,21 @@ function install_package() {
     rm -fv /tmp/${tarball}
     pushd . &> /dev/null
         cd ${DOTFILES_SRC}/${dirname}
-
-        CC=clang ./configure CPPFLAGS="-I${DOTFILES_INCLUDE} -I${DOTFILES_INCLUDE}/ncurses" \
-                             LDFLAGS=-L${DOTFILES_LIB} \
-                             --prefix=${DOTFILES_PREFIX}
+        PKG_CONFIG_PATH=${DOTFILES_LIB}/pkgconfig CC=clang ./configure --prefix=${DOTFILES_PREFIX}
         make -j && make install
-
     popd &> /dev/null
+
+    mkdir -p ${DOTFILES_CONFIG}/tmux
+    ln -fs ${DOTFILES_ROOT}/tmux/tmux.conf ${DOTFILES_CONFIG}/tmux/
+
+    # install and bootstrap tpm
+    export TMUX_PLUGIN_MANAGER_PATH=${DOTFILES_CONFIG}/tmux/plugins/
+    mkdir -p ${TMUX_PLUGIN_MANAGER_PATH}
+    git clone https://github.com/tmux-plugins/tpm ${TMUX_PLUGIN_MANAGER_PATH}/tpm
+    tmux start-server
+    tmux new-session -d
+    ${TMUX_PLUGIN_MANAGER_PATH}/tpm/scripts/install_plugins.sh
+    tmux kill-server
 }
 
 function uninstall_package() {
@@ -28,5 +36,9 @@ function uninstall_package() {
 }
 
 function init_package() {
-    echo -n
+    if which tmux >/dev/null 2>&1; then
+        if [[ -z "$TMUX" ]]; then
+            tmux new-session -A -s main
+        fi
+    fi
 }
