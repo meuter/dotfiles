@@ -29,7 +29,7 @@ echo ". ~/.dotfiles/bootstrap.sh" >> ~/.bashrc
 . ~/.dotfiles/bootstrap.sh
 ```
 
-You then have access to dedicated `dotfiles` command:
+You then have access to a dedicated `dotfiles` command:
 
 ```
 ❯ dotfiles
