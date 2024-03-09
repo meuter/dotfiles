@@ -117,7 +117,7 @@ function __dotfiles_init() {
     done
 }
 
-function dotfiles_bootstrap() {
+function __dotfiles_bootstrap() {
     __dotfiles_create_folders
     __dotfiles_init
 }
@@ -128,16 +128,6 @@ function __dotfiles_list_installed {
 
 function __dotfiles_list {
     (cd ${DOTFILES_ROOT} && find . -maxdepth 2 -name package.sh | awk '{split($0,a,"/"); print a[2]}')
-}
-
-function __dotfiles_initrc {
-    export PATH=${DOTFILES_BIN}:${PATH}
-    export LD_LIBRARY_PATH=${DOTFILES_LIB}
-
-    for installed_package in $(find -L ${DOTFILES_INSTALLED} -maxdepth 2 -name package.sh); do
-        source ${installed_package}
-        init_package
-    done
 }
 
 function __dotfiles_check {
@@ -160,11 +150,12 @@ function __dotfiles_check {
 
 function dotfiles {
     case ${1} in
+        init)               __dotfiles_init;;
+        bootstrap)          __dotfiles_bootstrap;;
+        check)              __dotfiles_check;;
+        install)            __dotfiles_install "${@:2}";;
         list)               __dotfiles_list;;
         list_installed)     __dotfiles_list_installed;;
-        initrc)             __dotfiles_initrc;;
-        check)              __dotfiles_check;;
-        install)            __dotfiles_install "${@:2}"
     esac
 }
 
@@ -172,5 +163,5 @@ function dotfiles {
 ## Bootstrap Packages
 ###################################################################################################
 
-dotfiles_bootstrap
+dotfiles bootstrap
 
