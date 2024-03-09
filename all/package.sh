@@ -1,7 +1,11 @@
 #!/bin/false "This script should be sourced in a shell, not executed directly"
 
 function dependencies() {
-    echo "starship exa rust git-delta ripgrep inputrc gitconfig golang nodejs neovim bat fzf"
+    echo "rust git-delta gitconfig"
+    echo "starship"
+    echo "inputrc bat exa fzf"
+    echo "clang ripgrep golang nodejs neovim bat"
+    echo "clang libevent ncurses tmux"
 }
 
 function install_package() {
