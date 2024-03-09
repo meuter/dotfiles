@@ -39,6 +39,29 @@ function __dotfiles_error() {
     echo
 }
 
+function __dotfiles_list {
+    (cd ${DOTFILES_ROOT} && find . -maxdepth 2 -name package.sh | awk '{split($0,a,"/"); print a[2]}')
+}
+
+function __dotfiles_list_installed {
+    (cd ${DOTFILES_INSTALLED} && find -L . -maxdepth 2 -name package.sh | awk '{split($0,a,"/"); print a[2]}')
+}
+
+function __dotfiles_check {
+    for package in $(find ${DOTFILES_ROOT} -maxdepth 2 -name package.sh); do
+        local output=$(mktemp -t dotfiles.XXXXX)
+        (set -eou pipefail; source "${package}" &> ${output})
+        if [ "$?" -ne 0 ]; then
+            __dotfiles_error "ERROR: ${package}"
+            cat ${output}
+            return 1
+        fi
+        rm -f ${output}
+    done
+    __dotfiles_info "All Good!"
+}
+
+
 function __dotfiles_install() {
     # resolve dependencies
     local pending_packages=$(echo "${@}" | xargs -n1 | awk '!a[$0]++' | xargs)
@@ -78,33 +101,30 @@ function __dotfiles_install() {
         fi
         source ${package_script}
         init_package --installed
-	ln -fv -s ${DOTFILES_ROOT}/${package}/ ${DOTFILES_INSTALLED}/
+        ln -fv -s ${DOTFILES_ROOT}/${package}/ ${DOTFILES_INSTALLED}/
     done
 
     __dotfiles_info "All Done!"
     __dotfiles_init
 }
 
-function __dotfiles_uninstall_in_subprocess() {
-    if ! dotfiles_is_installed ${1}; then
-        return 0
-    fi
-    __dotfiles_info "Uninstalling ${1}..."
-    pushd . &> /dev/null
-        cd ${DOTFILES_ROOT}/${1}/
-        source package.sh
-        uninstall_package
-        rm -vf ${DOTFILES_INSTALLED}/${1}
-    popd &> /dev/null
-}
+function __dotfiles_uninstall() {
+    local pending_packages=$(echo "${@}" | xargs -n1 | awk '!a[$0]++' | xargs)
+    for package in ${pending_packages}; do
+        __dotfiles_info "Uninstalling '${package}'..."
+        local package_script="${DOTFILES_INSTALLED}/${package}/package.sh"
+        if [ -f "${package_script}" ]; then
+            (set -eou pipefail && source ${package_script} && set -x && uninstall_package)
+            if [ "$?" -ne 0 ]; then
+                __dotfiles_error "Could uninstall '${package}'"
+                return 1
+            fi
+            rm -vf ${DOTFILES_INSTALLED}/${1}
+        fi
+    done
 
-function __dotfiles_create_folders() {
-    mkdir -p \
-        ${DOTFILES_BIN}\
-        ${DOTFILES_SRC}\
-        ${DOTFILES_SHARE}\
-        ${DOTFILES_INSTALLED}\
-        ${DOTFILES_CONFIG}
+    __dotfiles_info "All Done!"
+    __dotfiles_init
 }
 
 function __dotfiles_init() {
@@ -118,30 +138,31 @@ function __dotfiles_init() {
 }
 
 function __dotfiles_bootstrap() {
-    __dotfiles_create_folders
+    mkdir -p \
+        ${DOTFILES_BIN}\
+        ${DOTFILES_SRC}\
+        ${DOTFILES_SHARE}\
+        ${DOTFILES_INSTALLED}\
+        ${DOTFILES_CONFIG}
     __dotfiles_init
 }
 
-function __dotfiles_list_installed {
-    (cd ${DOTFILES_INSTALLED} && find -L . -maxdepth 2 -name package.sh | awk '{split($0,a,"/"); print a[2]}')
-}
 
-function __dotfiles_list {
-    (cd ${DOTFILES_ROOT} && find . -maxdepth 2 -name package.sh | awk '{split($0,a,"/"); print a[2]}')
-}
-
-function __dotfiles_check {
-    for package in $(find ${DOTFILES_ROOT} -maxdepth 2 -name package.sh); do
-        local output=$(mktemp -t dotfiles.XXXXX)
-        (set -eou pipefail; source "${package}" &> ${output})
-        if [ "$?" -ne 0 ]; then
-            __dotfiles_error "ERROR: ${package}"
-            cat ${output}
-            return 1
-        fi
-        rm -f ${output}
-    done
-    __dotfiles_info "All Good!"
+function __dotfiles_help {
+    echo "Usage:"
+    echo "    dotfiles <command>"
+    echo
+    echo "Available Commands:"
+    echo "    list                  list available packages"
+    echo "    list_installed        list installed packages"
+    echo "    check                 check all packages"
+    echo "    install               install packages"
+    echo "    uninstall             uninstall packages"
+    echo "    help                  print this help message"
+    echo ""
+    echo
+    echo "Examples:"
+    echo "    dotfiles install neovim tmux"
 }
 
 ###################################################################################################
@@ -150,12 +171,12 @@ function __dotfiles_check {
 
 function dotfiles {
     case ${1} in
-        init)               __dotfiles_init;;
-        bootstrap)          __dotfiles_bootstrap;;
-        check)              __dotfiles_check;;
-        install)            __dotfiles_install "${@:2}";;
         list)               __dotfiles_list;;
         list_installed)     __dotfiles_list_installed;;
+        check)              __dotfiles_check;;
+        install)            __dotfiles_install   "${@:2}";;
+        uninstall)          __dotfiles_uninstall "${@:2}";;
+        *)                  __dotfiles_help;;
     esac
 }
 
@@ -163,5 +184,5 @@ function dotfiles {
 ## Bootstrap Packages
 ###################################################################################################
 
-dotfiles bootstrap
+__dotfiles_bootstrap
 
