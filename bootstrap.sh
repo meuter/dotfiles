@@ -4,7 +4,7 @@
 ## Environment Variables
 ###################################################################################################
 
-export DOTFILES_ROOT=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+export DOTFILES_ROOT=$(dirname $(readlink -f ${BASH_SOURCE[0]}))
 export DOTFILES_PREFIX=${HOME}/.local
 export DOTFILES_BIN=${DOTFILES_PREFIX}/bin
 export DOTFILES_LIB=${DOTFILES_PREFIX}/lib
@@ -127,6 +127,11 @@ function __dotfiles_uninstall() {
     __dotfiles_init
 }
 
+function __dotfiles_reinstall() {
+    __dotfiles_uninstall "${@}"
+    __dotfiles_install   "${@}"
+}
+
 function __dotfiles_init() {
     export PATH=${DOTFILES_BIN}:${PATH}
     export LD_LIBRARY_PATH=${DOTFILES_LIB}
@@ -176,6 +181,7 @@ function dotfiles {
         check)              __dotfiles_check;;
         install)            __dotfiles_install   "${@:2}";;
         uninstall)          __dotfiles_uninstall "${@:2}";;
+        reinstall)          __dotfiles_reinstall "${@:2}";;
         *)                  __dotfiles_help;;
     esac
 }
