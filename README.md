@@ -1,4 +1,23 @@
+# Introduction
+
+Here lies my _dotfiles_. But these are not ordinary dotfiles. It is more like
+an artisanal package manager of sorts. Each "packages" is a script that will
+install a component locally (in `~/.local`) as well as the corresponding config
+`~/.config`.
+
+But Why, you may ask? 🤔
+1. Because I can 🤓.
+2. Because I often work remotely on servers where I do not have root access.
+   And this package manager is a way to gain back control.
+
 # Installation
+
+Just clone, source `bootstrap.sh` in your `~/.bashrc` and you have access to
+additional commands:
+- `install` to install a package
+- `uninstall` to uninstall a package
+- `is_installed` that will return with exit 
+  code 0 if and only if a package is installed
 
 ```bash
 git clone https://github.com/meuter/dotfiles ~/.dotfiles/
