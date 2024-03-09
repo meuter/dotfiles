@@ -6,6 +6,7 @@ export DOTFILES_BIN=${DOTFILES_PREFIX}/bin
 export DOTFILES_LIB=${DOTFILES_PREFIX}/lib
 export DOTFILES_MAN=${DOTFILES_PREFIX}/man
 export DOTFILES_SRC=${DOTFILES_PREFIX}/src
+export DOTFILES_INCLUDE=${DOTFILES_PREFIX}/include
 export DOTFILES_SHARE=${DOTFILES_PREFIX}/share
 export DOTFILES_INSTALLED=${DOTFILES_PREFIX}/etc/pkg/installed
 export DOTFILES_CONFIG=${HOME}/.config
@@ -80,6 +81,7 @@ function bootstrap() {
         ${DOTFILES_CONFIG}
 
     export PATH=${DOTFILES_BIN}:${PATH}
+    export LD_LIBRARY_PATH=${DOTFILES_LIB}
 
     for installed_package in $(find -L ${DOTFILES_INSTALLED} -name package.sh); do
         source ${installed_package}
