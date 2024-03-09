@@ -12,7 +12,7 @@ But why? _you may ask_ 🤔
 3. Because I always get the exact version I want regardless of the underlying
    distribution / package manager.
 4. Because I can restart from scratch by removing `~/.local` and `~/.config`
-   and rerun one command in mimutes.
+   and rerun one command to get back to a clean known state.
 
 And why not use [nix](https://nixos.org/) then? because using nix without root access
 is a pain in the 🤡, otherwize it would be 🥇.
