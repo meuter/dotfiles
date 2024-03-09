@@ -10,12 +10,12 @@ function install_package() {
     curl -L https://go.dev/dl/${tarball} --output /tmp/${tarball}
     pushd . &> /dev/null
         tar -C ${DOTFILES_PREFIX} -xvf /tmp/${tarball}
+    	chmod -R u+w ${DOTFILES_PREFIX}/go
         rm -rf /tmp/${tarball}
     popd &> /dev/null
 }
 
 function uninstall_package() {
-    chmod -R u+w ${DOTFILES_PREFIX}/go
     rm -rvf ${DOTFILES_PREFIX}/go
     unset GOROOT
     unset GOROOT
