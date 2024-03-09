@@ -9,6 +9,10 @@ But Why, you may ask? 🤔
 1. Because I can 🤓.
 2. Because I often work remotely on servers where I do not have root access.
    And this package manager is a way to gain back control.
+3. Because I always get the exact version I want regardless of the underlying
+   distribution / package manager.
+4. Because I can restart from scratch by removing `~/.local` and `~/.config`
+   and rerun one command in mimutes.
 
 # Installation
 
