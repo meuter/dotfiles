@@ -1,7 +1,7 @@
 #!/bin/false "This script should be sourced in a shell, not executed directly"
 
 ###################################################################################################
-## Environment Variables 
+## Environment Variables
 ###################################################################################################
 
 export DOTFILES_ROOT=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
@@ -31,9 +31,9 @@ function __dotfiles_info() {
 
 # NOTE: use () instead of {} for the function body -> executed in it's own bash process
 function __dotfiles_install_in_subprocess() (
-    
+
     set -eou pipefail
-    
+
     if dotfiles_is_installed ${1}; then
         return 0
     fi
@@ -50,11 +50,11 @@ function __dotfiles_install_in_subprocess() (
             __dotfiles_info "Installing ${package}..."
             pushd . &> /dev/null
                 cd ${DOTFILES_ROOT}/${package}/
-		set -ex
+        set -ex
                 source package.sh
                 install_package
                 init_package
-		set +ex
+        set +ex
                 ln -fv -s ${DOTFILES_ROOT}/${package}/ ${DOTFILES_INSTALLED}/
             popd &> /dev/null
         fi
@@ -63,7 +63,7 @@ function __dotfiles_install_in_subprocess() (
 
 # NOTE: use () instead of {} for the function body -> executed in it's own bash process
 function __dotfiles_uninstall_in_subprocess() (
-    
+
     set -eou pipefail
 
     if ! dotfiles_is_installed ${1}; then
@@ -72,10 +72,10 @@ function __dotfiles_uninstall_in_subprocess() (
     __dotfiles_info "Uninstalling ${1}..."
     pushd . &> /dev/null
         cd ${DOTFILES_ROOT}/${1}/
-	set -exu
+    set -exu
         source package.sh
         uninstall_package
-	set +exu
+    set +exu
         rm -vf ${DOTFILES_INSTALLED}/${1}
     popd &> /dev/null
 )
@@ -93,7 +93,7 @@ function __dotfiles_init() {
     export PATH=${DOTFILES_BIN}:${PATH}
     export LD_LIBRARY_PATH=${DOTFILES_LIB}
 
-    for installed_package in $(find -L ${DOTFILES_INSTALLED} -name package.sh); do
+    for installed_package in $(ls ${DOTFILES_INSTALLED}/*/package.sh); do
         source ${installed_package}
         init_package
     done
