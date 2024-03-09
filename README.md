@@ -21,9 +21,9 @@ is a pain in the 🤡, otherwize it would be 🥇.
 
 Just clone, source `bootstrap.sh` in your `~/.bashrc` and you have access to
 additional commands:
-- `install` to install a package
-- `uninstall` to uninstall a package
-- `is_installed` that will return with exit 
+- `dotfiles_install` to install a package
+- `dotfiles_uninstall` to uninstall a package
+- `dotfiles_is_installed` that will return with exit 
   code 0 if and only if a package is installed
 
 ```bash
