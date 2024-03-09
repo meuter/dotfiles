@@ -22,17 +22,13 @@ CAUTION: this is highly experimental! Use are your own risk ⚠
 # Installation
 
 Just clone, source `bootstrap.sh` in your `~/.bashrc` and you have access to
-additional commands:
-- `dotfiles_install` to install a package
-- `dotfiles_uninstall` to uninstall a package
-- `dotfiles_is_installed` that will return with exit 
-  code 0 if and only if a package is installed
+one additional `dotfiles` command.
 
 ```bash
 git clone https://github.com/meuter/dotfiles ~/.dotfiles/
 echo ". ~/.dotfiles/bootstrap.sh" >> ~/.bashrc
 . ~/.dotfiles/bootstrap.sh
-dotfiles_install all
+dotfiles install all
 
 ```
 
