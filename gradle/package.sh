@@ -5,10 +5,12 @@ function dependencies() {
 }
 
 function install_package() {
+    set +u
     sdk install gradle 7.5.1
 }
 
 function uninstall_package() {
+    set +u
     sdk uninstall gradle 7.5.1
 }
 

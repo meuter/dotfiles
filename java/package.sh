@@ -5,10 +5,12 @@ function dependencies() {
 }
 
 function install_package() {
+    set +u
     sdk install java 17.0.10-amzn
 }
 
 function uninstall_package() {
+    set +u
     sdk uninstall java 17.0.10-amzn
 }
 

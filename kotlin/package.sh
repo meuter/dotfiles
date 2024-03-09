@@ -5,10 +5,12 @@ function dependencies() {
 }
 
 function install_package() {
+    set +u
     sdk install kotlin 1.8.20
 }
 
 function uninstall_package() {
+    set +u
     sdk uninstall kotlin 1.8.20
 }
 

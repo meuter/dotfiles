@@ -17,6 +17,7 @@ function uninstall_package() {
 }
 
 function init_package() {
+    set +u
     export SDKMAN_DIR=~/.local/sdkman
     export SDKMAN_DIR_RAW=~/.local/sdkman
     source ~/.local/sdkman/bin/sdkman-init.sh
