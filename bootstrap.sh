@@ -29,11 +29,17 @@ function __dotfiles_info() {
     echo
 }
 
-# NOTE: use () instead of {} for the function body -> executed in it's own bash process
-function __dotfiles_install_in_subprocess() (
+function __dotfiles_error() {
+    local white_on_red="\e[97m\e[101m"
+    local normal="\e[0m"
+    echo
+    printf "${white_on_red}------------------------------------------------------------${normal}\n"
+    printf "${white_on_red}-- %-57s${normal}\n" "${1}"
+    printf "${white_on_red}------------------------------------------------------------${normal}\n"
+    echo
+}
 
-    set -eou pipefail
-
+function __dotfiles_install_in_subprocess() {
     if dotfiles_is_installed ${1}; then
         return 0
     fi
@@ -50,35 +56,29 @@ function __dotfiles_install_in_subprocess() (
             __dotfiles_info "Installing ${package}..."
             pushd . &> /dev/null
                 cd ${DOTFILES_ROOT}/${package}/
-        set -ex
                 source package.sh
+                set -x
                 install_package
                 init_package
-        set +ex
+                set +x
                 ln -fv -s ${DOTFILES_ROOT}/${package}/ ${DOTFILES_INSTALLED}/
             popd &> /dev/null
         fi
     done
-)
+}
 
-# NOTE: use () instead of {} for the function body -> executed in it's own bash process
-function __dotfiles_uninstall_in_subprocess() (
-
-    set -eou pipefail
-
+function __dotfiles_uninstall_in_subprocess() {
     if ! dotfiles_is_installed ${1}; then
         return 0
     fi
     __dotfiles_info "Uninstalling ${1}..."
     pushd . &> /dev/null
         cd ${DOTFILES_ROOT}/${1}/
-    set -exu
         source package.sh
         uninstall_package
-    set +exu
         rm -vf ${DOTFILES_INSTALLED}/${1}
     popd &> /dev/null
-)
+}
 
 function __dotfiles_create_folders() {
     mkdir -p \
@@ -114,17 +114,25 @@ function dotfiles_is_installed() {
 }
 
 function dotfiles_install() {
-    __dotfiles_create_folders
-    __dotfiles_install_in_subprocess ${1}
-    __dotfiles_init
-    __dotfiles_info "All Done!"
+    ( \
+        set -eou pipefail && \
+        __dotfiles_install_in_subprocess ${1} && \
+        __dotfiles_init && \
+        __dotfiles_create_folders \
+    ) && \
+        __dotfiles_info "All Done!" || \
+        __dotfiles_error "Error"
 }
 
 function dotfiles_uninstall() {
-    __dotfiles_create_folders
-    __dotfiles_uninstall_in_subprocess ${1}
-    __dotfiles_init
-    __dotfiles_info "All Done!"
+    ( \
+        set -eou pipefail && \
+        __dotfiles_uninstall_in_subprocess ${1} && \
+        __dotfiles_init && \
+        __dotfiles_create_folders \
+    ) && \
+        __dotfiles_info "All Done!" || \
+        __dotfiles_error "Error"
 }
 
 function dotfiles_bootstrap() {
