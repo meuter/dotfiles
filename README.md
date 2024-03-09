@@ -14,6 +14,9 @@ But why? _you may ask_ 🤔
 4. Because I can restart from scratch by removing `~/.local` and `~/.config`
    and rerun one command in mimutes.
 
+And why not use [nix](https://nixos.org/) then? because using nix without root access
+is a pain in the 🤡, otherwize it would be 🥇.
+
 # Installation
 
 Just clone, source `bootstrap.sh` in your `~/.bashrc` and you have access to
