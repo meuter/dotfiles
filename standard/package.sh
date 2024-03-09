@@ -3,7 +3,7 @@
 function dependencies() {
     echo "rust git-delta gitconfig"
     echo "starship"
-    echo "inputrc bat exa fzf"
+    echo "inputrc bat exa fzf zoxide"
     echo "clang ripgrep golang nodejs neovim bat"
     echo "clang libevent ncurses tmux"
 }
