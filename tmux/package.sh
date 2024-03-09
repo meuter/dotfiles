@@ -37,9 +37,13 @@ function uninstall_package() {
 }
 
 function init_package() {
-    if which tmux >/dev/null 2>&1; then
-        if [[ -z "${TMUX-}" ]]; then
-            tmux new-session -A -s main
-        fi
+    # prevent from launching tmux during the installation
+    if [ "${1}" == "--installed" ]; then 
+        return 0
+    fi
+
+    # start tmux session right away
+    if [ -z "${TMUX-}" ]; then
+        tmux new-session -A -s main
     fi
 }

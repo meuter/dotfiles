@@ -71,17 +71,18 @@ function __dotfiles_install() {
             __dotfiles_error "Could not install '${package}'"
             return 1
         fi
-        (set -eou pipefail && source ${package_script} && set -x init_package)
+        (set -eou pipefail && source ${package_script} && set -x && init_package --installed)
         if [ "$?" -ne 0 ]; then
             __dotfiles_error "Could initialize '${package}'"
             return 1
         fi
         source ${package_script}
-        init_package
+        init_package --installed
 	ln -fv -s ${DOTFILES_ROOT}/${package}/ ${DOTFILES_INSTALLED}/
     done
 
     __dotfiles_info "All Done!"
+    __dotfiles_init
 }
 
 function __dotfiles_uninstall_in_subprocess() {
