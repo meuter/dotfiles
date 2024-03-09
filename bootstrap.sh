@@ -66,18 +66,19 @@ function __dotfiles_install() {
     for package in ${packages_to_install}; do
         __dotfiles_info "Installing '${package}'..."
         local package_script="${DOTFILES_ROOT}/${package}/package.sh"
-        (set -eou pipefail && source ${package_script} && install_package)
+        (set -eou pipefail && source ${package_script} && set -x && install_package)
         if [ "$?" -ne 0 ]; then
             __dotfiles_error "Could not install '${package}'"
             return 1
         fi
-        (set -eou pipefail && source ${package_script} && init_package)
+        (set -eou pipefail && source ${package_script} && set -x init_package)
         if [ "$?" -ne 0 ]; then
             __dotfiles_error "Could initialize '${package}'"
             return 1
         fi
         source ${package_script}
         init_package
+	ln -fv -s ${DOTFILES_ROOT}/${package}/ ${DOTFILES_INSTALLED}/
     done
 
     __dotfiles_info "All Done!"
