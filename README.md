@@ -18,8 +18,9 @@ install all
 function dependencies() {
     # function used to indicate the list of packages on 
     # which this package depends.
-    # NOTE: no transitive package dependencis, you need to 
-    #       specify *ALL* dependencies manually
+    # NOTE: no transitive package dependencies, you need to 
+    #       specify *ALL* packages including their dependencies
+    #       and their dependencies, etc.
     echo ""
 }
 
