@@ -17,6 +17,8 @@ But why? _you may ask_ 🤔
 And why not use [nix](https://nixos.org/) then? because using nix without root access
 is a pain in the 🤡, otherwize it would be 🥇.
 
+CAUTION: this is highly experimental! Use are your own risk ⚠
+
 # Installation
 
 Just clone, source `bootstrap.sh` in your `~/.bashrc` and you have access to
