@@ -13,8 +13,11 @@ function install_package() {
     rm -fv /tmp/${tarball}
     pushd . &> /dev/null
         cd ${DOTFILES_SRC}/${dirname}
-        CC=clang ./configure --prefix=${DOTFILES_PREFIX} --with-shared --with-termlib --enable-pc-files \
-        make -j && make install
+	CC=clang ./configure --prefix=${DOTFILES_PREFIX} --with-shared --with-termlib --enable-pc-files \
+	                     --with-pkg-config-libdir=${DOTFILES_LIB}/pkgconfig
+	
+	make -j && make install
+
         # https://stackoverflow.com/questions/51408698/when-in-conda-tmux-and-emacs-throw-error-while-loading-shared-libraries-libti
         rm -v ${DOTFILES_LIB}/libtinfo.so.6
         ln -s `readlink -f ${DOTFILES_LIB}/libtinfo.so` `readlink -f ${DOTFILES_LIB}/libtinfo.so | sed 's@libtinfo.so$@libtinfo.so.6@'`
