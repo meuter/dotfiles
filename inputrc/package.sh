@@ -5,14 +5,11 @@ function dependencies() {
 }
 
 function install_package() {
-    if [ -f ~/.inputrc ]; then
-        mv -v ~/.inputrc ~/.inputrc.bak
-    fi
     ln -sf ${DOTFILES_ROOT}/inputrc/.inputrc ~/.inputrc
 }
 
 function uninstall_package() {
-    rm -f ~/.inputrc
+    rm -fv ~/.inputrc
 }
 
 function init_package() {

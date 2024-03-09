@@ -5,9 +5,6 @@ function dependencies() {
 }
 
 function install_package() {
-    if [ -f ~/.gitconfig ]; then
-        mv -v ~/.gitconfig ~/.gitconfig.bak
-    fi
     ln -sf ${DOTFILES_ROOT}/gitconfig/.gitconfig ~/.gitconfig
 }
 

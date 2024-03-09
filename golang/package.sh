@@ -8,10 +8,8 @@ function install_package() {
     local version=1.22.0
     local tarball=go${version}.linux-amd64.tar.gz
     curl -L https://go.dev/dl/${tarball} --output /tmp/${tarball}
-    pushd . &> /dev/null
-        tar -C ${DOTFILES_PREFIX} -xvf /tmp/${tarball}
-        rm -rf /tmp/${tarball}
-    popd &> /dev/null
+    tar -C ${DOTFILES_PREFIX} -xvf /tmp/${tarball}
+    rm -rf /tmp/${tarball}
 }
 
 function uninstall_package() {

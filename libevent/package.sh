@@ -11,16 +11,16 @@ function install_package() {
     curl -L https://github.com/libevent/libevent/releases/download/release-${version}-stable/${tarball} --output /tmp/${tarball}
     tar xvf /tmp/${tarball} -C ${DOTFILES_SRC}/
     rm -fv /tmp/${tarball}
-    pushd . &> /dev/null
-        cd ${DOTFILES_SRC}/${dirname}
-        CC=clang ./configure --prefix=${DOTFILES_PREFIX} --enable-shared --disable-openssl
-        make -j && make install
-    popd &> /dev/null
+    cd ${DOTFILES_SRC}/${dirname}
+    CC=clang ./configure --prefix=${DOTFILES_PREFIX} --enable-shared --disable-openssl
+    make -j && make install
 }
 
 function uninstall_package() {
-    # TODO
-    echo -n
+    local version=2.1.12
+    local dirname=libevent-${version}-stable
+    make -C ${DOTFILES_SRC}/${dirname} uninstall
+    rm -rvf ${DOTFILES_SRC}/${dirname}
 }
 
 function init_package() {
