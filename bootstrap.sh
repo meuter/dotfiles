@@ -19,7 +19,7 @@ export DOTFILES_CONFIG=${HOME}/.config
 ## Private Functions
 ###################################################################################################
 
-function info() {
+function __dotfiles_info() {
     local white_on_green="\e[97m\e[102m"
     local normal="\e[0m"
     echo
@@ -29,7 +29,7 @@ function info() {
     echo
 }
 
-function error() {
+function __dotfiles_error() {
     local white_on_red="\e[97m\e[101m"
     local normal="\e[0m"
     echo
@@ -39,52 +39,55 @@ function error() {
     echo
 }
 
-function __dotfiles_install_many_packages() {
+function __dotfiles_install() {
     # resolve dependencies
     local pending_packages=$(echo "${@}" | xargs -n1 | awk '!a[$0]++' | xargs)
     for package in ${pending_packages}; do
         local package_script="${DOTFILES_ROOT}/${package}/package.sh"
         if [ ! -f "${package_script}" ]; then
-            error "Unknown Package: '${package}'"
+            __dotfiles_error "Unknown Package: '${package}'"
             return 1
         fi
+        local additional_package=$(set -eou pipefail && source ${package_script} && dependencies)
+        pending_packages="${additional_package} ${pending_packages}"
     done
-    echo ${pending_packages}
-    return 0
+    local pending_packages=$(echo "${pending_packages}" | xargs -n1 | awk '!a[$0]++' | xargs)
 
-
-    if dotfiles_is_installed ${1}; then
-        return 0
-    fi
-
-    local to_install=${1}
-    pushd . &> /dev/null
-        cd ${DOTFILES_ROOT}/${1}/
-        source package.sh
-        to_install="$(dependencies) ${to_install}"
-    popd &> /dev/null
-
-    for package in ${to_install}; do
-        if ! dotfiles_is_installed ${package}; then
-            info "Installing ${package}..."
-            pushd . &> /dev/null
-                cd ${DOTFILES_ROOT}/${package}/
-                source package.sh
-                set -x
-                install_package
-                init_package
-                set +x
-                ln -fv -s ${DOTFILES_ROOT}/${package}/ ${DOTFILES_INSTALLED}/
-            popd &> /dev/null
+    # check what needs to be installed
+    local packages_to_install=""
+    for package in ${pending_packages}; do
+        local package_script="${DOTFILES_INSTALLED}/${package}/package.sh"
+        if [ ! -f "${package_script}" ]; then
+            packages_to_install="${packages_to_install} ${package}"
         fi
     done
+
+    # perform installation
+    for package in ${packages_to_install}; do
+        __dotfiles_info "Installing '${package}'..."
+        local package_script="${DOTFILES_ROOT}/${package}/package.sh"
+        (set -eou pipefail && source ${package_script} && install_package)
+        if [ "$?" -ne 0 ]; then
+            __dotfiles_error "Could not install '${package}'"
+            return 1
+        fi
+        (set -eou pipefail && source ${package_script} && init_package)
+        if [ "$?" -ne 0 ]; then
+            __dotfiles_error "Could initialize '${package}'"
+            return 1
+        fi
+        source ${package_script}
+        init_package
+    done
+
+    __dotfiles_info "All Done!"
 }
 
 function __dotfiles_uninstall_in_subprocess() {
     if ! dotfiles_is_installed ${1}; then
         return 0
     fi
-    info "Uninstalling ${1}..."
+    __dotfiles_info "Uninstalling ${1}..."
     pushd . &> /dev/null
         cd ${DOTFILES_ROOT}/${1}/
         source package.sh
@@ -112,47 +115,10 @@ function __dotfiles_init() {
     done
 }
 
-
-###################################################################################################
-## Public Functions
-###################################################################################################
-
-function dotfiles_is_installed() {
-    local install_dir=${DOTFILES_INSTALLED}/${1}
-    if [ -d "${install_dir}" ]; then
-       return 0
-    else
-       return 1
-    fi
-}
-
-function dotfiles_install() {
-    ( \
-        set -eou pipefail && \
-        __dotfiles_install_many_packages ${@} && \
-        __dotfiles_init && \
-        __dotfiles_create_folders \
-    ) && \
-        info "All Done!" || \
-        error "Error"
-}
-
-function dotfiles_uninstall() {
-    ( \
-        set -eou pipefail && \
-        __dotfiles_uninstall_in_subprocess ${1} && \
-        __dotfiles_init && \
-        __dotfiles_create_folders \
-    ) && \
-        info "All Done!" || \
-        error "Error"
-}
-
 function dotfiles_bootstrap() {
     __dotfiles_create_folders
     __dotfiles_init
 }
-
 
 function __dotfiles_list_installed {
     (cd ${DOTFILES_INSTALLED} && find -L . -maxdepth 2 -name package.sh | awk '{split($0,a,"/"); print a[2]}')
@@ -160,10 +126,6 @@ function __dotfiles_list_installed {
 
 function __dotfiles_list {
     (cd ${DOTFILES_ROOT} && find . -maxdepth 2 -name package.sh | awk '{split($0,a,"/"); print a[2]}')
-}
-
-function __dotfiles_test {
-    echo "${@}"
 }
 
 function __dotfiles_initrc {
@@ -181,14 +143,18 @@ function __dotfiles_check {
         local output=$(mktemp -t dotfiles.XXXXX)
         (set -eou pipefail; source "${package}" &> ${output})
         if [ "$?" -ne 0 ]; then
-            error "ERROR: ${package}"
+            __dotfiles_error "ERROR: ${package}"
             cat ${output}
             return 1
         fi
         rm -f ${output}
     done
-    info "All Good!"
+    __dotfiles_info "All Good!"
 }
+
+###################################################################################################
+## Public Functions
+###################################################################################################
 
 function dotfiles {
     case ${1} in
@@ -196,6 +162,7 @@ function dotfiles {
         list_installed)     __dotfiles_list_installed;;
         initrc)             __dotfiles_initrc;;
         check)              __dotfiles_check;;
+        install)            __dotfiles_install "${@:2}"
     esac
 }
 
