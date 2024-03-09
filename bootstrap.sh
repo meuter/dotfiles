@@ -12,7 +12,7 @@ export DOTFILES_MAN=${DOTFILES_PREFIX}/man
 export DOTFILES_SRC=${DOTFILES_PREFIX}/src
 export DOTFILES_INCLUDE=${DOTFILES_PREFIX}/include
 export DOTFILES_SHARE=${DOTFILES_PREFIX}/share
-export DOTFILES_INSTALLED=${DOTFILES_PREFIX}/etc/pkg/installed
+export DOTFILES_INSTALLED=${DOTFILES_PREFIX}/etc/dotfiles
 export DOTFILES_CONFIG=${HOME}/.config
 
 ###################################################################################################
@@ -93,7 +93,7 @@ function __dotfiles_init() {
     export PATH=${DOTFILES_BIN}:${PATH}
     export LD_LIBRARY_PATH=${DOTFILES_LIB}
 
-    for installed_package in $(ls ${DOTFILES_INSTALLED}/*/package.sh); do
+    for installed_package in $(find -L ${DOTFILES_INSTALLED} -maxdepth 2 -name package.sh); do
         source ${installed_package}
         init_package
     done
