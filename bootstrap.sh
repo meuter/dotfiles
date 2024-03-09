@@ -19,7 +19,7 @@ export DOTFILES_CONFIG=${HOME}/.config
 ## Private Functions
 ###################################################################################################
 
-function __dotfiles_info() {
+function info() {
     local white_on_green="\e[97m\e[102m"
     local normal="\e[0m"
     echo
@@ -29,7 +29,7 @@ function __dotfiles_info() {
     echo
 }
 
-function __dotfiles_error() {
+function error() {
     local white_on_red="\e[97m\e[101m"
     local normal="\e[0m"
     echo
@@ -39,7 +39,20 @@ function __dotfiles_error() {
     echo
 }
 
-function __dotfiles_install_in_subprocess() {
+function __dotfiles_install_many_packages() {
+    # resolve dependencies
+    local pending_packages=$(echo "${@}" | xargs -n1 | awk '!a[$0]++' | xargs)
+    for package in ${pending_packages}; do
+        local package_script="${DOTFILES_ROOT}/${package}/package.sh"
+        if [ ! -f "${package_script}" ]; then
+            error "Unknown Package: '${package}'"
+            return 1
+        fi
+    done
+    echo ${pending_packages}
+    return 0
+
+
     if dotfiles_is_installed ${1}; then
         return 0
     fi
@@ -53,7 +66,7 @@ function __dotfiles_install_in_subprocess() {
 
     for package in ${to_install}; do
         if ! dotfiles_is_installed ${package}; then
-            __dotfiles_info "Installing ${package}..."
+            info "Installing ${package}..."
             pushd . &> /dev/null
                 cd ${DOTFILES_ROOT}/${package}/
                 source package.sh
@@ -71,7 +84,7 @@ function __dotfiles_uninstall_in_subprocess() {
     if ! dotfiles_is_installed ${1}; then
         return 0
     fi
-    __dotfiles_info "Uninstalling ${1}..."
+    info "Uninstalling ${1}..."
     pushd . &> /dev/null
         cd ${DOTFILES_ROOT}/${1}/
         source package.sh
@@ -116,12 +129,12 @@ function dotfiles_is_installed() {
 function dotfiles_install() {
     ( \
         set -eou pipefail && \
-        __dotfiles_install_in_subprocess ${1} && \
+        __dotfiles_install_many_packages ${@} && \
         __dotfiles_init && \
         __dotfiles_create_folders \
     ) && \
-        __dotfiles_info "All Done!" || \
-        __dotfiles_error "Error"
+        info "All Done!" || \
+        error "Error"
 }
 
 function dotfiles_uninstall() {
@@ -131,13 +144,59 @@ function dotfiles_uninstall() {
         __dotfiles_init && \
         __dotfiles_create_folders \
     ) && \
-        __dotfiles_info "All Done!" || \
-        __dotfiles_error "Error"
+        info "All Done!" || \
+        error "Error"
 }
 
 function dotfiles_bootstrap() {
     __dotfiles_create_folders
     __dotfiles_init
+}
+
+
+function __dotfiles_list_installed {
+    (cd ${DOTFILES_INSTALLED} && find -L . -maxdepth 2 -name package.sh | awk '{split($0,a,"/"); print a[2]}')
+}
+
+function __dotfiles_list {
+    (cd ${DOTFILES_ROOT} && find . -maxdepth 2 -name package.sh | awk '{split($0,a,"/"); print a[2]}')
+}
+
+function __dotfiles_test {
+    echo "${@}"
+}
+
+function __dotfiles_initrc {
+    export PATH=${DOTFILES_BIN}:${PATH}
+    export LD_LIBRARY_PATH=${DOTFILES_LIB}
+
+    for installed_package in $(find -L ${DOTFILES_INSTALLED} -maxdepth 2 -name package.sh); do
+        source ${installed_package}
+        init_package
+    done
+}
+
+function __dotfiles_check {
+    for package in $(find ${DOTFILES_ROOT} -maxdepth 2 -name package.sh); do
+        local output=$(mktemp -t dotfiles.XXXXX)
+        (set -eou pipefail; source "${package}" &> ${output})
+        if [ "$?" -ne 0 ]; then
+            error "ERROR: ${package}"
+            cat ${output}
+            return 1
+        fi
+        rm -f ${output}
+    done
+    info "All Good!"
+}
+
+function dotfiles {
+    case ${1} in
+        list)               __dotfiles_list;;
+        list_installed)     __dotfiles_list_installed;;
+        initrc)             __dotfiles_initrc;;
+        check)              __dotfiles_check;;
+    esac
 }
 
 ###################################################################################################
