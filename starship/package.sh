@@ -23,6 +23,7 @@ function uninstall_package() {
 }
 
 function init_package() {
+    set +u
     eval "$(starship init bash)"
 }
 
