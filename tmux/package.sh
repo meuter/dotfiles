@@ -21,8 +21,9 @@ function install_package() {
     ln -fs ${DOTFILES_ROOT}/tmux/tmux.conf ${DOTFILES_CONFIG}/tmux/
 
     # install and bootstrap tpm
-    export TMUX_PLUGIN_MANAGER_PATH=${DOTFILES_CONFIG}/tmux/plugins/
+    export TMUX_PLUGIN_MANAGER_PATH=${DOTFILES_CONFIG}/tmux/plugins
     mkdir -p ${TMUX_PLUGIN_MANAGER_PATH}
+    rm -rf ${TMUX_PLUGIN_MANAGER_PATH}/tmp
     git clone https://github.com/tmux-plugins/tpm ${TMUX_PLUGIN_MANAGER_PATH}/tpm
     tmux start-server
     tmux new-session -d
