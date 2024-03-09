@@ -5,7 +5,7 @@ an artisanal package manager of sorts. Each "package" is a script that will
 install a component locally (in `~/.local`) as well as the corresponding config
 `~/.config`.
 
-But Why, you may ask? 🤔
+But why? _you may ask_ 🤔
 1. Because I can 🤓.
 2. Because I often work remotely on servers where I do not have root access.
    And this package manager is a way to gain back control.
