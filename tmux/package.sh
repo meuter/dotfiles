@@ -23,7 +23,7 @@ function install_package() {
     # install and bootstrap tpm
     export TMUX_PLUGIN_MANAGER_PATH=${DOTFILES_CONFIG}/tmux/plugins
     mkdir -p ${TMUX_PLUGIN_MANAGER_PATH}
-    rm -rf ${TMUX_PLUGIN_MANAGER_PATH}/tmp
+    rm -rf ${TMUX_PLUGIN_MANAGER_PATH}/tpm
     git clone https://github.com/tmux-plugins/tpm ${TMUX_PLUGIN_MANAGER_PATH}/tpm
     tmux start-server
     tmux new-session -d
@@ -38,7 +38,7 @@ function uninstall_package() {
 
 function init_package() {
     if which tmux >/dev/null 2>&1; then
-        if [[ -z "$TMUX" ]]; then
+        if [[ -z "${TMUX-}" ]]; then
             tmux new-session -A -s main
         fi
     fi
