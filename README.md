@@ -28,7 +28,7 @@ one additional `dotfiles` command.
 git clone https://github.com/meuter/dotfiles ~/.dotfiles/
 echo ". ~/.dotfiles/bootstrap.sh" >> ~/.bashrc
 . ~/.dotfiles/bootstrap.sh
-dotfiles install standard 
+dotfiles install neovim tmux 
 
 ```
 
@@ -37,12 +37,15 @@ dotfiles install standard
 ```bash
 #!/bin/false "This script should be sourced in a shell, not executed directly"
 
+# Beware that functions in `bash` cannot be empty so always put
+# something between the `{` `}`, like `echo -n`
+
 function dependencies() {
     # This function returns (prints to stdout) the list of packages
     # that should be installed before this package. Note that there
     # are no transitive dependencies here. *ALL* dependencies and
     # their dependencies, and their dependencies, etc. should be
-    # specified here
+    # specified here.
     echo ""
 }
 
