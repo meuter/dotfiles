@@ -61,14 +61,16 @@ function uninstall_package() {
 function init_package() {
     # function used to initialize the package 
     # (will be called from ~/.bashrc via bootstrap.sh)
+    # this function will receive '--installed' during the 
+    # installation but not afterwards when bashrc is parsed
     echo -n
 }
 
 ```
 
-## Example
+## Examples
 
-This is a package file to install neovim
+### neovim
 
 ```bash
 #!/bin/false "This script should be sourced in a shell, not executed directly"
@@ -106,4 +108,27 @@ function init_package() {
 }
 
 ```
+
+### zoxide
+
+```bash
+#!/bin/false "This script should be sourced in a shell, not executed directly"
+
+function dependencies() {
+    echo "rust"
+}
+
+function install_package() {
+    cargo install zoxide
+}
+
+function uninstall_package() {
+    cargo uninstall zoxide
+}
+
+function init_package() {
+    eval "$(zoxide init --cmd cd bash)"
+}
+```
+
 
