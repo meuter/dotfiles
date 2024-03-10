@@ -11,7 +11,9 @@ function install_package() {
     fi
 
     mkdir -p $(dirname ${manifest})
-    tar xvf /tmp/${tarball} --strip-components=1 -C ${DOTFILES_PREFIX} | tee ${manifest}
+    tar xvf /tmp/${tarball} \
+        --strip-components=1 \
+        -C ${DOTFILES_PREFIX} | tee ${manifest}
     sed -i "s#${tarball%.*.*}#${DOTFILES_PREFIX}#" ${manifest}
     sed -i "/.*\/$/d"                              ${manifest}
 
