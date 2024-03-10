@@ -209,9 +209,9 @@ function __dotfiles_bootstrap() {
         ${DOTFILES_SRC}\
         ${DOTFILES_SHARE}\
         ${DOTFILES_INSTALLED}\
-	${DOTFILES_COMPLETION} \
-	${DOTFILES_MAN1} \
-	${DOTFILES_MAN5} \
+    ${DOTFILES_COMPLETION} \
+    ${DOTFILES_MAN1} \
+    ${DOTFILES_MAN5} \
         ${DOTFILES_CONFIG}
     __dotfiles_init
 }
