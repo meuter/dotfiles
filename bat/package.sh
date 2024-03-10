@@ -16,16 +16,10 @@ function install_package() {
     # extract tarball
     tar xvf /tmp/${tarball} -C /tmp
 
-    # install binary
+    # install content
     find /tmp/${tarball%.tar.gz} -name "bat" -type f -exec mv {} ${DOTFILES_BIN}/ \;
-
-    # install bash completion
-    mkdir -p ${DOTFILES_SHARE}/bat/completion/
-    find /tmp/${tarball%.tar.gz} -name "bat.bash" -type f -exec mv {} ${DOTFILES_SHARE}/bat/completion/ \;
-
-    # install manpage
-    mkdir -p ${DOTFILES_MAN}/man1/
-    find /tmp/${tarball%.tar.gz} -name "bat.1" -type f -exec mv {} ${DOTFILES_MAN}/man1/ \;
+    find /tmp/${tarball%.tar.gz} -name "bat.bash" -type f -exec mv {} ${DOTFILES_COMPLETION}/ \;
+    find /tmp/${tarball%.tar.gz} -name "bat.1" -type f -exec mv {} ${DOTFILES_MAN1} \;
 
     # cleanup tarball and extracted archive
     rm -v /tmp/${tarball}
@@ -36,11 +30,10 @@ function uninstall_package() {
     # remove installed files
     rm -fv \
         ${DOTFILES_BIN}/bat \
-        ${DOTFILES_SHARE}/bat/completion/bat.bash \
-        ${DOTFILES_MAN}/man1/bat.1
+        ${DOTFILES_COMPLETION}/bat.bash \
+        ${DOTFILES_MAN1}/bat.1
 }
 
 function init_package() {
-    # parse bash completion
-    source ${DOTFILES_SHARE}/bat/completion/bat.bash
+    source ${DOTFILES_COMPLETION}/bat.bash
 }

@@ -16,28 +16,23 @@ function install_package() {
     # extract tarball
     tar xvf /tmp/${tarball} -C /tmp
 
-    # install binary
+    # install content
     find /tmp/${tarball%.tar.gz} -name "rg" -type f -exec mv {} ${DOTFILES_BIN}/ \;
-
-    # install bash completion
-    mkdir -p ${DOTFILES_SHARE}/rg/completion/
-    find /tmp/${tarball%.tar.gz} -name "rg.bash" -type f -exec mv {} ${DOTFILES_SHARE}/rg/completion/ \;
-
-    # install manpage
-    mkdir -p ${DOTFILES_MAN}/man1/
-    find /tmp/${tarball%.tar.gz} -name "rg.1" -type f -exec mv {} ${DOTFILES_MAN}/man1/ \;
+    find /tmp/${tarball%.tar.gz} -name "rg.bash" -type f -exec mv {} ${DOTFILES_COMPLETION}/ \;
+    find /tmp/${tarball%.tar.gz} -name "rg.1" -type f -exec mv {} ${DOTFILES_MAN1} \;
 
     # cleanup tarball and extracted archive
     rm -v /tmp/${tarball}
     rm -rv /tmp/${tarball%.tar.gz}
-
-
 }
 
 function uninstall_package() {
-    echo -n
+    rm -fv \
+        ${DOTFILES_BIN}/rg \
+        ${DOTFILES_COMPLETION}/rg.bash \
+        ${DOTFILES_MAN1}/rg.1
 }
 
 function init_package() {
-    source ${DOTFILES_SHARE}/rg/completion/rg.bash
+    source ${DOTFILES_COMPLETION}/rg.bash
 }

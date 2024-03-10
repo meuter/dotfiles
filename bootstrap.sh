@@ -10,9 +10,12 @@ export DOTFILES_BIN=${DOTFILES_PREFIX}/bin
 export DOTFILES_LIB=${DOTFILES_PREFIX}/lib
 export DOTFILES_MAN=${DOTFILES_PREFIX}/man
 export DOTFILES_SRC=${DOTFILES_PREFIX}/src
+export DOTFILES_MAN1=${DOTFILES_MAN}/man1
+export DOTFILES_MAN5=${DOTFILES_MAN}/man5
 export DOTFILES_INCLUDE=${DOTFILES_PREFIX}/include
 export DOTFILES_SHARE=${DOTFILES_PREFIX}/share
-export DOTFILES_INSTALLED=${DOTFILES_PREFIX}/etc/dotfiles
+export DOTFILES_COMPLETION=${DOTFILES_SHARE}/completion
+export DOTFILES_INSTALLED=${DOTFILES_SHARE}/dotfiles
 export DOTFILES_CONFIG=${HOME}/.config
 
 ###################################################################################################
@@ -206,6 +209,9 @@ function __dotfiles_bootstrap() {
         ${DOTFILES_SRC}\
         ${DOTFILES_SHARE}\
         ${DOTFILES_INSTALLED}\
+	${DOTFILES_COMPLETION} \
+	${DOTFILES_MAN1} \
+	${DOTFILES_MAN5} \
         ${DOTFILES_CONFIG}
     __dotfiles_init
 }
