@@ -21,6 +21,14 @@ CAUTION: this is highly experimental! Use are your own risk ⚠
 
 # Installation
 
+## The short way
+
+```bash
+eval "$(curl https://raw.githubusercontent.com/meuter/dotfiles/main/install.sh)"
+```
+
+## The long way
+
 Just clone the repo, then source `bootstrap.sh` in your `~/.bashrc`:
 
 ```bash
