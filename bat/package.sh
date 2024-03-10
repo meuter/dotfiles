@@ -1,22 +1,42 @@
 #!/bin/false "This script should be sourced in a shell, not executed directly"
 
 function dependencies() {
-    echo ""
+    echo -n
 }
 
 function install_package() {
+    # version info
     local version=0.24.0
     local tarball=bat-v${version}-x86_64-unknown-linux-musl.tar.gz
+    local checksum=2c018f64d8fa1106f51fd021bb074064
+
+    # grab tarball
     curl -L https://github.com/sharkdp/bat/releases/download/v${version}/${tarball} --output /tmp/${tarball}
     tar xvf /tmp/${tarball} -C /tmp
+    md5sum -c ${DOTFILES_ROOT}/bat/checksum.md5
+
+    # install `bat` binary
     find /tmp/${tarball%.tar.gz} -name "bat" -type f -exec mv {} ${DOTFILES_BIN}/ \;
+
+    # install bash completion
+    mkdir -p ${DOTFILES_SHARE}/bat/completion/
+    find /tmp/${tarball%.tar.gz} -name "bat.bash" -type f -exec mv {} ${DOTFILES_SHARE}/bat/completion/ \;
+
+    # install manpage
+    mkdir -p ${DOTFILES_MAN}/man1/
+    find /tmp/${tarball%.tar.gz} -name "bat.1" -type f -exec mv {} ${DOTFILES_MAN}/man1/ \;
+
+    # cleanup tarball
     rm -rf /tmp/${tarball}
 }
 
 function uninstall_package() {
-    rm -fv ${DOTFILES_BIN}/bat
+    rm -fv \
+        ${DOTFILES_BIN}/bat \
+        ${DOTFILES_SHARE}/bat/completion/bat.bash \
+        ${DOTFILES_MAN}/man1/bat.1
 }
 
 function init_package() {
-    echo -n
+    source ${DOTFILES_SHARE}/bat/completion/bat.bash
 }
