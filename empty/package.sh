@@ -41,3 +41,14 @@ function init_package() {
     # NOTE: this function is optional
     echo -n
 }
+
+function uninit_package() {
+    # This function is used to un-initialize the package after it is
+    # uninstalled to e.g. remove alias, cleanup environment variables, ...
+    # Beware that this function is executed in the main shell, it should
+    # therefore be a good citizen, e.g. not change the cwd.
+    #
+    # NOTE: this function is optional
+    echo -n
+}
+

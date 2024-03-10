@@ -159,6 +159,24 @@ function __dotfiles_uninstall() {
                 __dotfiles_error "Could uninstall '${package}'"
                 return 1
             fi
+
+            # verify if the package has an uninit function
+            local exists=$( \
+                set -eou pipefail;
+                unset -f uninit_package;
+                source ${package_script};
+                [[ $(type -t uninit_package) == function ]] && echo "yes" || echo "no" \
+            )
+
+            # if so execute the function
+            if [ "${exists}" == "yes" ]; then
+                source ${package_script} && uninit_package
+                if [ "$?" -ne 0 ]; then
+                    __dotfiles_error "Could uninitialize '${package}'"
+                    return 1
+                fi
+            fi
+
             rm -vf ${DOTFILES_INSTALLED}/${1}
         fi
     done

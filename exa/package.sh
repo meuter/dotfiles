@@ -1,5 +1,3 @@
-#!/bin/false "This script should be sourced in a shell, not executed directly"
-
 function install_package() {
     # version info
     local version=0.10.1
@@ -16,7 +14,7 @@ function install_package() {
         return 1
     fi
 
-    # extract archive
+    # extract archive and create manifest
     mkdir -p $(dirname ${manifest})
     unzip -o /tmp/${zipfile} -d ${DOTFILES_PREFIX} | tee ${manifest}
     sed -i "s#\s*inflating:\ ##" ${manifest}
@@ -27,14 +25,21 @@ function install_package() {
 }
 
 function uninstall_package() {
-    set +x
     local manifest=${DOTFILES_SHARE}/exa/manifest.txt
-    for file in $(cat ${manifest}); do
-        rm -fv ${file}
-    done
+
+    # remove installed files
+    set +x
+    for file in $(cat ${manifest}); do rm -fv ${file}; done
+    set -x
+
+    # remove manifest
     rm -fv ${manifest}
 }
 
 function init_package() {
     alias ls=exa
+}
+
+function uninit_package() {
+    unalias ls
 }

@@ -27,10 +27,12 @@ function install_package() {
 function uninstall_package() {
     local manifest=${DOTFILES_SHARE}/clang/manifest.txt
 
+    # remove installed files
     set +x
     for file in $(cat ${manifest}); do rm -fv ${file}; done
     set -x
 
+    # remove manifest
     rm -fv ${manifest}
 }
 
