@@ -1,10 +1,8 @@
-#!/bin/false "This script should be sourced in a shell, not executed directly"
-
 function dependencies() {
-    echo "rust git-delta gitconfig"
+    echo "rust git-delta git-config"
     echo "starship"
     echo "inputrc bat exa fzf zoxide"
-    echo "clang ripgrep golang nodejs neovim bat"
+    echo "clang ripgrep golang nodejs neovim neovim-config"
     echo "clang libevent ncurses tmux"
 }
 
