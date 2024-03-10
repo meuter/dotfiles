@@ -1,5 +1,3 @@
-#!/bin/false "This script should be sourced in a shell, not executed directly"
-
 function install_package() {
     # version info
     local version=15.0.6
@@ -23,19 +21,16 @@ function install_package() {
     sed -i "/.*\/$/d"                              ${manifest}
 
     # cleanup tarball
-    rm -rf /tmp/${tarball}
+    rm -v /tmp/${tarball}
 }
 
 function uninstall_package() {
-    set +x
     local manifest=${DOTFILES_SHARE}/clang/manifest.txt
 
-    for file in $(cat ${manifest}); do
-        rm -fv ${file}
-    done
+    set +x
+    for file in $(cat ${manifest}); do rm -fv ${file}; done
+    set -x
+
     rm -fv ${manifest}
 }
 
-function init_package() {
-    echo -n
-}
