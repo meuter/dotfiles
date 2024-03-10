@@ -51,17 +51,14 @@ Examples:
 # Structure of a Package
 
 ```bash
-#!/bin/false "This script should be sourced in a shell, not executed directly"
-
-# Beware that functions in `bash` cannot be empty so always put
-# something between the `{` `}`, like `echo -n`
-
 function dependencies() {
     # This function returns (prints to stdout) the list of packages
     # that should be installed before this package. Note that there
     # are no transitive dependencies here. *ALL* dependencies and
     # their dependencies, and their dependencies, etc. should be
     # specified here.
+    #
+    # NOTE: this function is optional
     echo ""
 }
 
@@ -72,12 +69,16 @@ function install_package() {
     # is executed will be configured with `set -eou pipefile`. Therefore
     # if it fails on any command, the execution will halt and
     # an error message will be displayed.
+    #
+    # NOTE: this function is mandatory
     echo -n
 }
 
 function uninstall_package() {
     # This function is used to uninstall the packages. It will be
     # executed in the exact same way as `install_pakage`.
+    #
+    # NOTE: this function is mandatory
     echo -n
 }
 
@@ -89,8 +90,21 @@ function init_package() {
     # in the list that will be installed.
     # Beware that this function is executed in the main shell, it should
     # therefore be a good citizen, e.g. not change the cwd.
+    #
+    # NOTE: this function is optional
     echo -n
 }
+
+function uninit_package() {
+    # This function is used to un-initialize the package after it is
+    # uninstalled to e.g. remove alias, cleanup environment variables, ...
+    # Beware that this function is executed in the main shell, it should
+    # therefore be a good citizen, e.g. not change the cwd.
+    #
+    # NOTE: this function is optional
+    echo -n
+}
+
 
 ```
 
