@@ -33,9 +33,11 @@ function install_package() {
 
 function uninstall_package() {
     set +x
-    for file in $(cat ${DOTFILES_SHARE}/exa/manifest.txt); do
+    local manifest=${DOTFILES_SHARE}/exa/manifest.txt
+    for file in $(cat ${manifest}); do
         rm -fv ${file}
     done
+    rm -fv ${manifest}
 }
 
 function init_package() {
