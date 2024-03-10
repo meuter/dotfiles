@@ -12,10 +12,10 @@ function install_package() {
     mkdir -p /tmp/exa-${version}/
     unzip -o /tmp/${zipfile} -d /tmp/exa-${version}/
 
-    find /tmp/exa-${version} -name "exa" -type f -exec mv {} ${DOTFILES_BIN}/ \;
-    find /tmp/exa-${version} -name "exa.bash" -type f -exec mv {} ${DOTFILES_COMPLETION}/ \;
-    find /tmp/exa-${version} -name "exa.1" -type f -exec mv {} ${DOTFILES_MAN1} \;
-    find /tmp/exa-${version} -name "exa_colors.5" -type f -exec mv {} ${DOTFILES_MAN5} \;
+    find /tmp/exa-${version} -name "exa"            -type f -exec mv {} ${DOTFILES_BIN}/ \;
+    find /tmp/exa-${version} -name "exa.bash"       -type f -exec mv {} ${DOTFILES_COMPLETION}/ \;
+    find /tmp/exa-${version} -name "exa.1"          -type f -exec mv {} ${DOTFILES_MAN1} \;
+    find /tmp/exa-${version} -name "exa_colors.5"   -type f -exec mv {} ${DOTFILES_MAN5} \;
 
     rm -fv /tmp/${zipfile}
     rm -rvf /tmp/exa-${version}/
