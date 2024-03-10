@@ -20,15 +20,20 @@ function install_package() {
     fi
 
     # extract tarball directly in destibation
-    tar xvf /tmp/${tarball} --strip-components=1 -C ${DOTFILES_PREFIX}
+    mkdir -p ${DOTFILES_SHARE}/clang/
+    tar xvf /tmp/${tarball} --strip-components=1 -C ${DOTFILES_PREFIX} | tee ${DOTFILES_SHARE}/clang/manifest.txt
+    sed -i "s#${tarball%.*.*}#${DOTFILES_PREFIX}#" ${DOTFILES_SHARE}/clang/manifest.txt
+    sed -i "/.*\/$/d" ${DOTFILES_SHARE}/clang/manifest.txt
 
     # cleanup tarball
     rm -rf /tmp/${tarball}
 }
 
 function uninstall_package() {
-    # TODO
-    echo -n
+    set +x
+    for file in $(cat ${DOTFILES_SHARE}/clang/manifest.txt); do
+        rm -fv ${file}
+    done
 }
 
 function init_package() {
