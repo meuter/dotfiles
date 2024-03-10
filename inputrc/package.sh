@@ -1,5 +1,3 @@
-#!/bin/false "This script should be sourced in a shell, not executed directly"
-
 function install_package() {
     ln -sf ${DOTFILES_ROOT}/inputrc/.inputrc ~/.inputrc
 }
