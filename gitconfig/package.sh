@@ -1,19 +1,13 @@
-#!/bin/false "This script should be sourced in a shell, not executed directly"
-
 function dependencies() {
-    echo "rust git-delta"
+    echo "git-delta"
 }
 
 function install_package() {
-    ln -sf ${DOTFILES_ROOT}/gitconfig/.gitconfig ~/.gitconfig
+    ln -sf ${DOTFILES_ROOT}/gitconfig/.gitconfig ${HOME}/.gitconfig
 }
 
 function uninstall_package() {
-    rm -f ~/.gitconfig
-    unalias w
-    unalias d
-    unalias l
-    unalias g
+    rm -f ${HOME}/.gitconfig
 }
 
 function init_package() {
@@ -21,4 +15,11 @@ function init_package() {
     alias d="git diff"
     alias l="git lol"
     alias g="git lolg"
+}
+
+function uninit_package() {
+    unalias w
+    unalias d
+    unalias l
+    unalias g
 }
