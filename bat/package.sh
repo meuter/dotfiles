@@ -28,8 +28,8 @@ function install_package() {
     find /tmp/${tarball%.tar.gz} -name "bat.1" -type f -exec mv {} ${DOTFILES_MAN}/man1/ \;
 
     # cleanup tarball and extracted archive
-    rm -vf /tmp/${tarball}
-    rm -rvf /tmp/${tarball%.tar.gz}
+    rm -v /tmp/${tarball}
+    rm -rv /tmp/${tarball%.tar.gz}
 }
 
 function uninstall_package() {
