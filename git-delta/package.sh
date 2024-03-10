@@ -12,6 +12,3 @@ function uninstall_package() {
     cargo uninstall git-delta
 }
 
-function init_package() {
-    echo -n
-}

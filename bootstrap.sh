@@ -125,13 +125,24 @@ function __dotfiles_install() {
             __dotfiles_error "Could not install '${package}'"
             return 1
         fi
-        (set -eou pipefail && source ${package_script} && set -x && init_package --installed)
-        if [ "$?" -ne 0 ]; then
-            __dotfiles_error "Could initialize '${package}'"
-            return 1
+
+        # verify if the package has an init function
+        local exists=$( \
+            set -eou pipefail;
+            unset -f init_package;
+            source ${package_script};
+            [[ $(type -t init_package) == function ]] && echo "yes" || echo "no" \
+        )
+
+        # if so execute the function
+        if [ "${exists}" == "yes" ]; then
+            source ${package_script} && init_package --installed
+            if [ "$?" -ne 0 ]; then
+                __dotfiles_error "Could initialize '${package}'"
+                return 1
+            fi
         fi
-        source ${package_script}
-        init_package --installed
+
         ln -fv -s ${DOTFILES_ROOT}/${package}/ ${DOTFILES_INSTALLED}/
     done
     return 0
