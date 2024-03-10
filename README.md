@@ -99,28 +99,30 @@ function init_package() {
 ### neovim
 
 ```bash
-#!/bin/false "This script should be sourced in a shell, not executed directly"
-
-function dependencies() {
-    echo "golang rust ripgrep nodejs"
-}
-
 function install_package() {
+    # version info
     local version=0.9.5
     local tarball=nvim-linux64.tar.gz
+    local checksum=9edfa4d46fc382ca90e8c4c84c2e8c73
+
+    # download tarball
     curl -L https://github.com/neovim/neovim/releases/download/v${version}/${tarball} --output /tmp/${tarball}
-    pushd . &> /dev/null
-        cd ${DOTFILES_PREFIX}
-        tar xvf /tmp/${tarball} --strip-components=1
-        rm -rf /tmp/${tarball}
-    popd &> /dev/null
-    git clone https://github.com/meuter/nvim ${DOTFILES_CONFIG}/nvim
+
+    # check tarball
+    if [ "${checksum}" != $(md5sum /tmp/${tarball} | awk '{print $1}') ]; then
+        >&2 echo Unexpected checksum
+        return 1
+    fi
+
+    # extract tarball
+    tar xvf /tmp/${tarball} --strip-components=1 -C ${DOTFILES_PREFIX}
+    rm -rf /tmp/${tarball}
 }
 
 function uninstall_package() {
+    # remove all nvim files
     rm -rvf \
-    	${DOTFILES_CONFIG}/nvim/ \
-	    ${DOTFILES_SHARE}/nvim/ \
+        ${DOTFILES_SHARE}/nvim/ \
         ${DOTFILES_BIN}/nvim \
         ${DOTFILES_LIB}/nvim \
         ${DOTFILES_MAN}/man1/nvim.1
@@ -133,28 +135,9 @@ function init_package() {
     alias vim=nvim
 }
 
+function uninit_package() {
+    unalias vim
+}
+
 ```
-
-### zoxide
-
-```bash
-#!/bin/false "This script should be sourced in a shell, not executed directly"
-
-function dependencies() {
-    echo "rust"
-}
-
-function install_package() {
-    cargo install zoxide
-}
-
-function uninstall_package() {
-    cargo uninstall zoxide
-}
-
-function init_package() {
-    eval "$(zoxide init --cmd cd bash)"
-}
-```
-
 
