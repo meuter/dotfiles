@@ -74,6 +74,9 @@ function __dotfiles_check {
 
 
 function __dotfiles_install() {
+    # just to make sure all the necessary folders are created
+    __dotfiles_bootstrap
+
     # resolve dependencies
     local pending_packages=$(echo "${@}" | xargs -n1 | awk '!a[$0]++' | xargs)
     for package in ${pending_packages}; do
