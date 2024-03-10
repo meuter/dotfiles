@@ -48,15 +48,23 @@ function __dotfiles_list_installed {
 }
 
 function __dotfiles_check {
-    for package in $(find ${DOTFILES_ROOT} -maxdepth 2 -name package.sh); do
+    local green="\e[32m"
+    local red="\e[31m"
+    local normal="\e[0m"
+
+    for package in $(__dotfiles_list); do
+        printf "%-30s" "checking '${package}'..."
+        local package_script=${DOTFILES_ROOT}/${package}/package.sh
         local output=$(mktemp -t dotfiles.XXXXX)
-        (set -eou pipefail; source "${package}" &> ${output})
+        (set -eou pipefail && trap "__dotfiles_error ${package_script}:${LINENO}" ERR && source "${package_script}" &> ${output})
         if [ "$?" -ne 0 ]; then
-            __dotfiles_error "ERROR: ${package}"
+            printf "${red}KO${normal}\n\n"
             cat ${output}
+            rm -f ${output}
             return 1
         fi
         rm -f ${output}
+        printf "${green}OK${normal}\n"
     done
     __dotfiles_info "All Good!"
 }
@@ -103,9 +111,7 @@ function __dotfiles_install() {
         init_package --installed
         ln -fv -s ${DOTFILES_ROOT}/${package}/ ${DOTFILES_INSTALLED}/
     done
-
-    __dotfiles_info "All Done!"
-    __dotfiles_init
+    return 0
 }
 
 function __dotfiles_uninstall() {
@@ -114,6 +120,7 @@ function __dotfiles_uninstall() {
         __dotfiles_info "Uninstalling '${package}'..."
         local package_script="${DOTFILES_INSTALLED}/${package}/package.sh"
         if [ -f "${package_script}" ]; then
+            echo "actually calling uninstall"
             (set -eou pipefail && source ${package_script} && set -x && uninstall_package)
             if [ "$?" -ne 0 ]; then
                 __dotfiles_error "Could uninstall '${package}'"
@@ -122,19 +129,19 @@ function __dotfiles_uninstall() {
             rm -vf ${DOTFILES_INSTALLED}/${1}
         fi
     done
-
-    __dotfiles_info "All Done!"
-    __dotfiles_init
+    return 0
 }
 
 function __dotfiles_reinstall() {
     __dotfiles_uninstall "${@}"
+    if [ "$?" -ne 0 ]; then return 1; fi;
     __dotfiles_install   "${@}"
 }
 
 function __dotfiles_init() {
     export PATH=${DOTFILES_BIN}:${PATH}
     export LD_LIBRARY_PATH=${DOTFILES_LIB}
+    export MANPATH=${DOTFILES_MAN}:${MANPATH}
 
     for installed_package in $(find -L ${DOTFILES_INSTALLED} -maxdepth 2 -name package.sh); do
         source ${installed_package}
@@ -174,6 +181,12 @@ function __dotfiles_help {
 ## Public Functions
 ###################################################################################################
 
+trap __dotfiles_on_error ERR
+
+function __dotfiles_on_error() {
+    __dotfiles_error "Error!"
+}
+
 function dotfiles {
     case ${1} in
         list)               __dotfiles_list;;
@@ -183,6 +196,15 @@ function dotfiles {
         uninstall)          __dotfiles_uninstall "${@:2}";;
         reinstall)          __dotfiles_reinstall "${@:2}";;
         *)                  __dotfiles_help;;
+    esac
+
+    case ${1} in
+        install|uninstall|reinstall)
+            if [ "$?" -eq 0 ]; then
+                __dotfiles_info "All Done!"
+                __dotfiles_init
+            fi
+            ;;
     esac
 }
 
