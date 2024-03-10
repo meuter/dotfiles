@@ -20,12 +20,16 @@ function install_package() {
     # is executed will be configured with `set -eou pipefile`. Therefore
     # if it fails on any command, the execution will halt and
     # an error message will be displayed.
+    #
+    # NOTE: this function is mandatory
     echo -n
 }
 
 function uninstall_package() {
     # This function is used to uninstall the packages. It will be
     # executed in the exact same way as `install_pakage`.
+    #
+    # NOTE: this function is mandatory
     echo -n
 }
 
@@ -37,5 +41,7 @@ function init_package() {
     # in the list that will be installed.
     # Beware that this function is executed in the main shell, it should
     # therefore be a good citizen, e.g. not change the cwd.
+    #
+    # NOTE: this function is optional
     echo -n
 }
