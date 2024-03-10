@@ -1,10 +1,5 @@
 #!/bin/false "This script should be sourced in a shell, not executed directly"
 
-
-function dependencies() {
-    echo ""
-}
-
 function install_package() {
     local version=1.17.1
     local tarball=starship-x86_64-unknown-linux-musl.tar.gz

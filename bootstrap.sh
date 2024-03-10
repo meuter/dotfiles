@@ -75,12 +75,35 @@ function __dotfiles_install() {
     local pending_packages=$(echo "${@}" | xargs -n1 | awk '!a[$0]++' | xargs)
     for package in ${pending_packages}; do
         local package_script="${DOTFILES_ROOT}/${package}/package.sh"
+
+        # verify package exists
         if [ ! -f "${package_script}" ]; then
             __dotfiles_error "Unknown Package: '${package}'"
             return 1
         fi
-        local additional_package=$(set -eou pipefail && source ${package_script} && dependencies)
-        pending_packages="${additional_package} ${pending_packages}"
+
+        # verify that dependencies function exists
+        local exists=$( \
+            set -eou pipefail;
+            unset -f dependencies;
+            source ${package_script};
+            [[ $(type -t dependencies) == function ]] && echo "yes" || echo "no" \
+        )
+
+        if [ "${exists}" == "yes" ]; then
+            # damn bash, why is it so hard to catch errors in subshells and capture output...
+            local output=$(mktemp -t dotfiles.XXXXX)
+            (set -eou pipefail && trap "__dotfiles_error ${package_script}:${LINENO}" ERR && source "${package_script}" && dependencies &> ${output})
+            if [ "$?" -ne 0 ]; then
+                cat ${output}
+                rm -f ${output}
+                __dotfiles_error "could not get dependencies"
+                return 1
+            fi
+            local additional_package=$(cat ${output})
+            rm -f ${output}
+            pending_packages="${additional_package} ${pending_packages}"
+        fi
     done
     local pending_packages=$(echo "${pending_packages}" | xargs -n1 | awk '!a[$0]++' | xargs)
 
@@ -179,12 +202,6 @@ function __dotfiles_help {
 ###################################################################################################
 ## Public Functions
 ###################################################################################################
-
-trap __dotfiles_on_error ERR
-
-function __dotfiles_on_error() {
-    __dotfiles_error "Error!"
-}
 
 function dotfiles {
     case ${1} in

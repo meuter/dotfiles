@@ -1,9 +1,5 @@
 #!/bin/false "This script should be sourced in a shell, not executed directly"
 
-function dependencies() {
-    echo -n
-}
-
 function install_package() {
     # version info
     local version=0.24.0

@@ -1,9 +1,5 @@
 #!/bin/false "This script should be sourced in a shell, not executed directly"
 
-function dependencies() {
-    echo ""
-}
-
 function install_package() {
     local version=1.22.0
     local tarball=go${version}.linux-amd64.tar.gz

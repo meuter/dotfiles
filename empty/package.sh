@@ -2,13 +2,14 @@
 
 # Beware that functions in `bash` cannot be empty so always put
 # something between the `{` `}`, like `echo -n`
-
 function dependencies() {
     # This function returns (prints to stdout) the list of packages
     # that should be installed before this package. Note that there
     # are no transitive dependencies here. *ALL* dependencies and
     # their dependencies, and their dependencies, etc. should be
     # specified here.
+    #
+    # NOTE: this function is optional
     echo ""
 }
 

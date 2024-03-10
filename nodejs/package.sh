@@ -1,9 +1,5 @@
 #!/bin/false "This script should be sourced in a shell, not executed directly"
 
-function dependencies() {
-    echo ""
-}
-
 function install_package() {
     local version=20.11.0
     local tarball=node-v${version}-linux-x64.tar.gz

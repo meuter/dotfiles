@@ -1,9 +1,5 @@
 #!/bin/false "This script should be sourced in a shell, not executed directly"
 
-function dependencies() {
-    echo ""
-}
-
 function install_package() {
     local script="/tmp/rust_bootstrap.sh"
     curl -L https://sh.rustup.rs --output ${script}

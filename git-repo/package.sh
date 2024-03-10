@@ -1,9 +1,5 @@
 #!/bin/false "This script should be sourced in a shell, not executed directly"
 
-function dependencies() {
-    echo ""
-}
-
 function install_package() {
     curl https://storage.googleapis.com/git-repo-downloads/repo > ${DOTFILES_BIN}/repo
     chmod a+rx ${DOTFILES_BIN}/repo
