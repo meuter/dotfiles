@@ -120,7 +120,6 @@ function __dotfiles_uninstall() {
         __dotfiles_info "Uninstalling '${package}'..."
         local package_script="${DOTFILES_INSTALLED}/${package}/package.sh"
         if [ -f "${package_script}" ]; then
-            echo "actually calling uninstall"
             (set -eou pipefail && source ${package_script} && set -x && uninstall_package)
             if [ "$?" -ne 0 ]; then
                 __dotfiles_error "Could uninstall '${package}'"
