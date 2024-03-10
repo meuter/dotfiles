@@ -3,7 +3,7 @@ function dependencies() {
 }
 
 function install_package() {
-    ln -sf ${DOTFILES_ROOT}/gitconfig/.gitconfig ${HOME}/.gitconfig
+    ln -sf ${DOTFILES_ROOT}/git-config/.gitconfig ${HOME}/.gitconfig
 }
 
 function uninstall_package() {
