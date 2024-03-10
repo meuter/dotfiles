@@ -1,5 +1,4 @@
 function install_package() {
-
     # version info
     local version=0.9.4
     local tarball=zoxide-${version}-x86_64-unknown-linux-musl.tar.gz

@@ -1,8 +1,8 @@
 function dependencies() {
-    echo "rust git-delta git-config"
+    echo "git-delta git-config"
     echo "starship"
-    echo "inputrc bat exa fzf zoxide"
-    echo "clang ripgrep golang nodejs neovim neovim-config"
+    echo "inputrc bat exa fzf zoxide ripgrep"
+    echo "rust clang nodejs golang neovim neovim-config"
     echo "clang libevent ncurses tmux"
 }
 
