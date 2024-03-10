@@ -1,5 +1,3 @@
-#!/bin/false "This script should be sourced in a shell, not executed directly"
-
 function install_package() {
     # version info
     local version=0.24.0
@@ -18,7 +16,7 @@ function install_package() {
     # extract tarball
     tar xvf /tmp/${tarball} -C /tmp
 
-    # install `bat` binary
+    # install binary
     find /tmp/${tarball%.tar.gz} -name "bat" -type f -exec mv {} ${DOTFILES_BIN}/ \;
 
     # install bash completion
@@ -29,11 +27,13 @@ function install_package() {
     mkdir -p ${DOTFILES_MAN}/man1/
     find /tmp/${tarball%.tar.gz} -name "bat.1" -type f -exec mv {} ${DOTFILES_MAN}/man1/ \;
 
-    # cleanup tarball
-    rm -rf /tmp/${tarball}
+    # cleanup tarball and extracted archive
+    rm -vf /tmp/${tarball}
+    rm -rvf /tmp/${tarball%.tar.gz}
 }
 
 function uninstall_package() {
+    # remove installed files
     rm -fv \
         ${DOTFILES_BIN}/bat \
         ${DOTFILES_SHARE}/bat/completion/bat.bash \
@@ -41,5 +41,6 @@ function uninstall_package() {
 }
 
 function init_package() {
+    # parse bash completion
     source ${DOTFILES_SHARE}/bat/completion/bat.bash
 }
