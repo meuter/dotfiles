@@ -209,9 +209,9 @@ function __dotfiles_bootstrap() {
         ${DOTFILES_SRC}\
         ${DOTFILES_SHARE}\
         ${DOTFILES_INSTALLED}\
-    ${DOTFILES_COMPLETION} \
-    ${DOTFILES_MAN1} \
-    ${DOTFILES_MAN5} \
+        ${DOTFILES_COMPLETION} \
+        ${DOTFILES_MAN1} \
+        ${DOTFILES_MAN5} \
         ${DOTFILES_CONFIG}
     __dotfiles_init
 }
@@ -227,6 +227,7 @@ function __dotfiles_help {
     echo "    check                 check all packages"
     echo "    install               install packages"
     echo "    uninstall             uninstall packages"
+    echo "    reinstall             reinstall packages"
     echo "    help                  print this help message"
     echo ""
     echo
