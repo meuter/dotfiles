@@ -12,8 +12,15 @@ function install_package() {
 
     # grab tarball
     curl -L https://github.com/sharkdp/bat/releases/download/v${version}/${tarball} --output /tmp/${tarball}
+
+    # check tarball
+    if [ "${checksum}" != $(md5sum /tmp/${tarball} | awk '{print $1}') ]; then
+        >&2 echo Unexpected checksum
+        return 1
+    fi
+
+    # extract tarball
     tar xvf /tmp/${tarball} -C /tmp
-    md5sum -c ${DOTFILES_ROOT}/bat/checksum.md5
 
     # install `bat` binary
     find /tmp/${tarball%.tar.gz} -name "bat" -type f -exec mv {} ${DOTFILES_BIN}/ \;
