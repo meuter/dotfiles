@@ -7,13 +7,9 @@ function dependencies() {
 }
 
 function install_package() {
-    :;
+    echo "Nothing to install"
 }
 
 function uninstall_package() {
-    :;
-}
-
-function init_package() {
-    :;
+    echo "Nothing to uninstall"
 }
