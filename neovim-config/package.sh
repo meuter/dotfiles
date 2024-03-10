@@ -1,5 +1,5 @@
 function dependencies() {
-    echo "rust clang nodejs golang neovim"
+    echo "ripgrep rust clang nodejs golang neovim"
 }
 
 function install_package() {
