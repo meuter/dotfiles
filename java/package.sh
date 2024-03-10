@@ -1,19 +1,19 @@
-#!/bin/false "This script should be sourced in a shell, not executed directly"
-
 function dependencies() {
     echo "sdkman"
 }
 
 function install_package() {
-    set +u
+    # sdkman is weird...
+    set +euxo pipefail
     sdk install java 17.0.10-amzn
 }
 
 function uninstall_package() {
-    set +u
-    sdk uninstall java 17.0.10-amzn
+    # sdkman is weird...
+    set +euxo pipefail
+    sdk uninstall --force java 17.0.10-amzn
 }
 
-function init_package() {
-    echo -n
+function uninit_package() {
+    unset JAVA_HOME
 }
