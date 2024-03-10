@@ -201,8 +201,20 @@ function __dotfiles_init() {
     export MANPATH=${DOTFILES_MAN}:${MANPATH}
 
     for installed_package in $(find -L ${DOTFILES_INSTALLED} -maxdepth 2 -name package.sh); do
-        source ${installed_package}
-        init_package
+
+        # verify if the package has an init function
+        local exists=$( \
+            set -eou pipefail;
+            unset -f init_package;
+            source ${installed_package};
+            [[ $(type -t init_package) == function ]] && echo "yes" || echo "no" \
+        )
+
+        # if so execute the function
+        if [ "${exists}" == "yes" ]; then
+            source ${installed_package}
+            init_package
+        fi
     done
 }
 

@@ -1,5 +1,4 @@
 function install_package() {
-    # version info
     local version=3.1.1
     local checksum=933b52f7c860d98cec173a36cf5c1a56
 
