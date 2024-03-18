@@ -1,5 +1,5 @@
 function dependencies() {
-    echo "clang libevent ncurses"
+    echo "clang pkg-config libevent ncurses"
 }
 
 function install_package() {

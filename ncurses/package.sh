@@ -1,5 +1,5 @@
 function dependencies() {
-    echo "clang libevent"
+    echo "clang pkg-config libevent"
 }
 
 function install_package() {
