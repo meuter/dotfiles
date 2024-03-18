@@ -1,6 +1,6 @@
 function dependencies() {
     echo "git-delta git-config"
-    echo "inputrc starship bash-history"
+    echo "inputrc starship"
     echo "bat exa fzf zoxide ripgrep starship"
 }
 
