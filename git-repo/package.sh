@@ -1,5 +1,5 @@
 function install_package() {
-    local version=2.43
+    local version=2.44
     local checksum="6b75424e1d5d392d4d0fc60ab8d22d86"
 
     curl https://android.googlesource.com/tools/repo/+/refs/tags/v${version}/repo?format=TEXT | base64 --decode > /tmp/repo-${version}
