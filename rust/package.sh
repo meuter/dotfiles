@@ -1,8 +1,10 @@
 function install_package() {
-    local script="/tmp/rust_bootstrap.sh"
+    # NOTE: on some machines the /tmp is mounted in noexec
+    # see: https://github.com/rust-lang/cargo/issues/4350
+    local script=${DOTFILES_TMP}/rust_bootstrap.sh
     curl -L https://sh.rustup.rs --output ${script}
     chmod u+x ${script}
-    CARGO_HOME=${DOTFILES_PREFIX}/cargo RUSTUP_HOME=${DOTFILES_PREFIX}/rustup ${script} -y --no-modify-path
+    TMPDIR=${DOTFILES_TMP} CARGO_HOME=${DOTFILES_PREFIX}/cargo RUSTUP_HOME=${DOTFILES_PREFIX}/rustup ${script} -y --no-modify-path
 }
 
 function uninstall_package() {
@@ -13,5 +15,6 @@ function uninstall_package() {
 function init_package() {
     export CARGO_HOME=${DOTFILES_PREFIX}/cargo
     export RUSTUP_HOME=${DOTFILES_PREFIX}/rustup
+    export TMPDIR=${DOTFILES_TMP}
     source ${CARGO_HOME}/env
 }
