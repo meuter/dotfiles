@@ -8,6 +8,7 @@ export DOTFILES_ROOT=$(dirname $(readlink -f ${BASH_SOURCE[0]}))
 export DOTFILES_PREFIX=${HOME}/.local
 export DOTFILES_BIN=${DOTFILES_PREFIX}/bin
 export DOTFILES_LIB=${DOTFILES_PREFIX}/lib
+export DOTFILES_TMP=${DOTFILES_PREFIX}/tmp
 export DOTFILES_MAN=${DOTFILES_PREFIX}/man
 export DOTFILES_SRC=${DOTFILES_PREFIX}/src
 export DOTFILES_MAN1=${DOTFILES_MAN}/man1
@@ -222,6 +223,7 @@ function __dotfiles_bootstrap() {
     mkdir -p \
         ${DOTFILES_BIN}\
         ${DOTFILES_SRC}\
+        ${DOTFILES_TMP}\
         ${DOTFILES_SHARE}\
         ${DOTFILES_INSTALLED}\
         ${DOTFILES_COMPLETION} \
