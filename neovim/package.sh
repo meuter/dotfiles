@@ -26,8 +26,10 @@ function uninstall_package() {
 
 function init_package() {
     alias vim=nvim
+    export EDITOR=nvim
 }
 
 function uninit_package() {
     unalias vim
+    unset EDITOR
 }
