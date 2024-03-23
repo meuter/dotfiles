@@ -53,4 +53,6 @@ function init_package() {
     if [ -z "${TMUX-}" ]; then
         tmux new-session -A -s main
     fi
+
+    export TERM=screen-256color
 }
