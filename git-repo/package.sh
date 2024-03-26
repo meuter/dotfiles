@@ -1,6 +1,6 @@
 function install_package() {
-    local version=2.44
-    local checksum="6b75424e1d5d392d4d0fc60ab8d22d86"
+    local version=2.45
+    local checksum="c55151e3e82c705948d1c114b762c0d5"
 
     curl https://android.googlesource.com/tools/repo/+/refs/tags/v${version}/repo?format=TEXT | base64 --decode > /tmp/repo-${version}
     if [ "${checksum}" != $(md5sum /tmp/repo-${version} | awk '{print $1}') ]; then
