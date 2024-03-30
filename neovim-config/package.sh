@@ -3,9 +3,7 @@ function dependencies() {
 }
 
 function install_package() {
-    local branch=catppuccin
-
-    git clone https://github.com/meuter/nvim -b ${branch} ${DOTFILES_CONFIG}/nvim
+    git clone https://github.com/meuter/nvim ${DOTFILES_CONFIG}/nvim
 }
 
 function uninstall_package() {
