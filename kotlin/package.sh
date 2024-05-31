@@ -4,12 +4,12 @@ function dependencies() {
 
 function install_package() {
     set +euxo pipefail
-    sdk install kotlin 1.8.20
+    sdk install kotlin 1.9.20
 }
 
 function uninstall_package() {
     set +euxo pipefail
-    sdk uninstall --force kotlin 1.8.20
+    sdk uninstall --force kotlin 1.9.20
 }
 
 function uninit_package() {
