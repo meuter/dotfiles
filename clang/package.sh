@@ -1,7 +1,7 @@
 function install_package() {
-    local version=15.0.6
+    local version=18.1.8
     local tarball=clang+llvm-${version}-x86_64-linux-gnu-ubuntu-18.04.tar.xz
-    local checksum=a48464533ddabc180d830df7e13e82ae
+    local checksum=aeb379a5688b8d7b7d3c0d8353d30265
     local manifest=${DOTFILES_SHARE}/clang/manifest.txt
 
     curl -L https://github.com/llvm/llvm-project/releases/download/llvmorg-${version}/${tarball} --output /tmp/${tarball}
