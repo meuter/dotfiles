@@ -1,7 +1,7 @@
 function install_package() {
-    local version=0.10.0
+    local version=0.10.1
     local tarball=nvim-linux64.tar.gz
-    local checksum=593d833dfb6faae4e833e2c793cf5539
+    local checksum=d42b8c60c06b20f1fe5c2a1ab2c0eadd
 
     curl -L https://github.com/neovim/neovim/releases/download/v${version}/${tarball} --output /tmp/${tarball}
     if [ "${checksum}" != $(md5sum /tmp/${tarball} | awk '{print $1}') ]; then
