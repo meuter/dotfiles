@@ -16,11 +16,13 @@ function init_package() {
     # unlimited history
     export HISTSIZE=
     export HISTFILESIZE=
+    alias watch="CLICOLOR_FORCE=1 watch -n1 --color"
 }
 
 function uninit_package() {
     unset HISTSIZE
     unset HISTFILESIZE
+    unalias watch
 }
 
 
