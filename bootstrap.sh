@@ -11,6 +11,7 @@ export DOTFILES_LIB=${DOTFILES_PREFIX}/lib
 export DOTFILES_TMP=${DOTFILES_PREFIX}/tmp
 export DOTFILES_MAN=${DOTFILES_PREFIX}/man
 export DOTFILES_SRC=${DOTFILES_PREFIX}/src
+export DOTFILES_OPT=${DOTFILES_PREFIX}/opt
 export DOTFILES_MAN1=${DOTFILES_MAN}/man1
 export DOTFILES_MAN5=${DOTFILES_MAN}/man5
 export DOTFILES_INCLUDE=${DOTFILES_PREFIX}/include
@@ -224,6 +225,7 @@ function __dotfiles_bootstrap() {
         ${DOTFILES_BIN}\
         ${DOTFILES_SRC}\
         ${DOTFILES_TMP}\
+        ${DOTFILES_OPT}\
         ${DOTFILES_SHARE}\
         ${DOTFILES_INSTALLED}\
         ${DOTFILES_COMPLETION} \
