@@ -34,3 +34,15 @@ function uninstall_package() {
 
     rm -fv ${manifest}
 }
+
+function init_package() {
+  export NODE_PATH=$HOME/.local/lib/node_modules:$NODE_PATH
+  export npm_config_prefix=$HOME/.local
+}
+
+function uninit_package() {
+  unset NODE_PATH
+  unser npm_config_prefix
+}
+
+
